@@ -1,24 +1,27 @@
-public class Calendar {
-    Calendar(int initialYear) {
-        setCalendar(initialYear);
-    }
+import java.util.ArrayList;
 
-    private Month[] arrayOfMonth = new Month[12]; // массив месяцев
-    private Year startYear = new Year(0); // год календаря
-    public void setCalendar(int intYear) {
-        startYear.setYear(intYear);
-        arrayOfMonth[0] = new Month("January", startYear.getFirstWeekDay(), startYear.getDayQuantityInMonth());
-        for (int i=1; i<12; i++) {
-            arrayOfMonth[i] = arrayOfMonth[i - 1];
-            arrayOfMonth[i].
+public class Calendar implements ICalendar {
+    Calendar(int initialNumberYear) {
+        Week initialWeek = new Week();
+        Year initialYear = new Year(initialNumberYear, initialWeek);
+        setCalendar(initialYear, initialWeek);
+    }
+    private ArrayList<Month> arrayOfMonth; // массив месяцев
+    private Week week;
+    private Year year;
+    public void setCalendar(Year inYear, Week inWeek) {
+        week = inWeek;
+        year = inYear;
+        arrayOfMonth = new ArrayList<Month>();
+        for (int i=0; i<year.getNumberOfMonth(); i++) {
+            arrayOfMonth.add(new Month(year.getMonthName(i), year.getNameOfFirstDay(i), year.getDayQuantityInMonth(i), week));
         }
     }
-    public String getWeekDay(int Day, String stringMonth) { // получение дня недели по дате
-        Month Month = new Month("Null", "Null", 0); // Не понял как работает static метод
-        int intMonth = Month.getIntFromString(stringMonth);
-        Day findableWeekDay = arrayOfMonth[intMonth].getBeginningOfMonth();
-        findableWeekDay.changeWeekDay(Day-1);
-        return findableWeekDay.getWeekDay();
+    public String getWeekDay(int intDay, String stringMonth) { // получение дня недели по дате
+        return arrayOfMonth.get(year.getMonthNumber(stringMonth)).getDay(intDay-1).getWeekDay();
+    }
+    public boolean getIsWorking(int intDay, String stringMonth) {
+        return arrayOfMonth.get(year.getMonthNumber(stringMonth)).getDay(intDay-1).getIsWorkingDay();
     }
 
 }
