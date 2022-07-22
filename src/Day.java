@@ -1,3 +1,4 @@
+//TODO посмотреть lombok
 public class Day implements IDay {
     Day(String initialWeekDay, boolean initialIsWorkingDay) {
         setDay(initialWeekDay, initialIsWorkingDay);
