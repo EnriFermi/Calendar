@@ -1,4 +1,4 @@
-//TODO посмотреть lombok
+//TODO посмотреть lombok https://projectlombok.org/
 public class Day implements IDay {
     Day(String initialWeekDay, boolean initialIsWorkingDay) {
         setDay(initialWeekDay, initialIsWorkingDay);
@@ -12,9 +12,10 @@ public class Day implements IDay {
         return isWorkingDay;
     }
 
-    private void setDay(String strWeekDay, boolean boolIsWorkingDay) {
-        weekDay = strWeekDay;
-        isWorkingDay = boolIsWorkingDay;
+    //TODO в конструкторах использовать this
+    private void setDay(String weekDay, boolean isWorkingDay) {
+        this.weekDay = weekDay;
+        this.isWorkingDay = isWorkingDay;
     }
 
 
