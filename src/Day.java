@@ -17,6 +17,4 @@ public class Day implements IDay {
         this.weekDay = weekDay;
         this.isWorkingDay = isWorkingDay;
     }
-
-
 }

@@ -8,7 +8,6 @@ public class Month implements IMonth {
     private ArrayList<Day> arrayOfDays = new ArrayList<Day>();
     private int dayQuantity = 0; // количество дней в месяцев
     /*
-
     public String getMonthName() {
         return monthName;
     }
