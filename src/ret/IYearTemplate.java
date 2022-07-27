@@ -8,16 +8,17 @@ import java.util.List;
  * @author Romanikhin Valeriy <romanihin@unislabs.com>
  */
 public interface IYearTemplate {
-
+    /**
+     * Количество дней в годе
+     */
+    Integer getDayQuantity();
     /**
      * Количество месяцев
      */
-    Integer getMonthCount();
-
+    Integer getNumberOfMonth();
     /**
      * Параметры месяцев
      */
     List<IMonthTemplate> getMonthList();
-
-
+    Integer getIndexOfMonthByName(String name);
 }

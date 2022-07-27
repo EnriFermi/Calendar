@@ -7,22 +7,8 @@ import java.util.List;
  * @author Romanikhin Valeriy <romanihin@unislabs.com>
  */
 public interface ICalendarConfig {
-
-
-
-    /**
-     * Количество дней в неделе
-    */
-    Integer getWeekDayCount();
-
-    /**
-     * Название дней недели
-     */
-    List<String> weekDayNameList();
-
-    /**
-     * ! Выходные дни недели !
-     */
-    List<Integer> weekDayWorkOutList();
-
+    String getAnchorWeekDay();
+    List<IYearTemplate> getYearList();
+    IWeekTemplate getWeek();
+    Integer getAnchorYear();
 }
