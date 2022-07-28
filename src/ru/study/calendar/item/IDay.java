@@ -1,6 +1,5 @@
-package ret;
+package ru.study.calendar.item;
 
-//TODO добавить комментарии
 public interface IDay {
     /**
      * Выдает день недели
@@ -12,5 +11,5 @@ public interface IDay {
      * Выдает рабочий день или нет
      * @return
      */
-    boolean getIsWorkingOutDay();
+    boolean isWorkingDay();
 }

@@ -1,51 +1,58 @@
-package data;
+package ru.study.calendar.item.impl;
 
-import ret.*;
-import template.CalendarConfig;
+import ru.study.calendar.config.ICalendarConfig;
+import ru.study.calendar.config.IDayTemplate;
+import ru.study.calendar.config.IMonthTemplate;
+import ru.study.calendar.config.impl.json.JsonCalendarConfig;
+import ru.study.calendar.item.ICalendar;
+import ru.study.calendar.item.IDay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Calendar implements ICalendar {
-    private List<Month> arrayOfMonth;
+    private final List<Month> arrayOfMonth;
     /**
-     * indexOfYearInConfig - Номер года в цикле
+     * Номер года в цикле
      */
-    private Integer indexOfYearInConfig;
-    private ICalendarConfig calendarConfig;
+    private final Integer indexOfYearInConfig;
+    private final ICalendarConfig calendarConfig;
+
     //-------------------------------------
     public Calendar(int numberYear) {
-        ICalendarConfig calendarConfig = new CalendarConfig("config\\classicCalendar.json");
-        this.calendarConfig = calendarConfig;
+        this.calendarConfig = new JsonCalendarConfig("config\\classicCalendar.json");
         //TODO почитать про static классы DONE (пока что конфиги не переведены в static)
-        this.arrayOfMonth = new ArrayList<Month>();
-        //TODO  подумать как схлопнуть в 1 цикл с циклом из template.YearTemplate DONE
+        this.arrayOfMonth = new ArrayList<>();
         /**
-         * index - Номер года в цикле годов. Нужен для последующего обращения к нужному году в конфиге
          * anchor - Номер дня недели 1 числа i месяца года, по которому создается календарь
          * weekSize - Количество дней недели
          */
-        Integer index = (numberYear-1) % calendarConfig.getYearList().size();
-        this.indexOfYearInConfig = index;
+        this.indexOfYearInConfig = (numberYear - 1) % calendarConfig.getYearList().size();
+        fillMonthList(numberYear);
+    }
+
+    private void fillMonthList(int numberYear) {
         Integer anchor = getIndexOfFirstDay(numberYear, calendarConfig);
         Integer weekSize = calendarConfig.getWeek().getWeekDayCount();
         IMonthTemplate month;
         IDayTemplate day;
-        for (int i=0; i<calendarConfig.getYearList().get(index).getNumberOfMonth(); i++) {
-            month = calendarConfig.getYearList().get(index).getMonthList().get(i);
+        //TODO вынести в пермененную calendarConfig.getYearList().get(indexOfYearInConfig)
+        for (int i = 0; i < calendarConfig.getYearList().get(indexOfYearInConfig).getNumberOfMonth(); i++) {
+            month = calendarConfig.getYearList().get(indexOfYearInConfig).getMonthList().get(i);
             day = calendarConfig.getWeek().weekDayNameList().get(anchor);
-            this.arrayOfMonth.add(new Month(month, day, calendarConfig));
+            arrayOfMonth.add(new Month(month, day, calendarConfig));
             anchor = (anchor + month.getDayCount()) % weekSize;
         }
     }
 
     /**
      * Возвращает день недели первого месяца года под номером numberYear
-     * @param numberYear - Номер года
+     *
+     * @param numberYear     - Номер года
      * @param calendarConfig - Конфиг календаря
      * @return
      */
-    private Integer getIndexOfFirstDay(Integer numberYear, ICalendarConfig calendarConfig){
+    private Integer getIndexOfFirstDay(Integer numberYear, ICalendarConfig calendarConfig) {
         /**
          *  anchor - Номер дня недели 1 числа 1 месяца 0 года
          *  yearListSize - Длина цикла годов
@@ -57,13 +64,16 @@ public class Calendar implements ICalendar {
         Integer weekSize = calendarConfig.getWeek().getWeekDayCount();
         Integer differenceBetweenYear = numberYear - calendarConfig.getAnchorYear();
         Integer number = differenceBetweenYear % (weekSize * yearListSize);
-        for (int iterator = 1; iterator<number; iterator++){
+        //TODO почитать про streamapi и перевести на него
+        for (int iterator = 1; iterator < number; iterator++) {
             anchor = (anchor + calendarConfig.getYearList().get(iterator % yearListSize).getDayQuantity()) % weekSize;
         }
         return anchor;
     }
 
+    //TODO рефактор +  ругаться если вышли за предел списка
     public IDay getWeekDay(Integer intDay, String stringMonth) {
-        return this.arrayOfMonth.get(calendarConfig.getYearList().get(indexOfYearInConfig).getIndexOfMonthByName(stringMonth)).getDay(intDay-1);
+        return arrayOfMonth.get(calendarConfig.getYearList().get(indexOfYearInConfig)
+                                                   .getIndexOfMonthByName(stringMonth)).getDay(intDay - 1);
     }
 }

@@ -1,4 +1,4 @@
-package ret;
+package ru.study.calendar.config;
 
 import java.util.List;
 

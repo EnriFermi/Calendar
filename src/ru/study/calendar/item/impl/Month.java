@@ -1,44 +1,49 @@
-package data;
+package ru.study.calendar.item.impl;
 
-import ret.*;
+import lombok.Getter;
+import ru.study.calendar.config.ICalendarConfig;
+import ru.study.calendar.config.IDayTemplate;
+import ru.study.calendar.config.IMonthTemplate;
+import ru.study.calendar.item.IDay;
+import ru.study.calendar.item.IMonth;
 
 
 import java.util.ArrayList;
 import java.util.List;
-//TODO привести имена полей в порядок DONE
+@Getter
 public class Month implements IMonth {
+    private String monthName;
+    private List<Day> arrayOfDays;
+    private int dayQuantity;
+
     Month(IMonthTemplate month, IDayTemplate weekDay, ICalendarConfig calendarConfig) {
         this.monthName = month.getName();
         this.dayQuantity = month.getDayCount();
-        arrayOfDays = new ArrayList<Day>();
+        this.arrayOfDays = new ArrayList<>();
+        fillDaysList(month, weekDay, calendarConfig);
+    }
+
+    private void fillDaysList(IMonthTemplate month, IDayTemplate weekDay, ICalendarConfig calendarConfig) {
         Integer begin = calendarConfig.getWeek().getIndexOfDayByName(weekDay.getDayName());
-        IDayTemplate day;
         List<Integer> dayWorkOutList = month.getDayWorkOutList();
         List<Integer> dayWorkList = month.getDayWorkList();
         boolean isWorkDay;
+        IDayTemplate day;
         for(int date = 0; date < dayQuantity; date++) {
-            //TODO 9. подумать как уменьшить количество кода
+            //TODO перевести на getOffsetDayFrom
             day = calendarConfig.getWeek().weekDayNameList().get((date + begin) % calendarConfig.getWeek().getWeekDayCount());
-            isWorkDay = day.getWeekDayWorkOut();
+            //TODO меньшить число строк
+            isWorkDay = day.isDefaultDayWorkOut();
+            //TODO защита от дурака, что день есть и в списке рабочих и  выходных
             if(dayWorkOutList.contains(date)){
                 isWorkDay = false;
-            } else if (dayWorkOutList.contains(date)) {
+            } else if (dayWorkList.contains(date)) {
                 isWorkDay = true;
             }
-            this.arrayOfDays.add(new Day(day.getDayName(), isWorkDay));
+            arrayOfDays.add(new Day(day.getDayName(), isWorkDay));
         }
     }
-    private String monthName;
-    private List<Day> arrayOfDays;
-    private int dayQuantity; // количество дней в месяцев
-    /*
 
-    public String getMonthName() {
-        return monthName;
-    }
-    public int getDayQuantity() {
-        return dayQuantity;
-    }*/
     public IDay getDay(int date) {
         //TODO 8 Подумать о поведении системы если не найдется дня или кривой входной параметр
         return arrayOfDays.get(date);

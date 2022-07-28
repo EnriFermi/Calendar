@@ -1,4 +1,4 @@
-package ret;
+package ru.study.calendar.item;
 
 public interface IMonth {
     /**

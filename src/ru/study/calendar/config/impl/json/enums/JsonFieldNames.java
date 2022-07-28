@@ -1,7 +1,8 @@
-package template;
+package ru.study.calendar.config.impl.json.enums;
 
-public enum FieldsNames {
-    anchorWeekDay ("anchorWeekDay"),
+//TODO добавить комменты
+public enum JsonFieldNames {
+    anchorweekday ("anchorWeekDay"),
     yearList("yearList"),
     anchorYear("anchorYear"),
     numberOfMonth("numberOfMonth"),
@@ -22,7 +23,7 @@ public enum FieldsNames {
     public String getFieldName() {
         return this.fieldName;
     }
-    FieldsNames(String fieldName) {
+    JsonFieldNames(String fieldName) {
         this.fieldName = fieldName;
     }
 }

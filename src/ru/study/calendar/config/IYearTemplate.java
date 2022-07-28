@@ -1,4 +1,4 @@
-package ret;
+package ru.study.calendar.config;
 
 import java.util.List;
 
@@ -11,14 +11,20 @@ public interface IYearTemplate {
     /**
      * Количество дней в годе
      */
+    //TODO самому посчитать при инициализации
     Integer getDayQuantity();
+
+    //TODO remove
     /**
      * Количество месяцев
      */
     Integer getNumberOfMonth();
+
     /**
      * Параметры месяцев
      */
     List<IMonthTemplate> getMonthList();
+
+    //TODO переделать аналогично с днями недели
     Integer getIndexOfMonthByName(String name);
 }

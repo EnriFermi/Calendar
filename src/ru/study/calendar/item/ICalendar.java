@@ -1,10 +1,9 @@
-package ret;
+package ru.study.calendar.item;
 
 public interface ICalendar {
-    //TODO переделать на возврат ret.IDay
     /**
      *   Выдает по номеру дня и названию месяца день недели
      */
-    ret.IDay getWeekDay(Integer intDay, String stringMonth);
+    IDay getWeekDay(Integer intDay, String stringMonth);
 
 }

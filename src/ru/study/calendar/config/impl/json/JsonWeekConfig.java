@@ -1,24 +1,25 @@
-package template;
+package ru.study.calendar.config.impl.json;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import ret.IDayTemplate;
-import ret.IWeekTemplate;
+import ru.study.calendar.config.IDayTemplate;
+import ru.study.calendar.config.IWeekTemplate;
+import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeekTemplate implements IWeekTemplate {
+public class JsonWeekConfig implements IWeekTemplate {
     private Integer weekDayCount;
     private List<IDayTemplate> weekDayNameList;
-    WeekTemplate(JSONObject weekConfig){
-        FieldsNames field = FieldsNames.weekDayCount;
+    JsonWeekConfig(JSONObject weekConfig){
+        JsonFieldNames field = JsonFieldNames.weekDayCount;
         this.weekDayCount = ((Long) weekConfig.get(field.getFieldName())).intValue();
-        field = FieldsNames.weekDayNameList;
+        field = JsonFieldNames.weekDayNameList;
         JSONArray dayListConfig = (JSONArray) weekConfig.get(field.getFieldName());
-        weekDayNameList = new ArrayList<IDayTemplate>();
+        weekDayNameList = new ArrayList<>();
         for (Object day:dayListConfig) {
-            weekDayNameList.add(new DayTemplate((JSONObject) day));
+            weekDayNameList.add(new JsonDayConfig((JSONObject) day));
         }
     }
 
@@ -34,11 +35,18 @@ public class WeekTemplate implements IWeekTemplate {
 
     @Override
     public Integer getIndexOfDayByName(String name) {
+        //TODO почитать про equals, hashcode
         for(int iterator=0; iterator<this.weekDayCount; iterator++){
             if(this.weekDayNameList.get(iterator).getDayName().equals(name)){
                 return iterator;
             }
         }
         return 0;
+    }
+
+    @Override
+    public IDayTemplate getOffsetDayFrom(IDayTemplate startDate, Integer offset) {
+        //TODO реализовать
+        return  null;
     }
 }

@@ -1,4 +1,4 @@
-package ret;
+package ru.study.calendar.config;
 
 /**
  * Параметры дня недели
@@ -12,5 +12,5 @@ public interface IDayTemplate {
     /**
      * ! Выходные дни недели !
      */
-    Boolean getWeekDayWorkOut();
+    Boolean isDefaultDayWorkOut();
 }

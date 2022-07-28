@@ -1,23 +1,24 @@
-package template;
+package ru.study.calendar.config.impl.json;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import ret.ICalendarConfig;
-import ret.IWeekTemplate;
-import ret.IYearTemplate;
+import ru.study.calendar.config.ICalendarConfig;
+import ru.study.calendar.config.IWeekTemplate;
+import ru.study.calendar.config.IYearTemplate;
+import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalendarConfig implements ICalendarConfig {
+public class JsonCalendarConfig implements ICalendarConfig {
     private String anchorWeekDay;
     private Integer anchorYear;
     private List<IYearTemplate> yearList;
     private IWeekTemplate week;
-    public CalendarConfig(String path){
-        FieldsNames field = FieldsNames.anchorWeekDay;
+    //TODO 9. ReT Сделать красивые обработки
+    public JsonCalendarConfig(String path){
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
         try {
@@ -34,26 +35,25 @@ public class CalendarConfig implements ICalendarConfig {
         /**
          * Получаем день недели 1 дня 1 месяца 1 года
          */
-        this.anchorWeekDay = (String) configOfCalendar.get(field.getFieldName());
+        //TODO проверить, что такое приведение типов отработает вместо (String)
+        this.anchorWeekDay = configOfCalendar.get(JsonFieldNames.anchorweekday.getFieldName()).toString();
         /**
          * Получаем год привязки(из-за исключений в григорианском календаре)
          */
-        field = FieldsNames.anchorYear;
-        this.anchorYear = ((Long) configOfCalendar.get(field.getFieldName())).intValue();
+        //TODO проверить, что такое приведение типов отработает вместо (Long).... .intValue()
+        this.anchorYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.anchorYear.getFieldName()).toString());
         /**
          * Получаем список годов
          */
-        this.yearList = new ArrayList<IYearTemplate>();
-        field = FieldsNames.yearList;
-        JSONArray yearArray = (JSONArray) configOfCalendar.get(field.getFieldName());
+        this.yearList = new ArrayList<>();
+        JSONArray yearArray = (JSONArray) configOfCalendar.get(JsonFieldNames.yearList.getFieldName());
         for(int iterator=0; iterator<yearArray.size(); iterator++) {
-            this.yearList.add(new YearTemplate((JSONObject) yearArray.get(iterator)));
+            this.yearList.add(new JsonYearConfig((JSONObject) yearArray.get(iterator)));
         }
         /**
          * Получаем неделю
          */
-        field = FieldsNames.week;
-        this.week = new WeekTemplate((JSONObject) configOfCalendar.get(field.getFieldName()));
+        this.week = new JsonWeekConfig((JSONObject) configOfCalendar.get(JsonFieldNames.week.getFieldName()));
     }
 
     @Override
