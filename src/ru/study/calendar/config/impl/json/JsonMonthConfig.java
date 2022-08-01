@@ -17,35 +17,29 @@ public class JsonMonthConfig implements IMonthTemplate {
         /**
          * Настраиваем имя месяца
          */
-        JsonFieldNames field = JsonFieldNames.nameOfMonth;
-        this.name = (String) monthConfig.get(field.getFieldName());
+        this.name = monthConfig.get(JsonFieldNames.nameOfMonth.getFieldName()).toString();
         /**
          * Настраиваем количество дней
          */
-        field = JsonFieldNames.dayCount;
-        this.dayCount = ((Long) monthConfig.get(field.getFieldName())).intValue();
+        this.dayCount = Integer.valueOf(monthConfig.get(JsonFieldNames.dayCount.getFieldName()).toString());
         /**
          * Настраиваем список нерабочих дней
          */
-        field = JsonFieldNames.dayWorkOutList;
-        dayWorkOutList = new ArrayList<>();
-        JSONArray dayWorkOutConfigList = (JSONArray) monthConfig.get(field);
-        field = JsonFieldNames.dateOfWorkOutDay;
+        this.dayWorkOutList = new ArrayList<>();
+        JSONArray dayWorkOutConfigList = (JSONArray) monthConfig.get(JsonFieldNames.dayWorkOutList.getFieldName());
         if (dayWorkOutConfigList != null) {
             for (Object day:dayWorkOutConfigList) {
-                dayWorkOutList.add((Integer) ((JSONObject) day).get(field.getFieldName()));
+                this.dayWorkOutList.add((Integer) ((JSONObject) day).get(JsonFieldNames.dateOfWorkOutDay.getFieldName()));
             }
         }
         /**
          * Настраиваем список рабочих дней
          */
-        field = JsonFieldNames.dayWorkList;
-        dayWorkList = new ArrayList<>();
-        JSONArray dayWorkConfigList = (JSONArray) monthConfig.get(field);
-        field = JsonFieldNames.dateOfWorkDay;
+        this.dayWorkList = new ArrayList<>();
+        JSONArray dayWorkConfigList = (JSONArray) monthConfig.get(JsonFieldNames.dayWorkList);
         if (dayWorkConfigList != null) {
             for (Object day:dayWorkConfigList) {
-                dayWorkList.add((Integer) ((JSONObject) day).get(field.getFieldName()));
+                this.dayWorkList.add((Integer) ((JSONObject) day).get(JsonFieldNames.dateOfWorkDay.getFieldName()));
             }
         }
     }

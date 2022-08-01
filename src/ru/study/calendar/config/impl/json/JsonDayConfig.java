@@ -8,19 +8,17 @@ public class JsonDayConfig implements IDayTemplate {
     private String dayName;
     private Boolean weekDayWorkOut;
     JsonDayConfig(JSONObject dayConfig){
-        JsonFieldNames field = JsonFieldNames.dayName;
-        this.dayName = (String) dayConfig.get(field.getFieldName());
-        field = JsonFieldNames.weekDayWorkOut;
-        this.weekDayWorkOut = (Boolean) dayConfig.get(field.getFieldName());
+        this.dayName = dayConfig.get(JsonFieldNames.dayName.getFieldName()).toString();
+        this.weekDayWorkOut = Boolean.valueOf(dayConfig.get(JsonFieldNames.weekDayWorkOut.getFieldName()).toString());
     }
 
     @Override
     public String getDayName() {
-        return dayName;
+        return this.dayName;
     }
 
     @Override
     public Boolean isDefaultDayWorkOut() {
-        return weekDayWorkOut;
+        return this.weekDayWorkOut;
     }
 }

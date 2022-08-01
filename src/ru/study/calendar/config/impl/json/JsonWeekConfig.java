@@ -7,19 +7,25 @@ import ru.study.calendar.config.IWeekTemplate;
 import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class JsonWeekConfig implements IWeekTemplate {
     private Integer weekDayCount;
     private List<IDayTemplate> weekDayNameList;
+
+    private HashMap<String, Integer> weekDayNameMap;
+
     JsonWeekConfig(JSONObject weekConfig){
-        JsonFieldNames field = JsonFieldNames.weekDayCount;
-        this.weekDayCount = ((Long) weekConfig.get(field.getFieldName())).intValue();
-        field = JsonFieldNames.weekDayNameList;
-        JSONArray dayListConfig = (JSONArray) weekConfig.get(field.getFieldName());
-        weekDayNameList = new ArrayList<>();
+        this.weekDayCount = Integer.valueOf(weekConfig.get(JsonFieldNames.weekDayCount.getFieldName()).toString());
+        JSONArray dayListConfig = (JSONArray) weekConfig.get(JsonFieldNames.weekDayNameList.getFieldName());
+        this.weekDayNameList = new ArrayList<>();
+        this.weekDayNameMap = new HashMap<>();
+        int iterator = 0;
         for (Object day:dayListConfig) {
-            weekDayNameList.add(new JsonDayConfig((JSONObject) day));
+            this.weekDayNameList.add( new JsonDayConfig((JSONObject) day));
+            this.weekDayNameMap.put(this.weekDayNameList.get(iterator).getDayName(), iterator);
+            iterator++;
         }
     }
 
@@ -34,19 +40,9 @@ public class JsonWeekConfig implements IWeekTemplate {
     }
 
     @Override
-    public Integer getIndexOfDayByName(String name) {
-        //TODO почитать про equals, hashcode
-        for(int iterator=0; iterator<this.weekDayCount; iterator++){
-            if(this.weekDayNameList.get(iterator).getDayName().equals(name)){
-                return iterator;
-            }
-        }
-        return 0;
-    }
-
-    @Override
     public IDayTemplate getOffsetDayFrom(IDayTemplate startDate, Integer offset) {
-        //TODO реализовать
-        return  null;
+        //TODO реализовать DONE
+        Integer fullOffset = (this.weekDayNameMap.get(startDate.getDayName())+offset) % this.weekDayCount;
+        return this.weekDayNameList.get(fullOffset);
     }
 }

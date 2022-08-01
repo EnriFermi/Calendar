@@ -6,29 +6,30 @@ import ru.study.calendar.config.IMonthTemplate;
 import ru.study.calendar.config.IYearTemplate;
 import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 public class JsonYearConfig implements IYearTemplate {
     private List<IMonthTemplate> monthList;
     private Integer numberOfMonth;
+    private HashMap<String, Integer> monthMap;
 
     private Integer dayQuantity;
     JsonYearConfig(JSONObject yearConfig){
-        JsonFieldNames field = JsonFieldNames.numberOfMonth;
-        this.numberOfMonth = ((Long) yearConfig.get(field.getFieldName())).intValue();
-        field = JsonFieldNames.dayQuantity;
-        this.dayQuantity = ((Long) yearConfig.get(field.getFieldName())).intValue();
-        field = JsonFieldNames.monthList;
+        this.numberOfMonth = Integer.valueOf(yearConfig.get(JsonFieldNames.numberOfMonth.getFieldName()).toString());
+        this.dayQuantity = Integer.valueOf(yearConfig.get(JsonFieldNames.dayQuantity.getFieldName()).toString());
         this.monthList = new ArrayList<>();
-        JSONArray monthListConfig = (JSONArray) yearConfig.get(field.getFieldName());
-        for(int iterator=0; iterator<numberOfMonth;iterator++)
+        this.monthMap = new HashMap<>();
+        JSONArray monthListConfig = (JSONArray) yearConfig.get(JsonFieldNames.monthList.getFieldName());
+        for(int iterator=0; iterator<this.numberOfMonth;iterator++)
         {
             this.monthList.add(new JsonMonthConfig((JSONObject) monthListConfig.get(iterator)));
+            this.monthMap.put(this.monthList.get(iterator).getName(), iterator);
         }
     }
 
     @Override
     public Integer getDayQuantity() {
-        return dayQuantity;
+        return this.dayQuantity;
     }
     @Override
     public Integer getNumberOfMonth() {
@@ -40,13 +41,16 @@ public class JsonYearConfig implements IYearTemplate {
     }
 
     @Override
-    public Integer getIndexOfMonthByName(String name) {
-        for(int iterator=0; iterator<numberOfMonth; iterator++){
-            if(monthList.get(iterator).getName().equals(name)){
-                return iterator;
-            }
+    public Integer getIndexOfMonthByName(String name) throws Exception {
+        if (this.monthMap.containsKey(name)) {
+            return this.monthMap.get(name);
         }
-        return null;
+        throw new Exception("Month with such name doesn't exist");
     }
 
+    @Override
+    public IMonthTemplate getOffsetDayFrom(IMonthTemplate startDate, Integer offset) {
+        Integer fullOffset = this.monthMap.get(startDate.getName()) + offset % this.numberOfMonth;
+        return this.monthList.get(fullOffset);
+    }
 }

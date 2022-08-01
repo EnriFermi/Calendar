@@ -4,6 +4,6 @@ public interface ICalendar {
     /**
      *   Выдает по номеру дня и названию месяца день недели
      */
-    IDay getWeekDay(Integer intDay, String stringMonth);
+    IDay getWeekDay(Integer intDay, String stringMonth) throws Exception;
 
 }

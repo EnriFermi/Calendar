@@ -17,9 +17,10 @@ public interface IWeekTemplate {
     List<IDayTemplate> weekDayNameList();
 
     //TODO убрать метод и почитать про аннотации, например:
-    @Deprecated
-    Integer getIndexOfDayByName(String name);
+    //TODO подумать о пользе метода, на вход день и количество дней сдвига, на выходе результирующий день DONE
 
-    //TODO подумать о пользе метода, на вход день и количество дней сдвига, на выходе результирующий день
+    /**
+     *  Пока не очень понял, как применить в существующих случаях
+     */
     IDayTemplate getOffsetDayFrom(IDayTemplate startDate, Integer offset);
 }

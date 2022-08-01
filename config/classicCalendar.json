@@ -1,6 +1,7 @@
 {
-  "anchorWeekDay": "Monday",
-  "anchorYear": 1905,
+  "anchorWeekDay": {"dayName": "Tuesday", "weekDayWorkOut": false},
+  "beginningYear" : 1901,
+  "endYear": 2100,
   "yearList":
   [
     {

@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import ru.study.calendar.config.ICalendarConfig;
+import ru.study.calendar.config.IDayTemplate;
 import ru.study.calendar.config.IWeekTemplate;
 import ru.study.calendar.config.IYearTemplate;
 import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
@@ -13,11 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonCalendarConfig implements ICalendarConfig {
-    private String anchorWeekDay;
-    private Integer anchorYear;
+    private JsonDayConfig anchorWeekDay;
     private List<IYearTemplate> yearList;
     private IWeekTemplate week;
-    //TODO 9. ReT Сделать красивые обработки
+    private Integer beginningYear;
+    private Integer endYear;
+    //TODO 9. ReT Сделать красивые обработки ?
     public JsonCalendarConfig(String path){
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
@@ -35,13 +37,20 @@ public class JsonCalendarConfig implements ICalendarConfig {
         /**
          * Получаем день недели 1 дня 1 месяца 1 года
          */
-        //TODO проверить, что такое приведение типов отработает вместо (String)
-        this.anchorWeekDay = configOfCalendar.get(JsonFieldNames.anchorweekday.getFieldName()).toString();
+        //TODO проверить, что такое приведение типов отработает вместо (String) DONE
+        this.anchorWeekDay = new JsonDayConfig((JSONObject) configOfCalendar.get(JsonFieldNames.anchorWeekDay.getFieldName()));
         /**
          * Получаем год привязки(из-за исключений в григорианском календаре)
          */
-        //TODO проверить, что такое приведение типов отработает вместо (Long).... .intValue()
-        this.anchorYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.anchorYear.getFieldName()).toString());
+        //TODO проверить, что такое приведение типов отработает вместо (Long).... .intValue() DONE
+        /**
+         * Год начала допустимого интервала календаря
+         */
+        this.beginningYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.beginningYear.getFieldName()).toString());
+        /**
+         * Год конца допустимого интервала календаря
+         */
+        this.endYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.endYear.getFieldName()).toString());
         /**
          * Получаем список годов
          */
@@ -57,22 +66,28 @@ public class JsonCalendarConfig implements ICalendarConfig {
     }
 
     @Override
-    public String getAnchorWeekDay() {
-        return anchorWeekDay;
+    public IDayTemplate getAnchorWeekDay() {
+        return this.anchorWeekDay;
     }
 
     @Override
     public List<IYearTemplate> getYearList() {
-        return yearList;
+        return this.yearList;
     }
 
     @Override
     public IWeekTemplate getWeek() {
-        return week;
+        return this.week;
+    }
+
+
+    @Override
+    public Integer getBeginningYear() {
+        return this.beginningYear;
     }
 
     @Override
-    public Integer getAnchorYear() {
-        return anchorYear;
+    public Integer getEndYear() {
+        return this.endYear;
     }
 }
