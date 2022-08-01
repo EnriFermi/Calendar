@@ -25,8 +25,6 @@ public interface IYearTemplate {
      */
     List<IMonthTemplate> getMonthList();
 
-    //TODO переделать аналогично с днями недели DONE
-
     /**
      * Возвращаем по названию месяца его индекс
      * @param name
@@ -35,11 +33,4 @@ public interface IYearTemplate {
      */
     Integer getIndexOfMonthByName(String name) throws Exception;
 
-    /**
-     * Возвращаем день со смещением offset
-     * @param startDate
-     * @param offset
-     * @return
-     */
-    IMonthTemplate getOffsetDayFrom(IMonthTemplate startDate, Integer offset);
 }

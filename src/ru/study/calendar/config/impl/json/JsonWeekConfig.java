@@ -41,8 +41,8 @@ public class JsonWeekConfig implements IWeekTemplate {
 
     @Override
     public IDayTemplate getOffsetDayFrom(IDayTemplate startDate, Integer offset) {
-        //TODO реализовать DONE
-        Integer fullOffset = (this.weekDayNameMap.get(startDate.getDayName())+offset) % this.weekDayCount;
-        return this.weekDayNameList.get(fullOffset);
+        //TODO попробовать использовать weekDayNameList.indexOf(startDate);
+        Integer fullOffset = (weekDayNameMap.get(startDate.getDayName())+offset) % weekDayCount;
+        return weekDayNameList.get(fullOffset);
     }
 }

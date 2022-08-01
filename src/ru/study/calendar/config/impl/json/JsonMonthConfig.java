@@ -25,6 +25,7 @@ public class JsonMonthConfig implements IMonthTemplate {
         /**
          * Настраиваем список нерабочих дней
          */
+        //TODO чувство прекрасного, логику вынести в метод
         this.dayWorkOutList = new ArrayList<>();
         JSONArray dayWorkOutConfigList = (JSONArray) monthConfig.get(JsonFieldNames.dayWorkOutList.getFieldName());
         if (dayWorkOutConfigList != null) {

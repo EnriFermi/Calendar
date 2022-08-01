@@ -28,11 +28,10 @@ public class Month implements IMonth {
         List<Integer> dayWorkList = month.getDayWorkList();
         boolean isWorkDay;
         for(int date = 0; date < this.dayQuantity; date++) {
-            //TODO перевести на getOffsetDayFrom
             day =  calendarConfig.getWeek().getOffsetDayFrom(day, date);
-            //TODO уменьшить число строк
+            //TODO уменьшить число строк, используя || &&
             isWorkDay = day.isDefaultDayWorkOut();
-            //TODO защита от дурака, что день есть и в списке рабочих и  выходных DONE
+            //TODO защита от дурака, что день есть и в списке рабочих и  выходных - при считывании конфига
             if(dayWorkOutList.contains(date)){
                 isWorkDay = false;
                 if(dayWorkList.contains(date)){
@@ -46,7 +45,7 @@ public class Month implements IMonth {
         }
     }
 
-    public IDay getDay(int date) {
+    public IDay getDayByNumberInMonth(int date) {
         //TODO 8 Подумать о поведении системы если не найдется дня или кривой входной параметр
         return this.arrayOfDays.get(date);
     }

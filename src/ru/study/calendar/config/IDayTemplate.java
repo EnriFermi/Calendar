@@ -13,4 +13,5 @@ public interface IDayTemplate {
      * ! Выходные дни недели !
      */
     Boolean isDefaultDayWorkOut();
+
 }

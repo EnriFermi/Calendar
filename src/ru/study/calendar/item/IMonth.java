@@ -4,6 +4,6 @@ public interface IMonth {
     /**
      *  По номеру дня выдает объект типа день
      */
-    IDay getDay(int number);
+    IDay getDayByNumberInMonth(int number);
 
 }

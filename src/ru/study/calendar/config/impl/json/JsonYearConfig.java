@@ -42,15 +42,11 @@ public class JsonYearConfig implements IYearTemplate {
 
     @Override
     public Integer getIndexOfMonthByName(String name) throws Exception {
+        //TODO точно метод относится к конфигу года?
         if (this.monthMap.containsKey(name)) {
             return this.monthMap.get(name);
         }
         throw new Exception("Month with such name doesn't exist");
     }
 
-    @Override
-    public IMonthTemplate getOffsetDayFrom(IMonthTemplate startDate, Integer offset) {
-        Integer fullOffset = this.monthMap.get(startDate.getName()) + offset % this.numberOfMonth;
-        return this.monthList.get(fullOffset);
-    }
 }

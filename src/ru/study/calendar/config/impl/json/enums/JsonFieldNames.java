@@ -1,6 +1,5 @@
 package ru.study.calendar.config.impl.json.enums;
 
-//TODO добавить комменты DONE
 public enum JsonFieldNames {
     /**
      * День недели первого числа первого месяца привязочного года

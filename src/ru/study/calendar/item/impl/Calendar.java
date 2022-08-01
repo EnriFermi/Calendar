@@ -23,11 +23,11 @@ public class Calendar implements ICalendar {
     //-------------------------------------
     public Calendar(int numberYear) throws Exception {
         this.calendarConfig = new JsonCalendarConfig("config\\classicCalendar.json");
+        //TODO предлагаю все проверки в 1 метод собрать
         /**
          * Проверка, что введенный номер года соответствует допустимому диапазону
          */
-        if (this.calendarConfig.getBeginningYear() > numberYear)
-        {
+        if (this.calendarConfig.getBeginningYear() > numberYear) {
             throw new Exception("NumberYear is below expected range");
         } else if (this.calendarConfig.getEndYear() < numberYear) {
             throw new Exception("NumberYear is above expected range");
@@ -44,15 +44,12 @@ public class Calendar implements ICalendar {
 
     private void fillMonthList(int numberYear) throws Exception {
         IDayTemplate day = getIndexOfFirstDay(numberYear, this.calendarConfig);
-        Integer weekSize = this.calendarConfig.getWeek().getWeekDayCount();
         IYearTemplate year = this.calendarConfig.getYearList().get(this.indexOfYearInConfig);
         IMonthTemplate month;
-        //TODO вынести в перемененную calendarConfig.getYearList().get(indexOfYearInConfig) DONE
         for (int i = 0; i < year.getNumberOfMonth(); i++) {
             month = year.getMonthList().get(i);
             this.arrayOfMonth.add(new Month(month, day, calendarConfig));
             day = this.calendarConfig.getWeek().getOffsetDayFrom(day, month.getDayCount());
-
         }
     }
 
@@ -70,31 +67,38 @@ public class Calendar implements ICalendar {
          *  weekSize - Длина недели
          *  number - Номер года в большом цикле лет
          */
-        IDayTemplate anchorDay = calendarConfig.getAnchorWeekDay();
-        Integer yearListSize = calendarConfig.getYearList().size();
+        IDayTemplate firstDayInFirstYear = calendarConfig.getAnchorWeekDay();
+        Integer yearCycleSize = calendarConfig.getYearList().size();
         Integer weekSize = calendarConfig.getWeek().getWeekDayCount();
         Integer differenceBetweenYear = numberYear - calendarConfig.getBeginningYear();
-        Integer number = differenceBetweenYear % (weekSize * yearListSize);
-        Integer begin = calendarConfig.getBeginningYear()%yearListSize;
-        anchorDay = calendarConfig.getWeek().getOffsetDayFrom(anchorDay, Stream.iterate(begin, iterator -> (iterator + 1) % yearListSize).limit(number)
-                    .map(integer -> this.calendarConfig.getYearList().get(integer).getDayQuantity()).reduce(0,(sum, add) -> sum + add));
+        //TODO refactor
+        Integer number = differenceBetweenYear % (weekSize * yearCycleSize);
+        //TODO magic?
+        Integer begin = calendarConfig.getBeginningYear() % yearCycleSize;
+        return calendarConfig.getWeek()
+                             .getOffsetDayFrom(firstDayInFirstYear, Stream.iterate(begin, iterator -> (iterator + 1) % yearCycleSize)
+                                                                          .limit(number)
+                                                                          .map(integer -> this.calendarConfig.getYearList()
+                                                                                                             .get(integer)
+                                                                                                             .getDayQuantity())
+                                                                          .reduce(0, (sum, add) -> sum + add));
 
-        //TODO почитать про stream api и перевести на него DONE
+        //TODO вернуть цикл
         /*
         for (int iterator = 1; iterator < number; iterator++) {
             anchor = (anchor + calendarConfig.getYearList().get(iterator % yearListSize).getDayQuantity()) % weekSize;
         }*/
-        return anchorDay;
     }
 
-    //TODO рефактор +  ругаться если вышли за предел списка DONE?
+    //TODO рефактор
     public IDay getWeekDay(Integer intDay, String stringMonth) throws Exception {
-        IYearTemplate year = this.calendarConfig.getYearList().get(this.indexOfYearInConfig);
+        IYearTemplate year = calendarConfig.getYearList().get(indexOfYearInConfig);
         Integer monthIndex = year.getIndexOfMonthByName(stringMonth);
+        //TODO исправить
         Integer dayQuantity = year.getDayQuantity();
         if (intDay > dayQuantity) {
             throw new Exception("Quantity of days is out of range");
         }
-        return this.arrayOfMonth.get(monthIndex).getDay(intDay - 1);
+        return arrayOfMonth.get(monthIndex).getDayByNumberInMonth(intDay - 1);
     }
 }
