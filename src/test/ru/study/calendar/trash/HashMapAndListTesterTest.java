@@ -1,9 +1,9 @@
 package ru.study.calendar.trash;
 
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class HashMapAndListTesterTest { ;
+public class HashMapAndListTesterTest { ;
     @Test
     public void TestMap() {
         Integer counter = 10000;

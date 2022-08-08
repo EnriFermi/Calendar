@@ -14,8 +14,11 @@ public interface IWeekTemplate {
     /**
      * Параметры дней недели
      */
+    //TODO везде return
+    /**
+     *
+     * @return
+     */
     List<IDayTemplate> getWeekDayNameList();
 
-    //TODO актуализировать коммент DONE
-    //TODO вынести в отдельный статичный класс + интерфейс, на вход подавать IWeekTemplate DONE
 }

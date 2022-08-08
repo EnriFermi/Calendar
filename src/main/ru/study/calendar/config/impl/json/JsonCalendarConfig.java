@@ -20,7 +20,7 @@ public class JsonCalendarConfig implements ICalendarTemplate {
     /**
      * День первого числа первого месяца привязочного года
      */
-    private final JsonDayConfig anchorWeekDay;
+    private final ru.study.calendar.config.impl.json.JsonDayConfig anchorWeekDay;
     /**
      * Список шаблонов лет
      */
@@ -38,13 +38,14 @@ public class JsonCalendarConfig implements ICalendarTemplate {
      */
     private final Integer endYear;
 
-    //TODO п.3 от 1 августа 2022
-
     /**
      * Конструктор календаря по передаваемому пути к конфигу
+     *
      * @param path Путь к конфигу
      * @throws Exception
      */
+
+    //TODO сделать конкретные Exception
     public JsonCalendarConfig(String path) throws Exception {
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
@@ -52,35 +53,21 @@ public class JsonCalendarConfig implements ICalendarTemplate {
         JSONObject configOfCalendar;
         configOfCalendar = (JSONObject) parserOfCalendar.parse(configFile);
 
-        //TODO не красиво п.2 1.08.22
-        /*
-         * Получаем день недели 1 дня 1 месяца 1 года
-         */
-        this.anchorWeekDay = new JsonDayConfig((JSONObject) configOfCalendar.get(JsonFieldNames.anchorWeekDay.getFieldName()));
-        /*
-         * Год начала допустимого интервала календаря
-         */
-        this.beginningYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.beginningYear.getFieldName()).toString());
-        /*
-         * Год конца допустимого интервала календаря
-         */
+        // Получаем день недели 1 дня 1 месяца 1 года
+        this.anchorWeekDay = new ru.study.calendar.config.impl.json.JsonDayConfig((JSONObject) configOfCalendar.get(JsonFieldNames.anchorWeekDay.getFieldName()));
+        // Год начала допустимого интервала календаря
+        this.beginningYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.beginningYear.getFieldName())
+                                                             .toString());
+        // Год конца допустимого интервала календаря
         this.endYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.endYear.getFieldName()).toString());
-        /*
-         * Получаем список годов
-         */
+        // Получаем список годов
         this.yearList = new ArrayList<>();
         JSONArray yearArray = (JSONArray) configOfCalendar.get(JsonFieldNames.yearList.getFieldName());
+        //TODO check yearArray.forEach();
         for (int iterator = 0; iterator < yearArray.size(); iterator++) {
-            this.yearList.add(new JsonYearConfig((JSONObject) yearArray.get(iterator)));
+            this.yearList.add(new ru.study.calendar.config.impl.json.JsonYearConfig((JSONObject) yearArray.get(iterator)));
         }
-        /*
-         * Получаем неделю
-         */
-        this.week = new JsonWeekConfig((JSONObject) configOfCalendar.get(JsonFieldNames.week.getFieldName()));
-    }
-
-    private Object getObject(JSONObject configOfCalendar) {
-        Object beginYear = configOfCalendar.get(JsonFieldNames.beginningYear.getFieldName());
-        return beginYear;
+        // Получаем неделю
+        this.week = new ru.study.calendar.config.impl.json.JsonWeekConfig((JSONObject) configOfCalendar.get(JsonFieldNames.week.getFieldName()));
     }
 }

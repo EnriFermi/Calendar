@@ -7,8 +7,8 @@ import ru.study.calendar.config.IYearTemplate;
 import ru.study.calendar.config.impl.json.JsonCalendarConfig;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;
-import ru.study.calendar.service.weekService;
-import ru.study.calendar.service.yearService;
+import ru.study.calendar.service.WeekService;
+import ru.study.calendar.service.YearService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +31,17 @@ public class Calendar implements ICalendar {
 
     /**
      * Конструктор календаря по номеру года из допустимого интервала
+     *
      * @param numberYear Номер года
      * @throws Exception
      */
     public Calendar(int numberYear) throws Exception {
         this.calendarConfig = new JsonCalendarConfig("resources\\classicCalendar.json");
-        //TODO предлагаю все проверки в 1 метод собрать (На уровне введенных данных сделано)
         /*
          * Проверка, что введенный номер года соответствует допустимому диапазону
          */
         checkForValid(numberYear);
 
-        //TODO почитать про static классы DONE (пока что конфиги не переведены в static)
         this.arrayOfMonth = new ArrayList<>();
         /*
          * anchor - Номер дня недели 1 числа i месяца года, по которому создается календарь
@@ -54,17 +53,19 @@ public class Calendar implements ICalendar {
 
     /**
      * Проверяет на корректность введенный номер года (должен попадать в указанный в конфиге интервал)
+     *
      * @param numberYear Проверяемый номер года
      * @throws Exception
      */
     private void checkForValid(int numberYear) {
-        if ((this.calendarConfig.getBeginningYear() > numberYear)&&(this.calendarConfig.getEndYear() < numberYear)) {
+        if ((this.calendarConfig.getBeginningYear() > numberYear) && (this.calendarConfig.getEndYear() < numberYear)) {
             throw new RuntimeException("Номер года вне границ разрешенного диапазона");
         }
     }
 
     /**
      * Заполняет список месяцев, получая данные из конфига
+     *
      * @param numberYear Номер года
      * @throws Exception
      */
@@ -75,12 +76,13 @@ public class Calendar implements ICalendar {
         for (int i = 0; i < year.getMonthList().size(); i++) {
             month = year.getMonthList().get(i);
             this.arrayOfMonth.add(new Month(month, day, calendarConfig.getWeek()));
-            day = weekService.getOffsetDayFrom(day, month.getDayCount(), calendarConfig.getWeek());
+            day = WeekService.getOffsetDayFrom(day, month.getDayCount(), calendarConfig.getWeek());
         }
     }
 
     /**
      * Возвращает день недели первого месяца года под номером numberYear
+     *
      * @param numberYear     Номер года
      * @param calendarConfig Конфиг календаря
      * @return Шаблон первого дня первого месяца года под номером numberYear
@@ -98,12 +100,10 @@ public class Calendar implements ICalendar {
         Integer yearCycleSize = calendarConfig.getYearList().size();
         Integer weekSize = calendarConfig.getWeek().getWeekDayCount();
         Integer differenceBetweenYear = numberYear - calendarConfig.getBeginningYear();
-        //TODO refactor DONE
         /*
          * Отвечает за то, какое количество раз нужно изменить firstDayInFirstDay, чтобы получить день недели года под номером numberYear
          */
         Integer shiftBetweenYears = differenceBetweenYear % (weekSize * yearCycleSize);
-        //TODO magic? DONE
         /*
          * Отвечает за то, чтобы можно было с любого года начинать, не только с того, который знаменует начало цикла лет
          * Сначала же создается последовательность ... 0 1 2 3 0 1 2 3 ...
@@ -113,39 +113,31 @@ public class Calendar implements ICalendar {
          * 2 3 0 1 2 ...
          * 3 0 1 2 3 ...
          */
+        //TODO ReT создать пример, чтобы такое испортилось
         Integer begin = calendarConfig.getBeginningYear() % yearCycleSize;
 
-        /*
-        return weekService.getOffsetDayFrom(firstDayInFirstYear, Stream.iterate(begin, iterator -> (iterator + 1) % yearCycleSize)
-                                                                          .limit(number)
-                                                                          .map(integer -> this.calendarConfig.getYearList()
-                                                                                                             .get(integer)
-                                                                                                             .getDayQuantity())
-                                                                          .reduce(0, (sum, add) -> sum + add), calendarConfig.getWeek());
-        */
-        //TODO вернуть цикл DONE
         for (int iterator = 1; iterator < shiftBetweenYears; iterator++) {
-            firstDayInFirstYear = weekService.getOffsetDayFrom(firstDayInFirstYear,
-                    calendarConfig.getYearList().get((iterator+begin) % yearCycleSize).getDayQuantity() % weekSize, calendarConfig.getWeek());
+            firstDayInFirstYear = WeekService.getOffsetDayFrom(firstDayInFirstYear,
+                    calendarConfig.getYearList().get((iterator + begin) % yearCycleSize)
+                                  .getDayQuantity() % weekSize, calendarConfig.getWeek());
         }
         return firstDayInFirstYear;
     }
 
-    //TODO рефактор
 
     /**
      * Выдает по номеру дня и названию месяца день недели
-     * @param intDay Номер дня в месяце (начинается с 1)
+     *
+     * @param intDay      Номер дня в месяце (начинается с 1)
      * @param stringMonth Название месяца
      * @return Объект дня
      * @throws Exception
      */
     public IDay getWeekDay(Integer intDay, String stringMonth) {
         IYearTemplate year = calendarConfig.getYearList().get(indexOfYearInConfig);
-        Integer monthIndex = yearService.getIndexOfMonthByName(stringMonth, year);
-        //TODO исправить DONE
+        Integer monthIndex = YearService.getIndexOfMonthByName(stringMonth, year);
         Integer dayQuantityInMonth = year.getMonthList().get(monthIndex).getDayCount();
-        if ((intDay > dayQuantityInMonth)||(intDay < 1)) {
+        if ((intDay > dayQuantityInMonth) || (intDay < 1)) {
             throw new RuntimeException("Количество дней за границей допустимых значений");
         }
         return arrayOfMonth.get(monthIndex).getDayByNumberInMonth(intDay - 1);

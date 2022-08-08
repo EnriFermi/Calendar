@@ -14,7 +14,6 @@ public interface IYearTemplate {
     //TODO самому посчитать при инициализации DONE
     Integer getDayQuantity();
 
-    //TODO remove DONE
     /**
      * Параметры месяцев
      */

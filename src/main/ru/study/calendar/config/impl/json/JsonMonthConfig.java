@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Getter
 public class JsonMonthConfig implements IMonthTemplate {
-    //FIXME проверить зацикливание Lombok
     /**
      * Имя месяца
      */
@@ -22,11 +21,11 @@ public class JsonMonthConfig implements IMonthTemplate {
      * Количество дней в месяце
      */
     private Integer dayCount;
-    //TODO по хорошему надо заменить на отдельный тип объектов, если в будущем захотим еще названия праздников добавлять
     /**
      * Список дополнительных нерабочих дней
      */
     private List<Integer> dayWorkOutList;
+    //TODO почему не используется
     /**
      * Список дополнительных рабочих дней
      */
@@ -37,7 +36,7 @@ public class JsonMonthConfig implements IMonthTemplate {
      * @param monthConfig Объект JSON конфига, хранящий информацию о конкретном месяце
      * @throws Exception
      */
-    JsonMonthConfig(JSONObject monthConfig) throws Exception {
+    JsonMonthConfig(JSONObject monthConfig) {
         /*
          * Настраиваем имя месяца
          */
@@ -49,28 +48,29 @@ public class JsonMonthConfig implements IMonthTemplate {
         /*
          * Настраиваем список нерабочих дней
          */
-        //TODO чувство прекрасного, логику вынести в метод DONE
+        //TODO аналогично setDayWorkList
         setDayWorkOutList(monthConfig);
         /*
          * Настраиваем список рабочих дней
          */
-        setDayWorkList(monthConfig);
+        this.dayWorkList.addAll(setDayWorkList(monthConfig));
     }
 
     /**
      * Получает из конфига месяца список дополнительных рабочих дней
      * @param monthConfig Объект JSON конфига, хранящий информацию о конкретном месяце
      */
-    private void setDayWorkList(JSONObject monthConfig) {
-        this.dayWorkList = new ArrayList<>();
+    private List<Integer> setDayWorkList(JSONObject monthConfig) {
+        List<Integer> dayWorkList = new ArrayList<>();
         JSONArray dayWorkConfigList = (JSONArray) monthConfig.get(JsonFieldNames.dayWorkList);
         if (dayWorkConfigList != null) {
             for (Object day:dayWorkConfigList) {
                 Integer date = Integer.valueOf(((JSONObject) day).get(JsonFieldNames.dateOfWorkDay.getFieldName())
                         .toString());
-                this.dayWorkList.add(date);
+                dayWorkList.add(date);
             }
         }
+        return dayWorkList;
     }
     /**
      * Получает из конфига месяца список дополнительных нерабочих дней
@@ -80,10 +80,12 @@ public class JsonMonthConfig implements IMonthTemplate {
         this.dayWorkOutList = new ArrayList<>();
         JSONArray dayWorkOutConfigList = (JSONArray) monthConfig.get(JsonFieldNames.dayWorkOutList.getFieldName());
         if (dayWorkOutConfigList != null) {
+            //TODO   dayWorkOutConfigList.forEach();
             for (Object day:dayWorkOutConfigList) {
                 Integer date = Integer.valueOf(((JSONObject) day).get(JsonFieldNames.dateOfWorkOutDay.getFieldName())
                         .toString());
                 if(this.dayWorkList.contains(date)) {
+                    //TODO подумать после реализации пунктов от 8.08
                     throw new RuntimeException("Коллапс при попытке инициализировать список дополнительных выходных и рабочих дней");
                 }
                 this.dayWorkOutList.add(date);
