@@ -1,0 +1,35 @@
+02:00:01.500 [main] ERROR r.s.c.errorHandler.errorHandler - Exception java.lang.ArithmeticException: / by zero
+	at main.calendar.config.impl.json.JsonDayConfig.<init>(JsonDayConfig.java:28)
+	at main.calendar.config.impl.json.JsonCalendarConfig.<init>(JsonCalendarConfig.java:62)
+	at main.calendar.item.impl.Calendar.<init>(Calendar.java:38)
+	at main.calendar.CalendarMain.main(CalendarMain.java:18)
+
+02:00:13.681 [main] ERROR r.s.c.errorHandler.errorHandler - Exception java.lang.NullPointerException: Cannot invoke "org.json.simple.JSONObject.isEmpty()" because the return value of "org.json.simple.JSONObject.get(Object)" is null
+	at main.calendar.config.impl.json.JsonCalendarConfig.<init>(JsonCalendarConfig.java:66)
+	at main.calendar.item.impl.Calendar.<init>(Calendar.java:38)
+	at main.calendar.CalendarMain.main(CalendarMain.java:18)
+
+02:00:19.608 [main] ERROR r.s.c.errorHandler.errorHandler - Exception java.lang.NullPointerException: Cannot invoke "org.json.simple.JSONObject.isEmpty()" because the return value of "org.json.simple.JSONObject.get(Object)" is null
+	at main.calendar.config.impl.json.JsonCalendarConfig.<init>(JsonCalendarConfig.java:66)
+	at main.calendar.item.impl.Calendar.<init>(Calendar.java:38)
+	at main.calendar.CalendarMain.main(CalendarMain.java:18)
+
+02:01:06.666 [main] INFO  main.calendar.CalendarMain - Saturday
+02:06:16.153 [main] ERROR r.s.c.errorHandler.errorHandler - Exception java.lang.RuntimeException: Отсутствует поле: beginningYear
+	at main.calendar.config.impl.json.JsonCalendarConfig.<init>(JsonCalendarConfig.java:73)
+	at main.calendar.item.impl.Calendar.<init>(Calendar.java:38)
+	at main.calendar.CalendarMain.main(CalendarMain.java:18)
+
+02:06:29.605 [main] INFO  main.calendar.CalendarMain - Saturday
+02:47:06.985 [main] ERROR r.s.c.errorHandler.errorHandler - Exception java.lang.RuntimeException: Пустой список полей: yearList
+	at main.calendar.config.impl.json.JsonCalendarConfig.<init>(JsonCalendarConfig.java:96)
+	at main.calendar.item.impl.Calendar.<init>(Calendar.java:38)
+	at main.calendar.CalendarMain.main(CalendarMain.java:18)
+
+03:16:45.700 [main] ERROR r.s.c.errorHandler.errorHandler - Exception java.lang.RuntimeException: Не уникальное название дня недели: Wednesday
+	at main.calendar.config.impl.json.JsonWeekConfig.<init>(JsonWeekConfig.java:39)
+	at main.calendar.config.impl.json.JsonCalendarConfig.<init>(JsonCalendarConfig.java:79)
+	at main.calendar.item.impl.Calendar.<init>(Calendar.java:38)
+	at main.calendar.CalendarMain.main(CalendarMain.java:18)
+
+10:28:30.179 [main] INFO  ru.study.calendar.CalendarMain - Saturday
