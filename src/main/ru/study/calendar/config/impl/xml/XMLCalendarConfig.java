@@ -27,7 +27,7 @@ public class XMLCalendarConfig implements ICalendarTemplate {
     /**
      * Список шаблонов лет
      */
-    private List<IYearTemplate> yearList;
+    private final List<IYearTemplate> yearList;
     /**
      * Шаблон недели
      */
@@ -53,7 +53,7 @@ public class XMLCalendarConfig implements ICalendarTemplate {
         Document document = builder.parse(new File(path));
         NodeList configOfCalendar = document.getFirstChild().getChildNodes();
         yearList = new ArrayList<>();
-        for(Integer i=0; i< configOfCalendar.getLength(); i++) {
+        for (Integer i = 0; i < configOfCalendar.getLength(); i++) {
             Node elementCalendar = configOfCalendar.item(i);
             if (elementCalendar.getNodeType() != Node.ELEMENT_NODE) {
                 continue;
@@ -75,14 +75,13 @@ public class XMLCalendarConfig implements ICalendarTemplate {
             // Получаем список годов
             if (elementCalendar.getNodeName().equals(XMLFieldNames.YEAR_LIST.getFieldName())) {
                 NodeList yearConfigList = elementCalendar.getChildNodes();
-                for(Integer j=0; j<yearConfigList.getLength(); j++) {
+                for (Integer j = 0; j < yearConfigList.getLength(); j++) {
 
                     Node yearConfig = yearConfigList.item(j);
                     if (yearConfig.getNodeType() != Node.ELEMENT_NODE) {
                         continue;
                     }
-                    if (yearConfig.getNodeName().equals(XMLFieldNames.YEAR_CONFIG.getFieldName()))
-                    {
+                    if (yearConfig.getNodeName().equals(XMLFieldNames.YEAR_CONFIG.getFieldName())) {
                         yearList.add(new XMLYearConfig(yearConfig));
                     }
                 }
