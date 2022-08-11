@@ -1,0 +1,89 @@
+{
+  "anchorWeekDay": {"dayName": "Tuesday", "weekDayWorkOut": false},
+  "beginningYear" : 1901,
+  "endYear": 2100,
+  "yearList":
+  [
+    {
+      "monthList":
+      [
+        {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [{"dateOfWorkOutDay": 30}], "dayWorkList": [{"dateOfWorkDay": 30}]},
+        {"nameOfMonth": "February", "dayCount": 28, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "March", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "April", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "May", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "June", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "July", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "August", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "September", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "October", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "November", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "December", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []}
+      ]
+    },
+    {
+      "monthList":
+      [
+        {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "February", "dayCount": 28, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "March", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "April", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "May", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "June", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "July", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "August", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "September", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "October", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "November", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "December", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []}
+      ]
+    },
+    {
+      "monthList":
+      [
+        {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "February", "dayCount": 28, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "March", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "April", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "May", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "June", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "July", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "August", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "September", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "October", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "November", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "December", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []}
+      ]
+    },
+    {
+      "monthList":
+      [
+        {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "February", "dayCount": 29, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "March", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "April", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "May", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "June", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "July", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "August", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "September", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "October", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "November", "dayCount": 30, "dayWorkOutList": [], "dayWorkList": []},
+        {"nameOfMonth": "December", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []}
+      ]
+    }
+  ],
+  "week":
+  {
+    "weekDayNameList":
+    [
+      {"dayName": "Monday", "weekDayWorkOut": false},
+      {"dayName": "Tuesday", "weekDayWorkOut": false},
+      {"dayName": "Wednesday", "weekDayWorkOut": false},
+      {"dayName": "Thursday", "weekDayWorkOut": false},
+      {"dayName": "Friday", "weekDayWorkOut": false},
+      {"dayName": "Saturday", "weekDayWorkOut": true},
+      {"dayName": "Sunday", "weekDayWorkOut": true}
+    ]
+  }
+}
