@@ -45,7 +45,7 @@ public class JsonCalendarConfig implements ICalendarTemplate {
      * @throws Exception
      */
 
-    //TODO сделать конкретные Exception
+    //TODO сделать конкретные Exception DONE
     public JsonCalendarConfig(String path) throws Exception {
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
@@ -54,20 +54,20 @@ public class JsonCalendarConfig implements ICalendarTemplate {
         configOfCalendar = (JSONObject) parserOfCalendar.parse(configFile);
 
         // Получаем день недели 1 дня 1 месяца 1 года
-        this.anchorWeekDay = new ru.study.calendar.config.impl.json.JsonDayConfig((JSONObject) configOfCalendar.get(JsonFieldNames.anchorWeekDay.getFieldName()));
+        this.anchorWeekDay = new JsonDayConfig((JSONObject) configOfCalendar.get(JsonFieldNames.ANCHOR_WEEKDAY.getFieldName()));
         // Год начала допустимого интервала календаря
-        this.beginningYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.beginningYear.getFieldName())
+        this.beginningYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.BEGINNING_YEAR.getFieldName())
                                                              .toString());
         // Год конца допустимого интервала календаря
-        this.endYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.endYear.getFieldName()).toString());
+        this.endYear = Integer.valueOf(configOfCalendar.get(JsonFieldNames.END_YEAR.getFieldName()).toString());
         // Получаем список годов
         this.yearList = new ArrayList<>();
-        JSONArray yearArray = (JSONArray) configOfCalendar.get(JsonFieldNames.yearList.getFieldName());
-        //TODO check yearArray.forEach();
-        for (int iterator = 0; iterator < yearArray.size(); iterator++) {
-            this.yearList.add(new ru.study.calendar.config.impl.json.JsonYearConfig((JSONObject) yearArray.get(iterator)));
-        }
+        JSONArray yearArray = (JSONArray) configOfCalendar.get(JsonFieldNames.YEAR_LIST.getFieldName());
+        //TODO check yearArray.forEach(); DONE
+        yearArray.forEach(year -> {
+            this.yearList.add(new JsonYearConfig((JSONObject) year));
+        });
         // Получаем неделю
-        this.week = new ru.study.calendar.config.impl.json.JsonWeekConfig((JSONObject) configOfCalendar.get(JsonFieldNames.week.getFieldName()));
+        this.week = new JsonWeekConfig((JSONObject) configOfCalendar.get(JsonFieldNames.WEEK.getFieldName()));
     }
 }

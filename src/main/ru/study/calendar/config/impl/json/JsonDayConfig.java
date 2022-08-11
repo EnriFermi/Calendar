@@ -25,8 +25,8 @@ public class JsonDayConfig implements IDayTemplate{
      * @param dayConfig Объект JSON конфига, хранящий информацию о конкретном дне
      */
     JsonDayConfig(JSONObject dayConfig){
-        this.dayName = dayConfig.get(JsonFieldNames.dayName.getFieldName()).toString();
-        this.weekDayWorkOut = Boolean.valueOf(dayConfig.get(JsonFieldNames.weekDayWorkOut.getFieldName()).toString());
+        this.dayName = dayConfig.get(JsonFieldNames.DAY_NAME.getFieldName()).toString();
+        this.weekDayWorkOut = Boolean.valueOf(dayConfig.get(JsonFieldNames.WEEKDAY_WORKOUT.getFieldName()).toString());
     }
 
     /**

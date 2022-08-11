@@ -5,6 +5,8 @@ import ru.study.calendar.config.IDayTemplate;
 import ru.study.calendar.config.IMonthTemplate;
 import ru.study.calendar.config.IYearTemplate;
 import ru.study.calendar.config.impl.json.JsonCalendarConfig;
+import ru.study.calendar.config.impl.xml.XMLCalendarConfig;
+import ru.study.calendar.errors.errorTypes.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;
 import ru.study.calendar.service.WeekService;
@@ -35,8 +37,15 @@ public class Calendar implements ICalendar {
      * @param numberYear Номер года
      * @throws Exception
      */
-    public Calendar(int numberYear) throws Exception {
-        this.calendarConfig = new JsonCalendarConfig("resources\\classicCalendar.json");
+    public Calendar(int numberYear, String configType, String configPath) throws Exception {
+        switch (configType) {
+            case "xml":
+                this.calendarConfig = new XMLCalendarConfig(configPath + "." +configType);
+                break;
+            default:
+                this.calendarConfig = new JsonCalendarConfig(configPath + "." + configType);
+                break;
+        }
         /*
          * Проверка, что введенный номер года соответствует допустимому диапазону
          */
@@ -59,7 +68,7 @@ public class Calendar implements ICalendar {
      */
     private void checkForValid(int numberYear) {
         if ((this.calendarConfig.getBeginningYear() > numberYear) && (this.calendarConfig.getEndYear() < numberYear)) {
-            throw new RuntimeException("Номер года вне границ разрешенного диапазона");
+            throw new OutOfBoundException("Номер года вне границ разрешенного диапазона");
         }
     }
 
@@ -93,7 +102,7 @@ public class Calendar implements ICalendar {
          *  yearCycleSize - Длина цикла годов
          *  weekSize - Длина недели
          *  differenceBetweenYear - Разница между годом привязки и введенным годом
-         *  weekAndYearCycleSize - Разница в годах относительно цикла ГодxНеделя
+         *  weekAndYearCycleSize - Разница в годах относительно цикла Год+Неделя
          *  number - Номер года в большом цикле лет
          */
         IDayTemplate firstDayInFirstYear = calendarConfig.getAnchorWeekDay();
@@ -138,7 +147,7 @@ public class Calendar implements ICalendar {
         Integer monthIndex = YearService.getIndexOfMonthByName(stringMonth, year);
         Integer dayQuantityInMonth = year.getMonthList().get(monthIndex).getDayCount();
         if ((intDay > dayQuantityInMonth) || (intDay < 1)) {
-            throw new RuntimeException("Количество дней за границей допустимых значений");
+            throw new OutOfBoundException("Количество дней за границей допустимых значений");
         }
         return arrayOfMonth.get(monthIndex).getDayByNumberInMonth(intDay - 1);
     }

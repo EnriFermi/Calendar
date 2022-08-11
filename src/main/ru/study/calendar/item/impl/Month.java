@@ -49,9 +49,9 @@ public class Month implements IMonth {
         List<Integer> dayWorkOutList = month.getDayWorkOutList();
         List<Integer> dayWorkList = month.getDayWorkList();
         for(int date = 0; date < dayQuantity; date++) {
-            day = WeekService.getOffsetDayFrom(day, date, weekConfig);
+            day = WeekService.getOffsetDayFrom(day, 1, weekConfig);
             arrayOfDays.add(new Day(day.getDayName(),
-                    day.isDefaultDayWorkOut() && dayWorkList.contains(date) && ! dayWorkOutList.contains(date)));
+                    (day.isDefaultDayWorkOut() && !dayWorkList.contains(date+1)) || dayWorkOutList.contains(date+1)));
         }
     }
 
@@ -61,7 +61,6 @@ public class Month implements IMonth {
      * @return Объект дня
      */
     public IDay getDayByNumberInMonth(int date) {
-        //TODO 8 Подумать о поведении системы если не найдется дня или кривой входной параметр DONE (см. Calendar/getWeekDay)
         return this.arrayOfDays.get(date);
     }
 }

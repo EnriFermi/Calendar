@@ -8,24 +8,24 @@ import java.util.List;
  */
 public interface IMonthTemplate {
     /**
-     * Имя месяца
-     * @return
+     * @return Имя месяца
      */
     String getName();
 
     /**
-     * Количество дней в месяце
-     * @return
+     * @return Количество дней в месяце
      */
     Integer getDayCount();
 
     /**
-     * ! Дополнительные не рабочие !
+     * Дополнительные не рабочие
+     * @return Список дополнительных нерабочих дней
      */
     List<Integer> getDayWorkOutList();
 
     /**
-     * ! Дополнительные рабочие !
+     * Дополнительные рабочие
+     * @return Список дополнительных рабочих дней
      */
     List<Integer> getDayWorkList();
 

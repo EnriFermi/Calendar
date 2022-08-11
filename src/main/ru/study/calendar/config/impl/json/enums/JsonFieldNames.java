@@ -7,75 +7,63 @@ public enum JsonFieldNames {
     /*
      * День недели первого числа первого месяца привязочного года
      */
-    anchorWeekDay("anchorWeekDay"),
+    ANCHOR_WEEKDAY("anchorWeekDay"),
     /*
      * Год начала допустимого интервала календаря
      */
-    beginningYear("beginningYear"),
+    BEGINNING_YEAR("beginningYear"),
     /*
      * Год конца допустимого интервала календаря
      */
-    endYear("endYear"),
+    END_YEAR("endYear"),
     /*
      * Список шаблонов лет
      */
-    yearList("yearList"),
-    /*
-     * Количество месяцев
-     */
-    numberOfMonth("numberOfMonth"),
-    /*
-     * Количество дней в году
-     */
-    dayQuantity("dayQuantity"),
+    YEAR_LIST("yearList"),
     /*
      * Список месяцев в году
      */
-    monthList("monthList"),
+    MONTH_LIST("monthList"),
     /*
      * Имя месяца
      */
-    nameOfMonth("nameOfMonth"),
+    NAME_OF_MONTH("nameOfMonth"),
     /*
      * Количество дней в месяце
      */
-    dayCount("dayCount"),
+    DAY_COUNT("dayCount"),
     /*
      * Список дополнительных нерабочих дней
      */
-    dayWorkOutList("dayWorkOutList"),
+    DAY_WORKOUT_LIST("dayWorkOutList"),
     /*
      * Список дополнительных рабочих дней
      */
-    dayWorkList("dayWorkList"),
+    DAY_WORK_LIST("dayWorkList"),
     /*
      * Шаблон недели
      */
-    week("week"),
-    /*
-     * Количество дней в неделе
-     */
-    weekDayCount("weekDayCount"),
+    WEEK("week"),
     /*
      * Список дней недели
      */
-    weekDayNameList("weekDayNameList"),
+    WEEKDAY_NAME_LIST("weekDayNameList"),
     /*
      * Название дня недели
      */
-    dayName("dayName"),
+    DAY_NAME("dayName"),
     /*
      * Указание рабочий ли день
      */
-    weekDayWorkOut("weekDayWorkOut"),
+    WEEKDAY_WORKOUT("weekDayWorkOut"),
     /*
      * Дата нерабочего дня
      */
-    dateOfWorkOutDay("dateOfWorkOutDay"),
+    DATE_OF_WORKOUT_DAY("dateOfWorkOutDay"),
     /*
      * Дата рабочего дня
      */
-    dateOfWorkDay("dateOfWorkDay");
+    DATE_OF_WORK_DAY("dateOfWorkDay");
     private String fieldName;
     public String getFieldName() {
         return this.fieldName;

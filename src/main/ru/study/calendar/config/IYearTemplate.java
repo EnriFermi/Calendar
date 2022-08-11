@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface IYearTemplate {
     /**
-     * Количество дней в годе
+     * @return Количество дней в году
      */
-    //TODO самому посчитать при инициализации DONE
     Integer getDayQuantity();
 
     /**
      * Параметры месяцев
+     * @return Список шаблонов месяцев
      */
     List<IMonthTemplate> getMonthList();
 }
