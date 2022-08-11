@@ -32,7 +32,6 @@ public class XMLYearConfig implements IYearTemplate {
      * @throws Exception
      */
     XMLYearConfig(Node yearConfig) {
-        //TODO убрать такое поле из конфига, и самому посчитать либо добавить проверку совпадения значений DONE
         this.monthList = new ArrayList<>();
         NodeList yearConfigList = yearConfig.getChildNodes();
         for (Integer i = 0; i < yearConfigList.getLength(); i++) {

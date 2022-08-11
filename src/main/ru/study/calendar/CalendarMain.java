@@ -15,7 +15,7 @@ public class CalendarMain {
     public static void main(String[] args) throws Exception {
         Logger log = LoggerFactory.getLogger(CalendarMain.class);
         try {
-            //TODO вернуться к разделению обязанностей Config
+            //TODO ReT вернуться к разделению обязанностей Config
             ICalendar resultDay = new Calendar(2022, "json", "resources\\classicCalendar.json");
             log.info(resultDay.getWeekDay(8, "August").getWeekDay());
             //TODO как получить всего кол-во дней log.info("В году всего " + resultDay.);

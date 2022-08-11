@@ -28,7 +28,6 @@ public class XMLMonthConfig implements IMonthTemplate {
      * Список дополнительных нерабочих дней
      */
     private List<Integer> dayWorkOutList;
-    //TODO почему не используется DONE
     /**
      * Список дополнительных рабочих дней
      */
@@ -112,7 +111,6 @@ public class XMLMonthConfig implements IMonthTemplate {
                     throw new СonfigurationException("Номер дополнительного нерабочего дня за границей допустимых значений");
                 }
                 if(dayWorkList.contains(date)||dayWorkOutList.contains(date)) {
-                    //TODO подумать после реализации пунктов от 8.08
                     throw new СonfigurationException("Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней");
                 }
                 dayWorkOutList.add(date);

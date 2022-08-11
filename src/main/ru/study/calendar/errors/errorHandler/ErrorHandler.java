@@ -10,7 +10,6 @@ public interface ErrorHandler {
      */
     static void run(Throwable err) {
         Logger log = LoggerFactory.getLogger(ErrorHandler.class);
-        //TODO check (It works)
         log.error("Error: ", err);
     }
 }

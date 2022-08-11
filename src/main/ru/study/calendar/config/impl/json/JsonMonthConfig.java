@@ -28,7 +28,6 @@ public class JsonMonthConfig implements IMonthTemplate {
      * Список дополнительных нерабочих дней
      */
     private List<Integer> dayWorkOutList;
-    //TODO почему не используется DONE
     /**
      * Список дополнительных рабочих дней
      */
@@ -52,14 +51,11 @@ public class JsonMonthConfig implements IMonthTemplate {
         /*
          * Настраиваем список рабочих дней
          */
-        //TODO аналогично setDayWorkList DONE
-        this.dayWorkList = new ArrayList<>();
-        this.dayWorkList.addAll(setDayWorkList(monthConfig));
+        this.dayWorkList = setDayWorkList(monthConfig);
         /*
          * Настраиваем список нерабочих дней
          */
-        this.dayWorkOutList = new ArrayList<>();
-        this.dayWorkOutList.addAll(setDayWorkOutList(monthConfig));
+        this.dayWorkOutList = setDayWorkOutList(monthConfig);
     }
 
     /**
@@ -92,16 +88,13 @@ public class JsonMonthConfig implements IMonthTemplate {
         List<Integer> dayWorkOutList = new ArrayList<>();
         JSONArray dayWorkOutConfigList = (JSONArray) monthConfig.get(JsonFieldNames.DAY_WORKOUT_LIST.getFieldName());
         if (dayWorkOutConfigList != null) {
-            //TODO   dayWorkOutConfigList.forEach(); DONE
             dayWorkOutConfigList.forEach(day -> {
                 Integer date = Integer.valueOf(((JSONObject) day).get(JsonFieldNames.DATE_OF_WORKOUT_DAY.getFieldName())
                         .toString());
                 if(date > dayCount) {
                     throw new СonfigurationException("Номер дополнительного нерабочего дня за границей допустимых значений");
                 }
-                //System.out.println(date);
                 if(dayWorkList.contains(date)||dayWorkOutList.contains(date)) {
-                    //TODO подумать после реализации пунктов от 8.08
                     throw new СonfigurationException("Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней");
                 }
                 dayWorkOutList.add(date);

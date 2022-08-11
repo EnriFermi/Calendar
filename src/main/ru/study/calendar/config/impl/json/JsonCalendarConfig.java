@@ -45,7 +45,6 @@ public class JsonCalendarConfig implements ICalendarTemplate {
      * @throws Exception
      */
 
-    //TODO сделать конкретные Exception DONE
     public JsonCalendarConfig(String path) throws Exception {
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
@@ -63,7 +62,6 @@ public class JsonCalendarConfig implements ICalendarTemplate {
         // Получаем список годов
         this.yearList = new ArrayList<>();
         JSONArray yearArray = (JSONArray) configOfCalendar.get(JsonFieldNames.YEAR_LIST.getFieldName());
-        //TODO check yearArray.forEach(); DONE
         yearArray.forEach(year -> {
             this.yearList.add(new JsonYearConfig((JSONObject) year));
         });

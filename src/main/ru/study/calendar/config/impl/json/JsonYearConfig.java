@@ -32,7 +32,6 @@ public class JsonYearConfig implements IYearTemplate {
      * @throws Exception
      */
     JsonYearConfig(JSONObject yearConfig) {
-        //TODO убрать такое поле из конфига, и самому посчитать либо добавить проверку совпадения значений DONE
         this.monthList = new ArrayList<>();
         JSONArray monthListConfig = (JSONArray) yearConfig.get(JsonFieldNames.MONTH_LIST.getFieldName());
         for (int iterator = 0; iterator < monthListConfig.size(); iterator++) {
