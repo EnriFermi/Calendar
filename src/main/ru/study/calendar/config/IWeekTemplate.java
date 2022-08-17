@@ -7,17 +7,13 @@ import java.util.List;
  */
 public interface IWeekTemplate {
     /**
-     * Количество дней в неделе
+     * @return Количество дней в неделе
      */
     Integer getWeekDayCount();
 
+    //TODO везде return DONE (надеюсь)
     /**
-     * Параметры дней недели
-     */
-    //TODO везде return
-    /**
-     *
-     * @return
+     * @return Список дней недели
      */
     List<IDayTemplate> getWeekDayNameList();
 

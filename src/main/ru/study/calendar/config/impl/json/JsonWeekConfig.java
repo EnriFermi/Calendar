@@ -28,17 +28,16 @@ public class JsonWeekConfig implements IWeekTemplate {
      * @param weekConfig Объект JSON конфига, хранящий информацию о неделе
      */
     JsonWeekConfig(JSONObject weekConfig){
-        this.weekDayCount = Integer.valueOf(weekConfig.get(JsonFieldNames.weekDayCount.getFieldName()).toString());
-        JSONArray dayListConfig = (JSONArray) weekConfig.get(JsonFieldNames.weekDayNameList.getFieldName());
-        this.weekDayNameList = new ArrayList<>();
+        JSONArray dayListConfig = (JSONArray) weekConfig.get(JsonFieldNames.WEEKDAY_NAME_LIST.getFieldName());
+        weekDayNameList = new ArrayList<>();
         for (Object dayConf:dayListConfig) {
             IDayTemplate day = new JsonDayConfig((JSONObject) dayConf);
             if (weekDayNameList.contains(day) == false) {
-                this.weekDayNameList.add(day);
+                weekDayNameList.add(day);
             } else {
                 throw new RuntimeException("Не уникальное название дня недели: " + day.getDayName());
             }
-
         }
+        weekDayCount = weekDayNameList.size();
     }
 }

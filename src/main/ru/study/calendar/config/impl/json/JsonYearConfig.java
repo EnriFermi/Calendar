@@ -6,7 +6,7 @@ import org.json.simple.JSONObject;
 import ru.study.calendar.config.IMonthTemplate;
 import ru.study.calendar.config.IYearTemplate;
 import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
-import ru.study.calendar.errors.errorTypes.СonfigurationException;
+import ru.study.calendar.errors.errorTypes.JsonСonfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class JsonYearConfig implements IYearTemplate {
             if (!this.monthList.contains(month)) {
                 this.monthList.add(month);
             } else {
-                throw new СonfigurationException("Не уникальное название месяца: " + month.getName());
+                throw new JsonСonfigurationException("Не уникальное название месяца: " + month.getName());
             }
         }
         this.dayQuantity = monthList.stream().map(month -> month.getDayCount()).reduce((sum, add) -> sum + add).get();

@@ -5,7 +5,7 @@ import ru.study.calendar.config.IDayTemplate;
 import ru.study.calendar.config.IMonthTemplate;
 import ru.study.calendar.config.IYearTemplate;
 import ru.study.calendar.config.impl.json.JsonCalendarConfig;
-import ru.study.calendar.config.impl.xml.XMLCalendarConfig;
+import ru.study.calendar.config.impl.xml.sax.XMLSaxCalendarConfig;
 import ru.study.calendar.errors.errorTypes.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;
@@ -40,7 +40,7 @@ public class Calendar implements ICalendar {
     public Calendar(int numberYear, String configType, String configPath) throws Exception {
         switch (configType) {
             case "xml":
-                this.calendarConfig = new XMLCalendarConfig(configPath + "." +configType);
+                this.calendarConfig = new XMLSaxCalendarConfig(configPath + "." +configType);
                 break;
             default:
                 this.calendarConfig = new JsonCalendarConfig(configPath + "." + configType);
@@ -150,5 +150,9 @@ public class Calendar implements ICalendar {
             throw new OutOfBoundException("Количество дней за границей допустимых значений");
         }
         return arrayOfMonth.get(monthIndex).getDayByNumberInMonth(intDay - 1);
+    }
+
+    public Integer getDayInYearCount() {
+        return calendarConfig.getYearList().get(indexOfYearInConfig).getDayQuantity();
     }
 }

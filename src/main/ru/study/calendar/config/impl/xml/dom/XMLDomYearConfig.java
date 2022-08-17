@@ -1,12 +1,12 @@
-package ru.study.calendar.config.impl.xml;
+package ru.study.calendar.config.impl.xml.dom;
 
 import lombok.Getter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.calendar.config.IMonthTemplate;
 import ru.study.calendar.config.IYearTemplate;
-import ru.study.calendar.config.impl.xml.enums.XMLFieldNames;
-import ru.study.calendar.errors.errorTypes.СonfigurationException;
+import ru.study.calendar.config.impl.xml.dom.enums.XMLDomFieldNames;
+import ru.study.calendar.errors.errorTypes.XmlСonfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * Класс реализующий хранение данных о конфигурации конкретного года в цикле лет
  */
 @Getter
-public class XMLYearConfig implements IYearTemplate {
+public class XMLDomYearConfig implements IYearTemplate {
     /**
      * Список месяцев в году
      */
@@ -31,7 +31,7 @@ public class XMLYearConfig implements IYearTemplate {
      * @param yearConfig, Объект JSON конфига, хранящий информацию о годе
      * @throws Exception
      */
-    XMLYearConfig(Node yearConfig) {
+    XMLDomYearConfig(Node yearConfig) {
         this.monthList = new ArrayList<>();
         NodeList yearConfigList = yearConfig.getChildNodes();
         for (Integer i = 0; i < yearConfigList.getLength(); i++) {
@@ -39,19 +39,19 @@ public class XMLYearConfig implements IYearTemplate {
             if (yearAttributeList.getNodeType() != Node.ELEMENT_NODE) {
                 continue;
             }
-            if (yearAttributeList.getNodeName().equals(XMLFieldNames.MONTH_LIST.getFieldName())) {
+            if (yearAttributeList.getNodeName().equals(XMLDomFieldNames.MONTH_LIST.getFieldName())) {
                 NodeList monthConfigList = yearAttributeList.getChildNodes();
                 for (Integer j=0; j<monthConfigList.getLength(); j++) {
                     Node monthConfig = monthConfigList.item(j);
                     if (yearAttributeList.getNodeType() != Node.ELEMENT_NODE) {
                         continue;
                     }
-                    if (monthConfig.getNodeName().equals(XMLFieldNames.MONTH_CONFIG.getFieldName())) {
-                        IMonthTemplate month = new XMLMonthConfig(monthConfig);
+                    if (monthConfig.getNodeName().equals(XMLDomFieldNames.MONTH_CONFIG.getFieldName())) {
+                        IMonthTemplate month = new XMLDomMonthConfig(monthConfig);
                         if (!this.monthList.contains(month)) {
                             this.monthList.add(month);
                         } else {
-                            throw new СonfigurationException("Не уникальное название месяца: " + month.getName());
+                            throw new XmlСonfigurationException("Не уникальное название месяца: " + month.getName());
                         }
                     }
                 }

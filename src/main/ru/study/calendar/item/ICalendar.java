@@ -13,4 +13,10 @@ public interface ICalendar {
      */
     IDay getWeekDay(Integer intDay, String stringMonth) throws Exception;
 
+    /**
+     * Выдает количество дней в календаре
+     * @return Количество дней в календаре
+     */
+    Integer getDayInYearCount();
+
 }

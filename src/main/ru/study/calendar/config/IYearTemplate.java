@@ -14,7 +14,6 @@ public interface IYearTemplate {
     Integer getDayQuantity();
 
     /**
-     * Параметры месяцев
      * @return Список шаблонов месяцев
      */
     List<IMonthTemplate> getMonthList();

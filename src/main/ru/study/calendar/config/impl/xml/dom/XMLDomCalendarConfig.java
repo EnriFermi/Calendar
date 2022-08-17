@@ -1,4 +1,4 @@
-package ru.study.calendar.config.impl.xml;
+package ru.study.calendar.config.impl.xml.dom;
 
 import lombok.Getter;
 import org.w3c.dom.Document;
@@ -7,7 +7,7 @@ import org.w3c.dom.NodeList;
 import ru.study.calendar.config.ICalendarTemplate;
 import ru.study.calendar.config.IWeekTemplate;
 import ru.study.calendar.config.IYearTemplate;
-import ru.study.calendar.config.impl.xml.enums.XMLFieldNames;
+import ru.study.calendar.config.impl.xml.dom.enums.XMLDomFieldNames;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,11 +19,11 @@ import java.util.List;
  * Класс реализующий хранение данных о конфигурации календаря
  */
 @Getter
-public class XMLCalendarConfig implements ICalendarTemplate {
+public class XMLDomCalendarConfig implements ICalendarTemplate {
     /**
      * День первого числа первого месяца привязочного года
      */
-    private XMLDayConfig anchorWeekDay;
+    private XMLDomDayConfig anchorWeekDay;
     /**
      * Список шаблонов лет
      */
@@ -47,7 +47,7 @@ public class XMLCalendarConfig implements ICalendarTemplate {
      * @param path Путь к конфигу
      * @throws Exception
      */
-    public XMLCalendarConfig(String path) throws Exception {
+    public XMLDomCalendarConfig(String path) throws Exception {
         DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = fac.newDocumentBuilder();
         Document document = builder.parse(new File(path));
@@ -60,20 +60,20 @@ public class XMLCalendarConfig implements ICalendarTemplate {
             }
 
             // Получаем 1 день 1 месяца привязочного года
-            if (elementCalendar.getNodeName().equals(XMLFieldNames.ANCHOR_WEEKDAY.getFieldName())) {
-                anchorWeekDay = new XMLDayConfig(elementCalendar);
+            if (elementCalendar.getNodeName().equals(XMLDomFieldNames.ANCHOR_WEEKDAY.getFieldName())) {
+                anchorWeekDay = new XMLDomDayConfig(elementCalendar);
             }
             // Год начала допустимого интервала календаря
-            if (elementCalendar.getNodeName().equals(XMLFieldNames.BEGINNING_YEAR.getFieldName())) {
+            if (elementCalendar.getNodeName().equals(XMLDomFieldNames.BEGINNING_YEAR.getFieldName())) {
                 beginningYear = Integer.valueOf(elementCalendar.getTextContent());
             }
             // Год конца допустимого интервала календаря
-            if (elementCalendar.getNodeName().equals(XMLFieldNames.END_YEAR.getFieldName())) {
+            if (elementCalendar.getNodeName().equals(XMLDomFieldNames.END_YEAR.getFieldName())) {
                 endYear = Integer.valueOf(elementCalendar.getTextContent());
             }
             //------------------------------------------------
             // Получаем список годов
-            if (elementCalendar.getNodeName().equals(XMLFieldNames.YEAR_LIST.getFieldName())) {
+            if (elementCalendar.getNodeName().equals(XMLDomFieldNames.YEAR_LIST.getFieldName())) {
                 NodeList yearConfigList = elementCalendar.getChildNodes();
                 for (Integer j = 0; j < yearConfigList.getLength(); j++) {
 
@@ -81,14 +81,14 @@ public class XMLCalendarConfig implements ICalendarTemplate {
                     if (yearConfig.getNodeType() != Node.ELEMENT_NODE) {
                         continue;
                     }
-                    if (yearConfig.getNodeName().equals(XMLFieldNames.YEAR_CONFIG.getFieldName())) {
-                        yearList.add(new XMLYearConfig(yearConfig));
+                    if (yearConfig.getNodeName().equals(XMLDomFieldNames.YEAR_CONFIG.getFieldName())) {
+                        yearList.add(new XMLDomYearConfig(yearConfig));
                     }
                 }
             }
             // Получаем неделю
-            if (elementCalendar.getNodeName().equals(XMLFieldNames.WEEK.getFieldName())) {
-                week = new XMLWeekConfig(elementCalendar);
+            if (elementCalendar.getNodeName().equals(XMLDomFieldNames.WEEK.getFieldName())) {
+                week = new XMLDomWeekConfig(elementCalendar);
             }
         }
     }

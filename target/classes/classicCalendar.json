@@ -5,6 +5,8 @@
   "yearList":
   [
     {
+      "numberOfMonth": 12,
+      "dayQuantity": 365,
       "monthList":
       [
         {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
@@ -22,6 +24,8 @@
       ]
     },
     {
+      "numberOfMonth": 12,
+      "dayQuantity": 365,
       "monthList":
       [
         {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
@@ -39,6 +43,8 @@
       ]
     },
     {
+      "numberOfMonth": 12,
+      "dayQuantity": 365,
       "monthList":
       [
         {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
@@ -56,6 +62,8 @@
       ]
     },
     {
+      "numberOfMonth": 12,
+      "dayQuantity": 366,
       "monthList":
       [
         {"nameOfMonth": "January", "dayCount": 31, "dayWorkOutList": [], "dayWorkList": []},
@@ -75,6 +83,7 @@
   ],
   "week":
   {
+    "weekDayCount": 7,
     "weekDayNameList":
     [
       {"dayName": "Monday", "weekDayWorkOut": false},

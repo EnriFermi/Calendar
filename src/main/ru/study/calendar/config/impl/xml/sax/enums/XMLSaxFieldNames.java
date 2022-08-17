@@ -1,9 +1,9 @@
-package ru.study.calendar.config.impl.xml.enums;
+package ru.study.calendar.config.impl.xml.sax.enums;
 
 /**
  * Хранит названия полей для парсинга JSON конфига
  */
-public enum XMLFieldNames {
+public enum XMLSaxFieldNames {
     /*
         Тэг конфига всего календаря
      */
@@ -84,7 +84,7 @@ public enum XMLFieldNames {
     public String getFieldName() {
         return this.fieldName;
     }
-    XMLFieldNames(String fieldName) {
+    XMLSaxFieldNames(String fieldName) {
         this.fieldName = fieldName;
     }
 }

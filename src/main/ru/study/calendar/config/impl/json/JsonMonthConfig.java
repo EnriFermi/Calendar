@@ -6,7 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import ru.study.calendar.config.IMonthTemplate;
 import ru.study.calendar.config.impl.json.enums.JsonFieldNames;
-import ru.study.calendar.errors.errorTypes.СonfigurationException;
+import ru.study.calendar.errors.errorTypes.JsonСonfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +70,10 @@ public class JsonMonthConfig implements IMonthTemplate {
                 Integer date = Integer.valueOf(((JSONObject) day).get(JsonFieldNames.DATE_OF_WORK_DAY.getFieldName())
                         .toString());
                 if(date > dayCount) {
-                    throw new СonfigurationException("Номер дополнительного рабочего дня за границей допустимых значений");
+                    throw new JsonСonfigurationException("Номер дополнительного рабочего дня за границей допустимых значений");
                 }
                 if(dayWorkList.contains(date)||dayWorkOutList.contains(date)) {
-                    throw new СonfigurationException("Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней");
+                    throw new JsonСonfigurationException("Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней");
                 }
                 dayWorkList.add(date);
             }
@@ -92,10 +92,10 @@ public class JsonMonthConfig implements IMonthTemplate {
                 Integer date = Integer.valueOf(((JSONObject) day).get(JsonFieldNames.DATE_OF_WORKOUT_DAY.getFieldName())
                         .toString());
                 if(date > dayCount) {
-                    throw new СonfigurationException("Номер дополнительного нерабочего дня за границей допустимых значений");
+                    throw new JsonСonfigurationException("Номер дополнительного нерабочего дня за границей допустимых значений");
                 }
                 if(dayWorkList.contains(date)||dayWorkOutList.contains(date)) {
-                    throw new СonfigurationException("Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней");
+                    throw new JsonСonfigurationException("Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней");
                 }
                 dayWorkOutList.add(date);
             });

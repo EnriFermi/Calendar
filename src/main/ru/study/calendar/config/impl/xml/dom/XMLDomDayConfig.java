@@ -1,18 +1,18 @@
-package ru.study.calendar.config.impl.xml;
+package ru.study.calendar.config.impl.xml.dom;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.calendar.config.IDayTemplate;
-import ru.study.calendar.config.impl.xml.enums.XMLFieldNames;
+import ru.study.calendar.config.impl.xml.dom.enums.XMLDomFieldNames;
 
 /**
  * Класс реализующий хранение данных о конфигурации конкретного дня недели
  */
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class XMLDayConfig implements IDayTemplate{
+public class XMLDomDayConfig implements IDayTemplate{
     /**
      * Название дня недели
      */
@@ -26,7 +26,7 @@ public class XMLDayConfig implements IDayTemplate{
      * Конструктор дня недели по передаваемому JSON конфигу
      * @param dayConfig Объект JSON конфига, хранящий информацию о конкретном дне
      */
-    XMLDayConfig(Node dayConfig){
+    XMLDomDayConfig(Node dayConfig){
         NodeList listDayConfig = dayConfig.getChildNodes();
         for(Integer i=0; i< listDayConfig.getLength(); i++) {
 
@@ -35,19 +35,19 @@ public class XMLDayConfig implements IDayTemplate{
                 continue;
             }
 
-            if (attributeDay.getNodeName().equals(XMLFieldNames.DAY_NAME.getFieldName())) {
+            if (attributeDay.getNodeName().equals(XMLDomFieldNames.DAY_NAME.getFieldName())) {
                 dayName = attributeDay.getTextContent();
                 continue;
             }
 
-            if (attributeDay.getNodeName().equals(XMLFieldNames.WEEKDAY_WORKOUT.getFieldName())) {
+            if (attributeDay.getNodeName().equals(XMLDomFieldNames.WEEKDAY_WORKOUT.getFieldName())) {
                 weekDayWorkOut = Boolean.valueOf(attributeDay.getTextContent());
                 continue;
             }
         }
     }
 
-    public XMLDayConfig(String dayName, Boolean weekDayWorkOut) {
+    public XMLDomDayConfig(String dayName, Boolean weekDayWorkOut) {
     }
 
     /**
