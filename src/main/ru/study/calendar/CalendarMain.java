@@ -18,9 +18,8 @@ public class CalendarMain {
             ICalendar calendar = new Calendar(2022, "xml", "resources\\classicCalendar");
             log.info(calendar.getWeekDay(8, "August").getWeekDay());
             log.info("В году всего " + calendar.getDayInYearCount() + " дней");
-            //TODO как получить всего кол-во дней log.info("В году всего " + resultDay.); DONE
         } catch (Exception err) {
-            //TODO выпилить  ErrorHandler DONE
+            //TODO разобраться с абстрактным throws Exception
             log.error("Error: ", err);
             throw err;
         }

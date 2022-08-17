@@ -11,7 +11,6 @@ public interface IWeekTemplate {
      */
     Integer getWeekDayCount();
 
-    //TODO везде return DONE (надеюсь)
     /**
      * @return Список дней недели
      */
