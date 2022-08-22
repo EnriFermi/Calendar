@@ -9,9 +9,9 @@ import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
 import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
-import ru.study.calendar.errors.errorTypes.IOConfigurationException;
-import ru.study.calendar.errors.errorTypes.JsonParsingException;
+import ru.study.calendar.exceptions.ConfigurationException;
+import ru.study.calendar.exceptions.IOConfigurationException;
+import ru.study.calendar.exceptions.JsonParsingException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

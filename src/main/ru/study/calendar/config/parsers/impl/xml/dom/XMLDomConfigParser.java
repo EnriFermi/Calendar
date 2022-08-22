@@ -8,8 +8,9 @@ import ru.study.calendar.config.body.impl.CalendarTemplate;
 import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
-import ru.study.calendar.errors.errorTypes.IOConfigurationException;
-import ru.study.calendar.errors.errorTypes.XmlDomParsingException;
+import ru.study.calendar.exceptions.ConfigurationException;
+import ru.study.calendar.exceptions.IOConfigurationException;
+import ru.study.calendar.exceptions.XmlDomParsingException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +23,7 @@ public class XMLDomConfigParser implements ConfigParser {
 
     }
     @Override
-    public ICalendarTemplateForParsing parse(String configPath) throws XmlDomParsingException, IOConfigurationException {
+    public ICalendarTemplateForParsing parse(String configPath) throws ConfigurationException {
         ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
         DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;

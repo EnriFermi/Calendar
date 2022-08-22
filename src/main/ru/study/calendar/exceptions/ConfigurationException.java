@@ -1,4 +1,4 @@
-package ru.study.calendar.errors.errorTypes;
+package ru.study.calendar.exceptions;
 
 public class ConfigurationException extends Exception {
     public ConfigurationException(Throwable cause) {

@@ -1,4 +1,4 @@
-package ru.study.calendar.errors.errorTypes;
+package ru.study.calendar.exceptions;
 
 /**
  * Исключение о выходе значений переменной за границы допустимых значений

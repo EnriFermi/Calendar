@@ -5,10 +5,13 @@ import ru.study.calendar.config.parsers.impl.jaxb.JaxbConfigParser;
 import ru.study.calendar.config.parsers.impl.json.JsonConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.dom.XMLDomConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.sax.XMLSaxConfigParser;
+import ru.study.calendar.exceptions.ConfigurationException;
 
 public interface ConfigFactory {
-    static ICalendarTemplateForReading getCalendarTemplate(String configPath, String configType) throws Exception {
+    static ICalendarTemplateForReading getCalendarTemplate(String configPath, String configType)
+            throws ConfigurationException {
         ConfigParser parser;
+        //TODO марафет
         switch (configType) {
             case "xml.dom":
                  parser = new XMLDomConfigParser();

@@ -5,8 +5,8 @@ import org.json.simple.JSONObject;
 import ru.study.calendar.config.body.impl.MonthTemplate;
 import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
-import ru.study.calendar.errors.errorTypes.JsonParsingException;
+import ru.study.calendar.exceptions.ConfigurationException;
+import ru.study.calendar.exceptions.JsonParsingException;
 
 import java.util.ArrayList;
 import java.util.List;

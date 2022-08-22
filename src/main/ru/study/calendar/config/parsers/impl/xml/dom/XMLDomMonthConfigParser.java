@@ -5,8 +5,8 @@ import org.w3c.dom.NodeList;
 import ru.study.calendar.config.body.impl.MonthTemplate;
 import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
-import ru.study.calendar.errors.errorTypes.XmlDomParsingException;
+import ru.study.calendar.exceptions.ConfigurationException;
+import ru.study.calendar.exceptions.XmlDomParsingException;
 
 /**
  * Класс реализующий хранение данных о конфигурации конкретного месяца в году

@@ -1,4 +1,4 @@
-package ru.study.calendar.errors.errorTypes;
+package ru.study.calendar.exceptions;
 
 public class IOConfigurationException extends ConfigurationException {
     public IOConfigurationException() {

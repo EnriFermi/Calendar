@@ -4,7 +4,7 @@ import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
 import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
 import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
-import ru.study.calendar.errors.errorTypes.OutOfBoundException;
+import ru.study.calendar.exceptions.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;
 import ru.study.calendar.service.WeekService;

@@ -8,9 +8,9 @@ import ru.study.calendar.config.body.inter.reading.*;
 import ru.study.calendar.config.body.impl.*;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.sax.enums.XMLSaxFieldNames;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
-import ru.study.calendar.errors.errorTypes.IOConfigurationException;
-import ru.study.calendar.errors.errorTypes.XmlSaxParsingException;
+import ru.study.calendar.exceptions.ConfigurationException;
+import ru.study.calendar.exceptions.IOConfigurationException;
+import ru.study.calendar.exceptions.XmlSaxParsingException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -25,7 +25,7 @@ import java.io.IOException;
 public class XMLSaxConfigParser implements ConfigParser {
 
     @Override
-    public ICalendarTemplateForReading parse(String configPath) throws XmlSaxParsingException, IOConfigurationException {
+    public ICalendarTemplateForReading parse(String configPath) throws ConfigurationException {
         SAXParserFactory fac = SAXParserFactory.newInstance();
         SAXParser parser = null;
         try {
@@ -47,7 +47,10 @@ public class XMLSaxConfigParser implements ConfigParser {
     }
 
     private class CalendarConfigHandler extends DefaultHandler {
+
+        //TODO интерфейсы для set не нужны
         private ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
+
         private IYearTemplateForParsing yearConstructor = new YearTemplate();
         private IMonthTemplateForParsing monthConstructor = new MonthTemplate();
         private IDayTemplateForParsing dayConstructor = new DayTemplate();
@@ -158,6 +161,7 @@ public class XMLSaxConfigParser implements ConfigParser {
             }
         }
     }
+    //TODO пройтись по конструкторам
     /**
      * Конструктор календаря по передаваемому пути к конфигу
      *

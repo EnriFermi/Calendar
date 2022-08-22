@@ -3,7 +3,7 @@ package ru.study.calendar.config.body.impl;
 import lombok.Getter;
 import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
 import ru.study.calendar.config.body.inter.parsing.IWeekTemplateForParsing;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
+import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;

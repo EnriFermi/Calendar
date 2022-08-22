@@ -1,7 +1,7 @@
 package ru.study.calendar.config.body.inter.parsing;
 
 import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
+import ru.study.calendar.exceptions.ConfigurationException;
 
 /**
  * Шаблон года, используется для параметризации года

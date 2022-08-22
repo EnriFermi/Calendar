@@ -5,8 +5,8 @@ import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
 import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
 import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
-import ru.study.calendar.errors.errorTypes.JaxbParsingException;
+import ru.study.calendar.exceptions.ConfigurationException;
+import ru.study.calendar.exceptions.JaxbParsingException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,6 +19,8 @@ public class JaxbConfigParser implements ConfigParser {
     private ICalendarTemplateForParsing mapper(JaxbCalendarConfig calendarConfig) throws JaxbParsingException {
         ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
         IDayTemplateForParsing dayTemplate = new DayTemplate();
+
+        //TODO mapstruct
 
         dayTemplate.setDayName(calendarConfig.getJaxbDayConfig().getDayName());
         dayTemplate.setWeekDayWorkOut(calendarConfig.getJaxbDayConfig().getWeekDayWorkOut());

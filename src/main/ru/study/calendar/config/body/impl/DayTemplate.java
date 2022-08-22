@@ -43,6 +43,7 @@ public class DayTemplate implements IDayTemplateForParsing {
     public Boolean isDefaultDayWorkOut() {
         return this.weekDayWorkOut;
     }
+
     public void resetDay() {
     }
 

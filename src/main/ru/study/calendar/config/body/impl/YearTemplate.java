@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
 import ru.study.calendar.config.body.inter.parsing.IYearTemplateForParsing;
-import ru.study.calendar.errors.errorTypes.ConfigurationException;
+import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
