@@ -1,9 +1,9 @@
 package ru.study.calendar.item.impl;
 
 import lombok.Getter;
-import ru.study.calendar.config.IDayTemplate;
-import ru.study.calendar.config.IMonthTemplate;
-import ru.study.calendar.config.IWeekTemplate;
+import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
+import ru.study.calendar.config.body.inter.reading.IWeekTemplateForReading;
 import ru.study.calendar.item.IDay;
 import ru.study.calendar.item.IMonth;
 import ru.study.calendar.service.WeekService;
@@ -33,7 +33,7 @@ public class Month implements IMonth {
      * @param weekDay    День недели 1 числа месяца
      * @param weekConfig Конфиг календаря
      */
-    Month(IMonthTemplate month, IDayTemplate weekDay, IWeekTemplate weekConfig) {
+    Month(IMonthTemplateForReading month, IDayTemplateForReading weekDay, IWeekTemplateForReading weekConfig) {
         this.monthName = month.getName();
         this.dayQuantity = month.getDayCount();
         this.arrayOfDays = new ArrayList<>();
@@ -47,8 +47,8 @@ public class Month implements IMonth {
      * @param weekDay    День недели 1 числа месяца
      * @param weekConfig Конфиг календаря
      */
-    private void fillDaysList(IMonthTemplate month, IDayTemplate weekDay, IWeekTemplate weekConfig) {
-        IDayTemplate day = weekDay;
+    private void fillDaysList(IMonthTemplateForReading month, IDayTemplateForReading weekDay, IWeekTemplateForReading weekConfig) {
+        IDayTemplateForReading day = weekDay;
         List<Integer> dayWorkOutList = month.getDayWorkOutList();
         List<Integer> dayWorkList = month.getDayWorkList();
         for (int date = 0; date < dayQuantity; date++) {

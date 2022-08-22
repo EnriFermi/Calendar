@@ -1,11 +1,9 @@
 package ru.study.calendar.item.impl;
 
-import ru.study.calendar.config.ICalendarTemplate;
-import ru.study.calendar.config.IDayTemplate;
-import ru.study.calendar.config.IMonthTemplate;
-import ru.study.calendar.config.IYearTemplate;
-import ru.study.calendar.config.impl.json.JsonCalendarConfig;
-import ru.study.calendar.config.impl.xml.sax.XMLSaxCalendarConfig;
+import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
+import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
 import ru.study.calendar.errors.errorTypes.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;
@@ -27,7 +25,7 @@ public class Calendar implements ICalendar {
     /**
      * Конфиг календаря
      */
-    private final ICalendarTemplate calendarConfig;
+    private final ICalendarTemplateForReading calendarConfig;
 
     //-------------------------------------
 
@@ -37,15 +35,8 @@ public class Calendar implements ICalendar {
      * @param numberYear Номер года
      * @throws Exception
      */
-    public Calendar(int numberYear, String configType, String configPath) throws Exception {
-        switch (configType) {
-            case "xml":
-                this.calendarConfig = new XMLSaxCalendarConfig(configPath + "." +configType);
-                break;
-            default:
-                this.calendarConfig = new JsonCalendarConfig(configPath + "." + configType);
-                break;
-        }
+    public Calendar(int numberYear, ICalendarTemplateForReading calendarConfig) throws Exception {
+        this.calendarConfig = calendarConfig;
         /*
          * Проверка, что введенный номер года соответствует допустимому диапазону
          */
@@ -66,7 +57,7 @@ public class Calendar implements ICalendar {
      * @param numberYear Проверяемый номер года
      * @throws Exception
      */
-    private void checkForValid(int numberYear) {
+    private void checkForValid(int numberYear) throws OutOfBoundException {
         if ((this.calendarConfig.getBeginningYear() > numberYear) && (this.calendarConfig.getEndYear() < numberYear)) {
             throw new OutOfBoundException("Номер года вне границ разрешенного диапазона");
         }
@@ -79,9 +70,9 @@ public class Calendar implements ICalendar {
      * @throws Exception
      */
     private void fillMonthList(int numberYear) {
-        IDayTemplate day = getIndexOfFirstDay(numberYear, this.calendarConfig);
-        IYearTemplate year = this.calendarConfig.getYearList().get(this.indexOfYearInConfig);
-        IMonthTemplate month;
+        IDayTemplateForReading day = getIndexOfFirstDay(numberYear, this.calendarConfig);
+        IYearTemplateForReading year = this.calendarConfig.getYearList().get(this.indexOfYearInConfig);
+        IMonthTemplateForReading month;
         for (int i = 0; i < year.getMonthList().size(); i++) {
             month = year.getMonthList().get(i);
             this.arrayOfMonth.add(new Month(month, day, calendarConfig.getWeek()));
@@ -96,7 +87,7 @@ public class Calendar implements ICalendar {
      * @param calendarConfig Конфиг календаря
      * @return Шаблон первого дня первого месяца года под номером numberYear
      */
-    private IDayTemplate getIndexOfFirstDay(Integer numberYear, ICalendarTemplate calendarConfig) {
+    private IDayTemplateForReading getIndexOfFirstDay(Integer numberYear, ICalendarTemplateForReading calendarConfig) {
         /*
          *  firstDayInFirstYear - День недели 1 числа 1 месяца 0 года
          *  yearCycleSize - Длина цикла годов
@@ -105,7 +96,7 @@ public class Calendar implements ICalendar {
          *  weekAndYearCycleSize - Разница в годах относительно цикла Год+Неделя
          *  number - Номер года в большом цикле лет
          */
-        IDayTemplate firstDayInFirstYear = calendarConfig.getAnchorWeekDay();
+        IDayTemplateForReading firstDayInFirstYear = calendarConfig.getAnchorWeekDay();
         Integer yearCycleSize = calendarConfig.getYearList().size();
         Integer weekSize = calendarConfig.getWeek().getWeekDayCount();
         Integer differenceBetweenYear = numberYear - calendarConfig.getBeginningYear();
@@ -142,8 +133,8 @@ public class Calendar implements ICalendar {
      * @return Объект дня
      * @throws Exception
      */
-    public IDay getWeekDay(Integer intDay, String stringMonth) {
-        IYearTemplate year = calendarConfig.getYearList().get(indexOfYearInConfig);
+    public IDay getWeekDay(Integer intDay, String stringMonth) throws OutOfBoundException {
+        IYearTemplateForReading year = calendarConfig.getYearList().get(indexOfYearInConfig);
         Integer monthIndex = YearService.getIndexOfMonthByName(stringMonth, year);
         Integer dayQuantityInMonth = year.getMonthList().get(monthIndex).getDayCount();
         if ((intDay > dayQuantityInMonth) || (intDay < 1)) {

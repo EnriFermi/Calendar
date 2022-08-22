@@ -1,6 +1,6 @@
 package ru.study.calendar.service;
 
-import ru.study.calendar.config.IYearTemplate;
+import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
 
 public interface YearService {
     /**
@@ -8,9 +8,8 @@ public interface YearService {
      * @param year Шаблон года
      * @return Номер месяца с именем name в году
      */
-    static Integer getIndexOfMonthByName(String name, IYearTemplate year) {
+    static Integer getIndexOfMonthByName(String name, IYearTemplateForReading year) {
         for (int i = 0; i < year.getMonthList().size(); i++) {
-
             if (year.getMonthList().get(i).getName().equals(name)) {
                 return i;
             }

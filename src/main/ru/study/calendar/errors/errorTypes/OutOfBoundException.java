@@ -4,7 +4,7 @@ package ru.study.calendar.errors.errorTypes;
  * Исключение о выходе значений переменной за границы допустимых значений
  */
 
-public class OutOfBoundException extends RuntimeException{
+public class OutOfBoundException extends Exception{
     public OutOfBoundException() {
         super("Значение за границей допустимых значений");
     }

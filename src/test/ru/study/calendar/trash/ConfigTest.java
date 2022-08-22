@@ -1,14 +1,13 @@
 package ru.study.calendar.trash;
 
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.study.calendar.CalendarMain;
-import ru.study.calendar.item.ICalendar;
-import ru.study.calendar.item.impl.Calendar;
 
 /**
  * @author Romanikhin Valeriy <romanihin@unislabs.com>
@@ -18,20 +17,13 @@ public class ConfigTest {
 
     @Test
     @ParameterizedTest
-    @ValueSource(strings = {"testResources\\dateOfWorkOutDay_is_outOfRange",
-            "testResources\\normalList",
-            "testResources\\sameDayInWorkOutList_and_inWorkList",
-            "testResources\\sameMonthName",
-            "testResources\\sameWeekDayName",
-            "testResources\\similarDays_in_dayWorkOutList"})
-    public void Test(String configPath) throws Exception {
+    @CsvFileSource(resources = "/testResources.csv")
+    public void Test(String configPath, String result) throws Exception {
         Logger log = LoggerFactory.getLogger(CalendarMain.class);
         try {
-            ICalendar calendar = new Calendar(2021, "xml", configPath);
-            System.out.println(calendar.getWeekDay(9, "August").isWorkingDay());
         } catch (Exception err) {
+            Assert.assertTrue(err.getMessage().contains(result));
             log.error("Error: ", err);
-            throw err;
         }
     }
 }

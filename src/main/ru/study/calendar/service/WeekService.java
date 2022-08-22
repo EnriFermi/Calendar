@@ -1,7 +1,7 @@
 package ru.study.calendar.service;
 
-import ru.study.calendar.config.IDayTemplate;
-import ru.study.calendar.config.IWeekTemplate;
+import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.body.inter.reading.IWeekTemplateForReading;
 
 public interface WeekService {
     /**
@@ -10,7 +10,7 @@ public interface WeekService {
      * @param week Шаблон дня недели
      * @return День смещенный относительно введенного дня на смещение offset
      */
-    static IDayTemplate getOffsetDayFrom(IDayTemplate startDay, Integer offset, IWeekTemplate week) {
+    static IDayTemplateForReading getOffsetDayFrom(IDayTemplateForReading startDay, Integer offset, IWeekTemplateForReading week) {
         Integer anchor = week.getWeekDayNameList().indexOf(startDay);
         return week.getWeekDayNameList().get((anchor + offset) % week.getWeekDayCount());
     }
