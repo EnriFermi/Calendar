@@ -1,8 +1,9 @@
 #Idea Files
 .idea/
 #Log Files
-**/log
+
 #Git Files
 .git/
 #Taget
-/target/
+target/
+log/
