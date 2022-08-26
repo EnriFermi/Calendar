@@ -3,7 +3,6 @@ package ru.study.calendar.config.parsers.impl.json;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import ru.study.calendar.config.body.impl.YearTemplate;
-import ru.study.calendar.config.body.inter.parsing.IYearTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JsonParsingException;
@@ -19,8 +18,8 @@ public class JsonYearConfigParser {
      * @param yearConfig, Объект JSON конфига, хранящий информацию о годе
      * @throws Exception
      */
-    public static IYearTemplateForParsing parse(JSONObject yearConfig) throws JsonParsingException {
-        IYearTemplateForParsing yearTemplate = new YearTemplate();
+    public static YearTemplate parse(JSONObject yearConfig) throws JsonParsingException {
+        YearTemplate yearTemplate = new YearTemplate();
         JSONArray monthListConfig = (JSONArray) yearConfig.get(JsonFieldNames.MONTH_LIST.getFieldName());
         for (int iterator = 0; iterator < monthListConfig.size(); iterator++) {
             try {

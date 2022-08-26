@@ -3,7 +3,6 @@ package ru.study.calendar.config.parsers.impl.xml.dom;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.calendar.config.body.impl.MonthTemplate;
-import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.XmlDomParsingException;
@@ -30,9 +29,10 @@ public class XMLDomMonthConfigParser {
      * Конструктор месяца по передаваемому JSON конфигу
      * @throws Exception
      */
-    protected static IMonthTemplateForParsing parse(Node monthConfig) throws XmlDomParsingException {
+    protected static MonthTemplate parse(Node monthConfig) throws XmlDomParsingException {
         NodeList monthAttributeList = monthConfig.getChildNodes();
-        IMonthTemplateForParsing monthTemplate = new MonthTemplate();
+        MonthTemplate
+                monthTemplate = new MonthTemplate();
         for (Integer i=0; i<monthAttributeList.getLength(); i++) {
             Node monthAttribute = monthAttributeList.item(i);
             if (monthAttribute.getNodeType() != Node.ELEMENT_NODE) {
@@ -66,7 +66,7 @@ public class XMLDomMonthConfigParser {
      * Получает из конфига месяца список дополнительных рабочих дней
      * @param monthAttribute Объект JSON конфига, хранящий информацию о конкретном месяце
      */
-    private static IMonthTemplateForParsing setWorkList(Node monthAttribute, IMonthTemplateForParsing monthTemplate) throws XmlDomParsingException {
+    private static MonthTemplate setWorkList(Node monthAttribute, MonthTemplate monthTemplate) throws XmlDomParsingException {
         NodeList workList = monthAttribute.getChildNodes();
         for(Integer j=0; j<workList.getLength(); j++) {
             Node workDay = workList.item(j);
@@ -87,7 +87,7 @@ public class XMLDomMonthConfigParser {
      * Получает из конфига месяца список дополнительных нерабочих дней
      * @param monthAttribute Объект JSON конфига, хранящий информацию о конкретном месяце
      */
-    private static IMonthTemplateForParsing setWorkOutList(Node monthAttribute, IMonthTemplateForParsing month) throws XmlDomParsingException {
+    private static MonthTemplate setWorkOutList(Node monthAttribute, MonthTemplate month) throws XmlDomParsingException {
         NodeList workOutList = monthAttribute.getChildNodes();
         for(Integer j=0; j<workOutList.getLength(); j++) {
             Node workOutDay = workOutList.item(j);

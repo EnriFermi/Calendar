@@ -3,7 +3,6 @@ package ru.study.calendar.config.parsers.impl.xml.dom;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.calendar.config.body.impl.DayTemplate;
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 
 /**
@@ -22,8 +21,8 @@ public class XMLDomDayConfigParser {
      * Конструктор дня недели по передаваемому JSON конфигу
      * @param dayConfig Объект JSON конфига, хранящий информацию о конкретном дне
      */
-    protected static IDayTemplateForParsing parse(Node dayConfig){
-        IDayTemplateForParsing dayTemplate = new DayTemplate();
+    protected static DayTemplate parse(Node dayConfig){
+        DayTemplate dayTemplate = new DayTemplate();
         NodeList listDayConfig = dayConfig.getChildNodes();
         for(Integer i=0; i< listDayConfig.getLength(); i++) {
             Node attributeDay = listDayConfig.item(i);

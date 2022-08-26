@@ -1,32 +1,27 @@
 package ru.study.calendar.config.body.impl;
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.Setter;
-import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IWeekTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IYearTemplateForParsing;
+import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 
 import java.util.ArrayList;
 import java.util.List;
-@Getter
 
-public class CalendarTemplate implements ICalendarTemplateForParsing {
+public class CalendarTemplate implements ICalendarTemplateForReading {
     /**
      * День первого числа первого месяца привязочного года
      */
     @Setter(AccessLevel.PUBLIC)
-    private IDayTemplateForParsing anchorWeekDay;
+    private DayTemplate anchorWeekDay;
     /**
      * Список шаблонов лет
      */
-    private List<IYearTemplateForParsing> yearList;
+    private List<YearTemplate> yearList;
     /**
      * Шаблон недели
      */
     @Setter(AccessLevel.PUBLIC)
-    private IWeekTemplateForParsing week;
+    private WeekTemplate week;
     /**
      * Год начала допустимого интервала календаря
      */
@@ -40,14 +35,38 @@ public class CalendarTemplate implements ICalendarTemplateForParsing {
     /**
      * Конструктор календаря по передаваемому пути к конфигу
      *
-     * @param path Путь к конфигу
      * @throws Exception
      */
-    public void addYear(IYearTemplateForParsing year) {
+    public void addYear(YearTemplate year) {
         yearList.add(year);
     }
 
     public CalendarTemplate() {
         yearList = new ArrayList<>();
+    }
+
+    @Override
+    public DayTemplate getAnchorWeekDay() {
+        return anchorWeekDay;
+    }
+
+    @Override
+    public List<YearTemplate> getYearList() {
+        return yearList;
+    }
+
+    @Override
+    public WeekTemplate getWeek() {
+        return week;
+    }
+
+    @Override
+    public Integer getBeginningYear() {
+        return beginningYear;
+    }
+
+    @Override
+    public Integer getEndYear() {
+        return endYear;
     }
 }

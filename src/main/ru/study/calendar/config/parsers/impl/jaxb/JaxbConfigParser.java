@@ -1,8 +1,6 @@
 package ru.study.calendar.config.parsers.impl.jaxb;
 
-import ru.study.calendar.config.body.impl.*;
-import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
+import org.mapstruct.factory.Mappers;
 import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.exceptions.ConfigurationException;
@@ -13,18 +11,18 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 
 public class JaxbConfigParser implements ConfigParser {
-    public JaxbConfigParser(){
+    /*
+    private CalendarTemplate mapper(JaxbCalendarConfig calendarConfig) throws JaxbParsingException {
+        CalendarTemplate calendarTemplate = new CalendarTemplate();
+        DayTemplate dayTemplate = new DayTemplate();
 
-    }
-    private ICalendarTemplateForParsing mapper(JaxbCalendarConfig calendarConfig) throws JaxbParsingException {
-        ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
-        IDayTemplateForParsing dayTemplate = new DayTemplate();
-
-        //TODO mapstruct
+        //TODO mapstruct DONE
 
         dayTemplate.setDayName(calendarConfig.getJaxbDayConfig().getDayName());
         dayTemplate.setWeekDayWorkOut(calendarConfig.getJaxbDayConfig().getWeekDayWorkOut());
-        calendarTemplate.setAnchorWeekDay(dayTemplate);
+        DayTemplate anchorDay = new DayTemplate();
+        anchorDay.clone(dayTemplate);
+        calendarTemplate.setAnchorWeekDay(anchorDay);
         dayTemplate.resetDay();
 
         calendarTemplate.setBeginningYear(calendarConfig.getBeginningYear());
@@ -36,19 +34,27 @@ public class JaxbConfigParser implements ConfigParser {
                     MonthTemplate monthTemplate = new MonthTemplate();
                     monthTemplate.setName(monthConfig.getMonthName());
                     monthTemplate.setDayCount(monthConfig.getDayCount());
-                    for(Integer weekDayWorkDate: monthConfig.getDayWorkList().getDateOfWorkDay()) {
-                        monthTemplate.addWorkDay(weekDayWorkDate);
+                    if(monthConfig.getDayWorkList() != null){
+                        for(Integer weekDayWorkDate: monthConfig.getDayWorkList().getDateOfWorkDay()) {
+                            monthTemplate.addWorkDay(weekDayWorkDate);
+                        }
                     }
-                    for(Integer weekDayWorkOutDate: monthConfig.getDayWorkOutList().getDateOfWorkOutDay()) {
-                        monthTemplate.addWorkDay(weekDayWorkOutDate);
+                    if(monthConfig.getDayWorkOutList() != null){
+                        for(Integer weekDayWorkOutDate: monthConfig.getDayWorkOutList().getDateOfWorkOutDay()) {
+                            monthTemplate.addWorkDay(weekDayWorkOutDate);
+                        }
                     }
-                    yearTemplate.addMonth(monthTemplate);
+                    MonthTemplate month = new MonthTemplate();
+                    month.clone(monthTemplate);
+                    yearTemplate.addMonth(month);
                     monthTemplate.resetMonth();
                 } catch (ConfigurationException e) {
                     throw new JaxbParsingException(e);
                 }
             }
-            calendarTemplate.addYear(yearTemplate);
+            YearTemplate year = new YearTemplate();
+            year.clone(yearTemplate);
+            calendarTemplate.addYear(year);
             yearTemplate.resetYearTemplate();
         }
         WeekTemplate weekTemplate = new WeekTemplate();
@@ -56,7 +62,9 @@ public class JaxbConfigParser implements ConfigParser {
             try {
                 dayTemplate.setDayName(weekDayConfig.getDayName());
                 dayTemplate.setWeekDayWorkOut(weekDayConfig.getWeekDayWorkOut());
-                weekTemplate.addWeekDay(dayTemplate);
+                DayTemplate day = new DayTemplate();
+                day.clone(dayTemplate);
+                weekTemplate.addWeekDay(day);
                 dayTemplate.resetDay();
             } catch (ConfigurationException e) {
                 throw new JaxbParsingException(e);
@@ -65,6 +73,7 @@ public class JaxbConfigParser implements ConfigParser {
         calendarTemplate.setWeek(weekTemplate);
         return calendarTemplate;
     }
+    */
     @Override
     public ICalendarTemplateForReading parse(String configPath) throws ConfigurationException {
         JaxbCalendarConfig jaxbCalendarConfig;
@@ -72,7 +81,9 @@ public class JaxbConfigParser implements ConfigParser {
         try {
             JAXBContext context = JAXBContext.newInstance(JaxbCalendarConfig.class);
             jaxbCalendarConfig = (JaxbCalendarConfig) context.createUnmarshaller().unmarshal(file);
-            return mapper(jaxbCalendarConfig);
+            CalendarConfigMapper mapper
+                    = Mappers.getMapper(CalendarConfigMapper.class);
+            return mapper.calendarMapper(jaxbCalendarConfig);
         } catch (JAXBException e) {
             throw new JaxbParsingException(e);
         }

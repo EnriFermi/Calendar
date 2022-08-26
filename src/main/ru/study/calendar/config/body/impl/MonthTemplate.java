@@ -2,17 +2,16 @@ package ru.study.calendar.config.body.impl;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.Setter;
-import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
+import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter(value = AccessLevel.PUBLIC) @Setter(value = AccessLevel.PUBLIC)
+@Setter(value = AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class MonthTemplate implements IMonthTemplateForParsing {
+public class MonthTemplate implements IMonthTemplateForReading {
     /**
      * Имя месяца
      */
@@ -67,10 +66,30 @@ public class MonthTemplate implements IMonthTemplateForParsing {
         dayWorkList.clear();
     }
 
-    public void clone(IMonthTemplateForParsing monthConstructor) {
+    public void clone(MonthTemplate monthConstructor) {
         dayCount = monthConstructor.getDayCount();
         name = monthConstructor.getName();
         dayWorkOutList.addAll(monthConstructor.getDayWorkOutList());
         dayWorkList.addAll(monthConstructor.getDayWorkList());
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Integer getDayCount() {
+        return dayCount;
+    }
+
+    @Override
+    public List<Integer> getDayWorkOutList() {
+        return dayWorkOutList;
+    }
+
+    @Override
+    public List<Integer> getDayWorkList() {
+        return dayWorkList;
     }
 }

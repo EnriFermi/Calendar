@@ -17,7 +17,7 @@ public class CalendarMain {
         Logger log = LoggerFactory.getLogger(CalendarMain.class);
         try {
             //TODO ReT вернуться к разделению обязанностей Config
-            ICalendarTemplateForReading calendarConfig = ConfigFactory.getCalendarTemplate("resources\\classicCalendar.xml", "jaxb");
+            ICalendarTemplateForReading calendarConfig = ConfigFactory.getCalendarTemplate("resources\\classicCalendar.xml", "xml");
             ICalendar calendar = new Calendar(2022, calendarConfig);
 
             log.info(calendar.getWeekDay(8, "August").getWeekDay());

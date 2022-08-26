@@ -3,7 +3,6 @@ package ru.study.calendar.config.parsers.impl.json;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import ru.study.calendar.config.body.impl.MonthTemplate;
-import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JsonParsingException;
@@ -19,8 +18,8 @@ public class JsonMonthConfigParser {
      * @param monthConfig Объект JSON конфига, хранящий информацию о конкретном месяце
      * @throws Exception
      */
-    public static IMonthTemplateForParsing parse(JSONObject monthConfig) throws JsonParsingException {
-        IMonthTemplateForParsing monthTemplate = new MonthTemplate();
+    public static MonthTemplate parse(JSONObject monthConfig) throws JsonParsingException {
+        MonthTemplate monthTemplate = new MonthTemplate();
         /*
          * Настраиваем имя месяца
          */
@@ -46,7 +45,7 @@ public class JsonMonthConfigParser {
      *
      * @param monthConfig Объект JSON конфига, хранящий информацию о конкретном месяце
      */
-    private static IMonthTemplateForParsing setDayWorkList(JSONObject monthConfig, IMonthTemplateForParsing monthTemplate) throws JsonParsingException {
+    private static MonthTemplate setDayWorkList(JSONObject monthConfig, MonthTemplate monthTemplate) throws JsonParsingException {
         List<Integer> dayWorkList = new ArrayList<>();
         JSONArray dayWorkConfigList = (JSONArray) monthConfig.get(JsonFieldNames.DAY_WORK_LIST.getFieldName());
         if (dayWorkConfigList != null) {
@@ -66,7 +65,7 @@ public class JsonMonthConfigParser {
      *
      * @param monthConfig Объект JSON конфига, хранящий информацию о конкретном месяце
      */
-    private static IMonthTemplateForParsing setDayWorkOutList(JSONObject monthConfig, IMonthTemplateForParsing monthTemplate) throws JsonParsingException {
+    private static MonthTemplate setDayWorkOutList(JSONObject monthConfig, MonthTemplate monthTemplate) throws JsonParsingException {
         List<Integer> dayWorkOutList = new ArrayList<>();
         JSONArray dayWorkOutConfigList = (JSONArray) monthConfig.get(JsonFieldNames.DAY_WORKOUT_LIST.getFieldName());
         if (dayWorkOutConfigList != null) {

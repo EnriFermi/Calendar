@@ -3,9 +3,8 @@ package ru.study.calendar.config.parsers.impl.xml.sax;
 import lombok.Getter;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import ru.study.calendar.config.body.inter.parsing.*;
-import ru.study.calendar.config.body.inter.reading.*;
 import ru.study.calendar.config.body.impl.*;
+import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.sax.enums.XMLSaxFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
@@ -48,18 +47,18 @@ public class XMLSaxConfigParser implements ConfigParser {
 
     private class CalendarConfigHandler extends DefaultHandler {
 
-        //TODO интерфейсы для set не нужны
-        private ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
+        //TODO интерфейсы для set не нужны DONE
+        private CalendarTemplate calendarTemplate = new CalendarTemplate();
 
-        private IYearTemplateForParsing yearConstructor = new YearTemplate();
-        private IMonthTemplateForParsing monthConstructor = new MonthTemplate();
-        private IDayTemplateForParsing dayConstructor = new DayTemplate();
-        private IWeekTemplateForParsing weekConstructor = new WeekTemplate();
+        private YearTemplate yearConstructor = new YearTemplate();
+        private MonthTemplate monthConstructor = new MonthTemplate();
+        private DayTemplate dayConstructor = new DayTemplate();
+        private WeekTemplate weekConstructor = new WeekTemplate();
         private String information;
         private String nodeName;
 
         public ICalendarTemplateForReading getCalendarTemplate() {
-            return (ICalendarTemplateForReading) calendarTemplate;
+            return calendarTemplate;
         }
 
         @Override
@@ -161,13 +160,10 @@ public class XMLSaxConfigParser implements ConfigParser {
             }
         }
     }
-    //TODO пройтись по конструкторам
+    //TODO пройтись по конструкторам DONE
     /**
      * Конструктор календаря по передаваемому пути к конфигу
      *
      * @throws Exception
      */
-    public XMLSaxConfigParser() {
-
-    }
 }

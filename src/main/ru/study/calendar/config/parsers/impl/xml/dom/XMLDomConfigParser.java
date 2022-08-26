@@ -5,7 +5,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.study.calendar.config.body.impl.CalendarTemplate;
-import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
@@ -19,12 +18,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class XMLDomConfigParser implements ConfigParser {
-    public XMLDomConfigParser(){
-
-    }
     @Override
-    public ICalendarTemplateForParsing parse(String configPath) throws ConfigurationException {
-        ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
+    public CalendarTemplate parse(String configPath) throws ConfigurationException {
+        CalendarTemplate calendarTemplate = new CalendarTemplate();
         DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         try {

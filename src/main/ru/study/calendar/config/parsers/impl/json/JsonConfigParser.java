@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import ru.study.calendar.config.body.impl.CalendarTemplate;
-import ru.study.calendar.config.body.inter.parsing.ICalendarTemplateForParsing;
 import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
@@ -18,12 +17,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JsonConfigParser implements ConfigParser {
-    public JsonConfigParser(){
-
-    }
     @Override
     public ICalendarTemplateForReading parse(String configPath) throws ConfigurationException {
-        ICalendarTemplateForParsing calendarTemplate = new CalendarTemplate();
+        CalendarTemplate calendarTemplate = new CalendarTemplate();
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
         try {

@@ -1,8 +1,9 @@
 package ru.study.calendar.config.body.inter.reading;
 
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IWeekTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IYearTemplateForParsing;
+
+import ru.study.calendar.config.body.impl.DayTemplate;
+import ru.study.calendar.config.body.impl.WeekTemplate;
+import ru.study.calendar.config.body.impl.YearTemplate;
 
 import java.util.List;
 
@@ -16,19 +17,19 @@ public interface ICalendarTemplateForReading {
      * Получаем день недели первого дня первого месяца привязочного года
      * @return День недели 1 дня 1 месяца привязочного года
      */
-    IDayTemplateForParsing getAnchorWeekDay();
+    DayTemplate getAnchorWeekDay();
 
     /**
      * Получаем список шаблонов лет
      * @return Список шаблонов лет
      */
-    List<IYearTemplateForParsing> getYearList();
+    List<YearTemplate> getYearList();
 
     /**
      * Получаем шаблон недели
      * @return Шаблон недели
      */
-    IWeekTemplateForParsing getWeek();
+    WeekTemplate getWeek();
 
     /**
      * Получаем год начала допустимого интервала календаря

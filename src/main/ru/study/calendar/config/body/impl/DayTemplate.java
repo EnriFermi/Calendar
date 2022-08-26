@@ -2,20 +2,12 @@ package ru.study.calendar.config.body.impl;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.Setter;
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Setter(AccessLevel.PUBLIC)
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class DayTemplate implements IDayTemplateForParsing {
+public class DayTemplate implements IDayTemplateForReading {
     /**
      * Конструктор дня недели по передаваемому JSON конфигу
      * @param  Объект JSON конфига, хранящий информацию о конкретном дне
@@ -25,15 +17,15 @@ public class DayTemplate implements IDayTemplateForParsing {
     /**
      * Название дня недели
      */
-    @EqualsAndHashCode.Include @Getter
-    @XmlElement
+    @EqualsAndHashCode.Include
     private String dayName;
     /**
      * Указание рабочий ли день
      */
-    @XmlElement
     private Boolean weekDayWorkOut;
-    public DayTemplate() {
+    @Override
+    public String getDayName() {
+        return dayName;
     }
     /**
      * Метод получения информации рабочий ли день
@@ -47,7 +39,7 @@ public class DayTemplate implements IDayTemplateForParsing {
     public void resetDay() {
     }
 
-    public void clone(IDayTemplateForParsing dayConstructor) {
+    public void clone(DayTemplate dayConstructor) {
         dayName = dayConstructor.getDayName();
         weekDayWorkOut = dayConstructor.isDefaultDayWorkOut();
     }

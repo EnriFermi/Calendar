@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.calendar.config.body.impl.YearTemplate;
-import ru.study.calendar.config.body.inter.parsing.IYearTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.XmlDomParsingException;
@@ -26,8 +25,8 @@ public class XMLDomYearConfigParser {
      *
      * @throws Exception
      */
-    protected static IYearTemplateForParsing parse(Node yearConfig) throws XmlDomParsingException {
-        IYearTemplateForParsing yearTemplate =  new YearTemplate();
+    protected static YearTemplate parse(Node yearConfig) throws XmlDomParsingException {
+        YearTemplate yearTemplate =  new YearTemplate();
         NodeList yearConfigList = yearConfig.getChildNodes();
         for (Integer i = 0; i < yearConfigList.getLength(); i++) {
             Node yearAttributeList = yearConfigList.item(i);

@@ -1,15 +1,16 @@
 package ru.study.calendar.config.body.impl;
 
-import lombok.Getter;
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IWeekTemplateForParsing;
+import ru.study.calendar.config.body.inter.reading.IWeekTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-public class WeekTemplate implements IWeekTemplateForParsing {
+public class WeekTemplate implements IWeekTemplateForReading {
+    public void setWeekDayCount(Integer weekDayCount) {
+        this.weekDayCount = weekDayCount;
+    }
+
     /**
      * Количество дней в неделе
      */
@@ -17,17 +18,16 @@ public class WeekTemplate implements IWeekTemplateForParsing {
     /**
      * Список дней недели
      */
-    private List<IDayTemplateForParsing> weekDayNameList;
+    private List<DayTemplate> weekDayNameList;
 
     /**
      * Конструктор недели по передаваемому JSON конфигу
-     * @param weekConfig Объект JSON конфига, хранящий информацию о неделе
      */
     public WeekTemplate() {
         weekDayCount = 0;
         weekDayNameList = new ArrayList<>();
     }
-    public void addWeekDay(IDayTemplateForParsing day) throws ConfigurationException {
+    public void addWeekDay(DayTemplate day) throws ConfigurationException {
         if (! weekDayNameList.contains(day)) {
             weekDayNameList.add(day);
             weekDayCount++;
@@ -40,8 +40,18 @@ public class WeekTemplate implements IWeekTemplateForParsing {
         weekDayNameList.clear();
     }
 
-    public void clone(IWeekTemplateForParsing weekConstructor) {
+    public void clone(WeekTemplate weekConstructor) {
         weekDayCount = weekConstructor.getWeekDayCount();
         weekDayNameList.addAll(weekConstructor.getWeekDayNameList());
+    }
+
+    @Override
+    public Integer getWeekDayCount() {
+        return weekDayCount;
+    }
+
+    @Override
+    public List<DayTemplate> getWeekDayNameList() {
+        return weekDayNameList;
     }
 }

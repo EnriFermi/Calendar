@@ -1,6 +1,6 @@
 package ru.study.calendar.config.body.inter.reading;
 
-import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
+import ru.study.calendar.config.body.impl.MonthTemplate;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface IYearTemplateForReading {
     /**
      * @return Список шаблонов месяцев
      */
-    List<IMonthTemplateForParsing> getMonthList();
+    List<MonthTemplate> getMonthList();
 }

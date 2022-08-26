@@ -1,5 +1,6 @@
 package ru.study.calendar.config.parsers.impl.jaxb;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Класс реализующий хранение данных о конфигурации календаря
  */
-@Getter @Setter
+@Getter(AccessLevel.PUBLIC) @Setter(AccessLevel.PUBLIC)
 @XmlRootElement(name = "calendarConfig")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class JaxbCalendarConfig  {

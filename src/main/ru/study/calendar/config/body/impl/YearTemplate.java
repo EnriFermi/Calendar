@@ -1,21 +1,17 @@
 package ru.study.calendar.config.body.impl;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import ru.study.calendar.config.body.inter.parsing.IMonthTemplateForParsing;
-import ru.study.calendar.config.body.inter.parsing.IYearTemplateForParsing;
+import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter(AccessLevel.PUBLIC)
-public class YearTemplate implements IYearTemplateForParsing {
+public class YearTemplate implements IYearTemplateForReading {
     /**
      * Список месяцев в году
      */
-    private List<IMonthTemplateForParsing> monthList;
+    private List<MonthTemplate> monthList;
     /**
      * Количество дней в году
      */
@@ -30,9 +26,9 @@ public class YearTemplate implements IYearTemplateForParsing {
         monthList = new ArrayList<>();
         dayQuantity = 0;
     }
-    public void addMonth(IMonthTemplateForParsing month) throws ConfigurationException {
+    public void addMonth(MonthTemplate month) throws ConfigurationException {
         if (!monthList.contains(month)) {
-            monthList.add((MonthTemplate) month);
+            monthList.add(month);
             dayQuantity+=month.getDayCount();
         } else {
             throw new ConfigurationException("Не уникальное название месяца: " + month.getName());
@@ -43,8 +39,22 @@ public class YearTemplate implements IYearTemplateForParsing {
         monthList.clear();
     }
 
-    public void clone(IYearTemplateForParsing yearConstructor) {
+    public void clone(YearTemplate yearConstructor) {
         dayQuantity = yearConstructor.getDayQuantity();
         monthList.addAll(yearConstructor.getMonthList());
+    }
+
+    @Override
+    public Integer getDayQuantity() {
+        return dayQuantity;
+    }
+
+    @Override
+    public List<MonthTemplate> getMonthList() {
+        return monthList;
+    }
+
+    public void setDayQuantity(Integer dayQuantity) {
+        this.dayQuantity = dayQuantity;
     }
 }

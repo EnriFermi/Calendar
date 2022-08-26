@@ -3,7 +3,6 @@ package ru.study.calendar.config.parsers.impl.xml.dom;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.calendar.config.body.impl.WeekTemplate;
-import ru.study.calendar.config.body.inter.parsing.IWeekTemplateForParsing;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.XmlDomParsingException;
@@ -22,8 +21,8 @@ public class XMLDomWeekConfigParser {
      * Конструктор недели по передаваемому JSON конфигу
      */
 
-    protected static IWeekTemplateForParsing parse(Node weekConfig) throws XmlDomParsingException {
-        IWeekTemplateForParsing weekTemplate = new WeekTemplate();
+    protected static WeekTemplate parse(Node weekConfig) throws XmlDomParsingException {
+        WeekTemplate weekTemplate = new WeekTemplate();
         NodeList weekConfigList = weekConfig.getChildNodes();
         for(Integer i=0; i<weekConfigList.getLength(); i++) {
             Node weekAttribute = weekConfigList.item(i);

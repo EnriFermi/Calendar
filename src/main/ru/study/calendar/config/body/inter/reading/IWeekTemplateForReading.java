@@ -1,6 +1,6 @@
 package ru.study.calendar.config.body.inter.reading;
 
-import ru.study.calendar.config.body.inter.parsing.IDayTemplateForParsing;
+import ru.study.calendar.config.body.impl.DayTemplate;
 
 import java.util.List;
 /**
@@ -16,6 +16,6 @@ public interface IWeekTemplateForReading {
     /**
      * @return Список дней недели
      */
-    List<IDayTemplateForParsing> getWeekDayNameList();
+    List<DayTemplate> getWeekDayNameList();
 
 }
