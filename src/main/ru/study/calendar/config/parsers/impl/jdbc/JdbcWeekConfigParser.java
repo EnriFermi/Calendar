@@ -1,6 +1,6 @@
 package ru.study.calendar.config.parsers.impl.jdbc;
 
-import ru.study.calendar.config.body.impl.WeekTemplate;
+import ru.study.calendar.config.domain.impl.WeekTemplate;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JaxbParsingException;

@@ -4,7 +4,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import ru.study.calendar.config.body.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;

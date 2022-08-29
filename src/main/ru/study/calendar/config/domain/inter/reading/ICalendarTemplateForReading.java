@@ -1,9 +1,9 @@
-package ru.study.calendar.config.body.inter.reading;
+package ru.study.calendar.config.domain.inter.reading;
 
 
-import ru.study.calendar.config.body.impl.DayTemplate;
-import ru.study.calendar.config.body.impl.WeekTemplate;
-import ru.study.calendar.config.body.impl.YearTemplate;
+import ru.study.calendar.config.domain.impl.DayTemplate;
+import ru.study.calendar.config.domain.impl.WeekTemplate;
+import ru.study.calendar.config.domain.impl.YearTemplate;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
-import ru.study.calendar.config.body.impl.*;
+import ru.study.calendar.config.domain.impl.*;
 
 import java.util.ArrayList;
 import java.util.List;

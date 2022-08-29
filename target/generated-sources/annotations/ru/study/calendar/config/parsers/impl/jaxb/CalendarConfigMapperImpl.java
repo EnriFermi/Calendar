@@ -3,15 +3,15 @@ package ru.study.calendar.config.parsers.impl.jaxb;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import ru.study.calendar.config.body.impl.CalendarTemplate;
-import ru.study.calendar.config.body.impl.DayTemplate;
-import ru.study.calendar.config.body.impl.MonthTemplate;
-import ru.study.calendar.config.body.impl.WeekTemplate;
-import ru.study.calendar.config.body.impl.YearTemplate;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.impl.DayTemplate;
+import ru.study.calendar.config.domain.impl.MonthTemplate;
+import ru.study.calendar.config.domain.impl.WeekTemplate;
+import ru.study.calendar.config.domain.impl.YearTemplate;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-29T11:16:24+0300",
+    date = "2022-08-29T11:46:22+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 18.0.1.1 (Oracle Corporation)"
 )
 public class CalendarConfigMapperImpl extends CalendarConfigMapper {

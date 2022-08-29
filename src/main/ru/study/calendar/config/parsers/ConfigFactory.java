@@ -2,7 +2,7 @@ package ru.study.calendar.config.parsers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.impl.jaxb.JaxbConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.JdbcConfigParser;
 import ru.study.calendar.config.parsers.impl.json.JsonConfigParser;

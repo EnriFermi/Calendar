@@ -1,9 +1,9 @@
 package ru.study.calendar.item.impl;
 
 import lombok.Getter;
-import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IWeekTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IMonthTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IWeekTemplateForReading;
 import ru.study.calendar.item.IDay;
 import ru.study.calendar.item.IMonth;
 import ru.study.calendar.service.WeekService;

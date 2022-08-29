@@ -1,4 +1,4 @@
-package ru.study.calendar.config.body.inter.reading;
+package ru.study.calendar.config.domain.inter.reading;
 
 /**
  * Параметры дня недели

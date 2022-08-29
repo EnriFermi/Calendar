@@ -1,7 +1,7 @@
 package ru.study.calendar.config.parsers.impl.jdbc;
 
-import ru.study.calendar.config.body.impl.CalendarTemplate;
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.service.db.connection.ConnectionService;
@@ -25,6 +25,7 @@ public class JdbcConfigParser implements ConfigParser {
                 serverConfiguration.getUserName(), serverConfiguration.getPassword())) {
             Statement calendarStatement = connection.createStatement();
             ResultSet calendarSet = calendarStatement.executeQuery("select * from " + JdbcFieldNames.CALENDAR_LIST.getFieldName());
+            //TODO использовать try with, чтобы не вызывать close
             calendarSet.next();
             calendarTemplate.setBeginningYear(calendarSet.getInt(JdbcFieldNames.BEGINNING_YEAR.getFieldName()));
             calendarTemplate.setEndYear(calendarSet.getInt(JdbcFieldNames.END_YEAR.getFieldName()));

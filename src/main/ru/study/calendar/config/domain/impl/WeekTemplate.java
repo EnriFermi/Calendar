@@ -1,6 +1,6 @@
-package ru.study.calendar.config.body.impl;
+package ru.study.calendar.config.domain.impl;
 
-import ru.study.calendar.config.body.inter.reading.IWeekTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IWeekTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;

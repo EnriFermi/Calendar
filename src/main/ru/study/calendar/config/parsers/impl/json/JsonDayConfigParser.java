@@ -1,7 +1,7 @@
 package ru.study.calendar.config.parsers.impl.json;
 
 import org.json.simple.JSONObject;
-import ru.study.calendar.config.body.impl.DayTemplate;
+import ru.study.calendar.config.domain.impl.DayTemplate;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
 
 /**

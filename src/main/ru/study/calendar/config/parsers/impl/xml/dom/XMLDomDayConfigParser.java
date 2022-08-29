@@ -2,7 +2,7 @@ package ru.study.calendar.config.parsers.impl.xml.dom;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import ru.study.calendar.config.body.impl.DayTemplate;
+import ru.study.calendar.config.domain.impl.DayTemplate;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 
 /**

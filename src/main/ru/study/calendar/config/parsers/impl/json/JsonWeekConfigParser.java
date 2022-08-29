@@ -2,7 +2,7 @@ package ru.study.calendar.config.parsers.impl.json;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import ru.study.calendar.config.body.impl.WeekTemplate;
+import ru.study.calendar.config.domain.impl.WeekTemplate;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JsonParsingException;

@@ -8,11 +8,10 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.study.calendar.CalendarMain;
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigFactory;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.impl.Calendar;
-import java.io.File;
 
 /**
  * @author Romanikhin Valeriy <romanihin@unislabs.com>

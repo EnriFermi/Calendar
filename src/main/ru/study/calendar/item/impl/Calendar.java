@@ -1,9 +1,9 @@
 package ru.study.calendar.item.impl;
 
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IMonthTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IYearTemplateForReading;
 import ru.study.calendar.exceptions.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;
@@ -113,7 +113,6 @@ public class Calendar implements ICalendar {
          * 2 3 0 1 2 ...
          * 3 0 1 2 3 ...
          */
-        //TODO ReT создать пример, чтобы такое испортилось
         Integer begin = calendarConfig.getBeginningYear() % yearCycleSize;
 
         for (int iterator = 1; iterator < shiftBetweenYears; iterator++) {

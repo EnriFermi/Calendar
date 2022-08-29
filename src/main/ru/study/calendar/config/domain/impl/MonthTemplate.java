@@ -1,9 +1,9 @@
-package ru.study.calendar.config.body.impl;
+package ru.study.calendar.config.domain.impl;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
-import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IMonthTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;

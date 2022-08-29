@@ -3,7 +3,7 @@ package ru.study.calendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.study.calendar.config.parsers.ConfigFactory;
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.impl.Calendar;
 

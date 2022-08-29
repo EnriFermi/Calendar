@@ -1,6 +1,6 @@
-package ru.study.calendar.config.body.inter.reading;
+package ru.study.calendar.config.domain.inter.reading;
 
-import ru.study.calendar.config.body.impl.MonthTemplate;
+import ru.study.calendar.config.domain.impl.MonthTemplate;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
-package ru.study.calendar.config.body.impl;
+package ru.study.calendar.config.domain.impl;
 
 import lombok.AccessLevel;
 import lombok.Setter;
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO интерфейсы используются если класс умеет делать действия, а не является хранилищем
 public class CalendarTemplate implements ICalendarTemplateForReading {
     /**
      * День первого числа первого месяца привязочного года

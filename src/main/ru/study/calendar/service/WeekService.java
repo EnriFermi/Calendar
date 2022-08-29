@@ -1,7 +1,7 @@
 package ru.study.calendar.service;
 
-import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IWeekTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IWeekTemplateForReading;
 
 public interface WeekService {
     /**

@@ -1,9 +1,9 @@
 package ru.study.calendar.config.service.converter;
 
-import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IDayTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IMonthTemplateForReading;
-import ru.study.calendar.config.body.inter.reading.IYearTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IDayTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IMonthTemplateForReading;
+import ru.study.calendar.config.domain.inter.reading.IYearTemplateForReading;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.service.db.connection.ConnectionService;
 import ru.study.calendar.config.service.db.connection.ServerConfiguration;
@@ -16,12 +16,17 @@ public class Template2DbConverter {
     public static void convert(ICalendarTemplateForReading calendarTemplate, String configPathDb)
             throws ConfigurationException {
 
+        //TODO транзакции?
         ServerConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPathDb);
+
+        //TODO кажется лишнее
         try {
             Class.forName(serverConfiguration.getDriverName());
         } catch (ClassNotFoundException e) {
             throw new JdbcParsingException(e);
         }
+//        ================================
+
         try (Connection connection = DriverManager.getConnection(serverConfiguration.getConnectionURL(),
                 serverConfiguration.getUserName(), serverConfiguration.getPassword())) {
             Statement calendarStatement = connection.createStatement();
@@ -33,8 +38,12 @@ public class Template2DbConverter {
                     + calendarTemplate.getBeginningYear() + ","
                     + calendarTemplate.getEndYear() + ");");
 
+            //TODO посмотреть calendarStatement.getResultSet()
+
             Integer calendarIndex = getLastIndex(JdbcFieldNames.CALENDAR_LIST.getFieldName(),
                     JdbcFieldNames.CALENDAR_ID.getFieldName(), calendarStatement);
+
+            //TODO почитать про preparestatment
             for (IYearTemplateForReading yearTemplate: calendarTemplate.getYearList()) {
                 setYearConfig(calendarStatement, calendarIndex, yearTemplate);
             }
@@ -83,7 +92,6 @@ public class Template2DbConverter {
 
         yearIndex = getLastIndex(JdbcFieldNames.YEAR_LIST.getFieldName(),
                 JdbcFieldNames.YEAR_ID.getFieldName(), calendarStatement);
-        ;
 
         for (IMonthTemplateForReading monthTemplate: yearTemplate.getMonthList()) {
             setMonthConfig(calendarStatement, yearIndex, monthTemplate);
