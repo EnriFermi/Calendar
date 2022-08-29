@@ -1,4 +1,4 @@
-package ru.study.calendar.config.parsers.impl.jdbc;
+package ru.study.calendar.config.service.db.connection;
 
 import lombok.Getter;
 import lombok.Setter;

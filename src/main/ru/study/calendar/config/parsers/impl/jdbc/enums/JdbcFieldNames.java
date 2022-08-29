@@ -4,22 +4,14 @@ package ru.study.calendar.config.parsers.impl.jdbc.enums;
  * Хранит названия полей для получения информации из БД
  */
 public enum JdbcFieldNames {
-    /*
-     * Логин пользователя для подключения к БД
-     */
-    USER_NAME("userName"),
-    /*
-     * Пароль пользователя для подключения к БД
-     */
-    PASSWORD("password"),
-    /*
-     * URL БД
-     */
-    CONNECTION_URL("connectionURL"),
-    /*
-     * Название драйвера JDBC
-     */
-    DRIVER_NAME("driverName"),
+
+    CALENDAR_LIST("calendarlist"),
+    DAY_LIST("daylist"),
+    DAY_WORK_LIST("dayworklist"),
+    DAY_WORKOUT_LIST("dayworkoutlist"),
+    MONTH_LIST("monthlist"),
+    YEAR_LIST("yearlist"),
+    CALENDAR_ID("calendarid"),
     /*
      * ID года в БД
      */
@@ -28,6 +20,8 @@ public enum JdbcFieldNames {
      * ID месяца в БД
      */
     MONTH_ID("monthid"),
+
+    DAY_ID("dayid"),
     /*
      * ID дня недели, являющегося привязочным
      */

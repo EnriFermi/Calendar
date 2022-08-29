@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class XMLDomConfigParser implements ConfigParser {
+
     @Override
     public CalendarTemplate parse(String configPath) throws ConfigurationException {
         CalendarTemplate calendarTemplate = new CalendarTemplate();

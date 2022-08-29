@@ -10,7 +10,7 @@ import ru.study.calendar.config.body.impl.YearTemplate;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-25T21:55:15+0300",
+    date = "2022-08-27T19:53:29+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 18.0.1.1 (Oracle Corporation)"
 )
 public class CalendarConfigMapperImpl extends CalendarConfigMapper {

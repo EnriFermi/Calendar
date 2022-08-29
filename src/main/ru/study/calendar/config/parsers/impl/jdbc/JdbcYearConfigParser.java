@@ -26,15 +26,15 @@ public class JdbcYearConfigParser {
         Statement monthStatement = connection.createStatement();
         Statement workStatement = connection.createStatement();
         Statement workOutStatement = connection.createStatement();
-        ResultSet monthSet = monthStatement.executeQuery("select * from monthList where yearid = " + index);
+        ResultSet monthSet = monthStatement.executeQuery("select * from " +JdbcFieldNames.MONTH_LIST.getFieldName() +" where yearid = " + index);
         Integer monthId;
         while (monthSet.next()) {
             try {
                 monthId = monthSet.getInt(JdbcFieldNames.MONTH_ID.getFieldName());
-                ResultSet workListSet = workStatement.executeQuery("select * from dayWorkList where monthid = "
-                        + monthId);
-                ResultSet workOutListSet = workOutStatement.executeQuery("select * from dayWorkOutList where monthid = "
-                        + monthId);
+                ResultSet workListSet = workStatement.executeQuery("select * from " +JdbcFieldNames.DAY_WORK_LIST.getFieldName()
+                        +" where "+ JdbcFieldNames.MONTH_ID.getFieldName() +" = " + monthId);
+                ResultSet workOutListSet = workOutStatement.executeQuery("select * from "+ JdbcFieldNames.DAY_WORKOUT_LIST.getFieldName()
+                        + " where " + JdbcFieldNames.MONTH_ID + " = " + monthId);
                 yearTemplate.addMonth(JdbcMonthConfigParser.parse(monthSet, workListSet, workOutListSet));
                 workListSet.close();
                 workOutListSet.close();
