@@ -27,7 +27,7 @@ public interface ConfigFactory {
      */
     static ICalendarTemplateForReading getCalendarTemplate(String configPath, String configType) throws ConfigurationException {
         Logger log = LoggerFactory.getLogger(ConfigFactory.class);
-        //TODO марафет DONE
+        //TODO сделать объект с типами из енумов вместо configType
         try {
             return configSwitch(configType).parse(configPath+ "." +configType.split("\\.")[1]);
         } catch (ConfigurationFactoryException e) {

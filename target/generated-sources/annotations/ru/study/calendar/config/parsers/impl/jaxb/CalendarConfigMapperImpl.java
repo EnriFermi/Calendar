@@ -1,5 +1,6 @@
 package ru.study.calendar.config.parsers.impl.jaxb;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import ru.study.calendar.config.body.impl.CalendarTemplate;
@@ -10,7 +11,7 @@ import ru.study.calendar.config.body.impl.YearTemplate;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-27T19:53:29+0300",
+    date = "2022-08-29T11:16:24+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 18.0.1.1 (Oracle Corporation)"
 )
 public class CalendarConfigMapperImpl extends CalendarConfigMapper {
@@ -24,8 +25,9 @@ public class CalendarConfigMapperImpl extends CalendarConfigMapper {
         CalendarTemplate calendarTemplate = new CalendarTemplate();
 
         calendarTemplate.setAnchorWeekDay( dayMapper( calendarConfig.getJaxbDayConfig() ) );
+        List<JaxbYearConfig> yearConfigList = calendarConfigJaxbYearListYearConfigList( calendarConfig );
         if ( calendarTemplate.getYearList() != null ) {
-            List<YearTemplate> list = yearListMapper( calendarConfig.getJaxbYearList() );
+            List<YearTemplate> list = jaxbYearConfigListToYearTemplateList( yearConfigList );
             if ( list != null ) {
                 calendarTemplate.getYearList().addAll( list );
             }
@@ -105,5 +107,33 @@ public class CalendarConfigMapperImpl extends CalendarConfigMapper {
         setWeekDayCount( weekTemplate );
 
         return weekTemplate;
+    }
+
+    private List<JaxbYearConfig> calendarConfigJaxbYearListYearConfigList(JaxbCalendarConfig jaxbCalendarConfig) {
+        if ( jaxbCalendarConfig == null ) {
+            return null;
+        }
+        JaxbYearList jaxbYearList = jaxbCalendarConfig.getJaxbYearList();
+        if ( jaxbYearList == null ) {
+            return null;
+        }
+        List<JaxbYearConfig> yearConfigList = jaxbYearList.getYearConfigList();
+        if ( yearConfigList == null ) {
+            return null;
+        }
+        return yearConfigList;
+    }
+
+    protected List<YearTemplate> jaxbYearConfigListToYearTemplateList(List<JaxbYearConfig> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<YearTemplate> list1 = new ArrayList<YearTemplate>( list.size() );
+        for ( JaxbYearConfig jaxbYearConfig : list ) {
+            list1.add( yearMapper( jaxbYearConfig ) );
+        }
+
+        return list1;
     }
 }

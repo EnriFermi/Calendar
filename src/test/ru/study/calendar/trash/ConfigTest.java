@@ -12,11 +12,11 @@ import ru.study.calendar.config.body.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigFactory;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.impl.Calendar;
+import java.io.File;
 
 /**
  * @author Romanikhin Valeriy <romanihin@unislabs.com>
  */
-//TODO сделать тесты на импорт конфига, успешный и не успешный (для каждого вида ошибок, включая парсинг) DONE
 public class ConfigTest {
 
     @Test

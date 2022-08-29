@@ -47,7 +47,6 @@ public class XMLSaxConfigParser implements ConfigParser {
 
     private class CalendarConfigHandler extends DefaultHandler {
 
-        //TODO интерфейсы для set не нужны DONE
         private CalendarTemplate calendarTemplate = new CalendarTemplate();
 
         private YearTemplate yearConstructor = new YearTemplate();
@@ -65,10 +64,12 @@ public class XMLSaxConfigParser implements ConfigParser {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             nodeName = qName;
             if (nodeName.equals(XMLSaxFieldNames.ANCHOR_WEEKDAY.getFieldName())) {
+                //TODO попытаться в список положить объект, а потом использовать new
                 DayTemplate day = new DayTemplate();
                 day.clone(dayConstructor);
                 calendarTemplate.setAnchorWeekDay(day);
-                dayConstructor.resetDay();
+                //TODO вместо reset использовать new
+                dayConstructor = new DayTemplate();
                 return;
             }
             if (nodeName.equals(XMLSaxFieldNames.DAY_NAME.getFieldName())) {
@@ -151,6 +152,7 @@ public class XMLSaxConfigParser implements ConfigParser {
 
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
+            //TODO Перевести на new String, что есть плохого в String
             information = "";
             for (Integer i = start; i < start + length; i++) {
                 information = information + String.valueOf(ch[i]);
@@ -160,10 +162,5 @@ public class XMLSaxConfigParser implements ConfigParser {
             }
         }
     }
-    //TODO пройтись по конструкторам DONE
-    /**
-     * Конструктор календаря по передаваемому пути к конфигу
-     *
-     * @throws Exception
-     */
+
 }
