@@ -2,12 +2,11 @@ package ru.study.calendar.config.domain.impl;
 
 import lombok.AccessLevel;
 import lombok.Setter;
-import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 
 import java.util.ArrayList;
 import java.util.List;
-//TODO интерфейсы используются если класс умеет делать действия, а не является хранилищем
-public class CalendarTemplate implements ICalendarTemplateForReading {
+//TODO интерфейсы используются если класс умеет делать действия, а не является хранилищем DONE
+public class CalendarTemplate {
     /**
      * День первого числа первого месяца привязочного года
      */
@@ -45,27 +44,21 @@ public class CalendarTemplate implements ICalendarTemplateForReading {
         yearList = new ArrayList<>();
     }
 
-    @Override
     public DayTemplate getAnchorWeekDay() {
         return anchorWeekDay;
     }
-
-    @Override
     public List<YearTemplate> getYearList() {
         return yearList;
     }
 
-    @Override
     public WeekTemplate getWeek() {
         return week;
     }
 
-    @Override
     public Integer getBeginningYear() {
         return beginningYear;
     }
 
-    @Override
     public Integer getEndYear() {
         return endYear;
     }

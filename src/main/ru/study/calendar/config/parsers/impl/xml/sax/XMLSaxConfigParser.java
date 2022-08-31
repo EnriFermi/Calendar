@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import ru.study.calendar.config.domain.impl.*;
-import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.sax.enums.XMLSaxFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
@@ -24,7 +23,7 @@ import java.io.IOException;
 public class XMLSaxConfigParser implements ConfigParser {
 
     @Override
-    public ICalendarTemplateForReading parse(String configPath) throws ConfigurationException {
+    public CalendarTemplate parse(String configPath) throws ConfigurationException {
         SAXParserFactory fac = SAXParserFactory.newInstance();
         SAXParser parser = null;
         try {
@@ -47,7 +46,7 @@ public class XMLSaxConfigParser implements ConfigParser {
 
     private class CalendarConfigHandler extends DefaultHandler {
 
-        private CalendarTemplate calendarTemplate = new CalendarTemplate();
+        private ru.study.calendar.config.domain.impl.CalendarTemplate calendarTemplate = new ru.study.calendar.config.domain.impl.CalendarTemplate();
 
         private YearTemplate yearConstructor = new YearTemplate();
         private MonthTemplate monthConstructor = new MonthTemplate();
@@ -56,7 +55,7 @@ public class XMLSaxConfigParser implements ConfigParser {
         private String information;
         private String nodeName;
 
-        public ICalendarTemplateForReading getCalendarTemplate() {
+        public CalendarTemplate getCalendarTemplate() {
             return calendarTemplate;
         }
 
@@ -64,11 +63,9 @@ public class XMLSaxConfigParser implements ConfigParser {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             nodeName = qName;
             if (nodeName.equals(XMLSaxFieldNames.ANCHOR_WEEKDAY.getFieldName())) {
-                //TODO попытаться в список положить объект, а потом использовать new
-                DayTemplate day = new DayTemplate();
-                day.clone(dayConstructor);
-                calendarTemplate.setAnchorWeekDay(day);
-                //TODO вместо reset использовать new
+                //TODO попытаться в список положить объект, а потом использовать new DONE
+                calendarTemplate.setAnchorWeekDay(dayConstructor);
+                //TODO вместо reset использовать new DONE
                 dayConstructor = new DayTemplate();
                 return;
             }
@@ -89,21 +86,17 @@ public class XMLSaxConfigParser implements ConfigParser {
                 return;
             }
             if (nodeName.equals(XMLSaxFieldNames.YEAR_CONFIG.getFieldName())) {
-                YearTemplate year = new YearTemplate();
-                year.clone( yearConstructor);
-                calendarTemplate.addYear(year);
-                yearConstructor.resetYearTemplate();
+                calendarTemplate.addYear(yearConstructor);
+                yearConstructor = new YearTemplate();
                 return;
             }
             if (nodeName.equals(XMLSaxFieldNames.MONTH_CONFIG.getFieldName())) {
                 try {
-                    MonthTemplate month = new MonthTemplate();
-                    month.clone(monthConstructor);
-                    yearConstructor.addMonth(month);
+                    yearConstructor.addMonth(monthConstructor);
+                    monthConstructor = new MonthTemplate();
                 } catch (ConfigurationException e) {
                     throw new SAXException(e);
                 }
-                monthConstructor.resetMonth();
                 return;
             }
             if (nodeName.equals(XMLSaxFieldNames.NAME_OF_MONTH.getFieldName())) {
@@ -131,35 +124,25 @@ public class XMLSaxConfigParser implements ConfigParser {
                 return;
             }
             if (nodeName.equals(XMLSaxFieldNames.WEEK.getFieldName())) {
-                WeekTemplate week = new WeekTemplate();
-                week.clone(weekConstructor);
-                calendarTemplate.setWeek(week);
-                weekConstructor.resetWeekConfig();
+                calendarTemplate.setWeek(weekConstructor);
+                weekConstructor = new WeekTemplate();
                 return;
             }
             if (nodeName.equals(XMLSaxFieldNames.WEEKDAY_NAME.getFieldName())) {
                 try {
-                    DayTemplate day = new DayTemplate();
-                    day.clone(dayConstructor);
-                    weekConstructor.addWeekDay(day);
+                    weekConstructor.addWeekDay(dayConstructor);
+                    dayConstructor = new DayTemplate();
                 } catch (ConfigurationException e) {
                     throw new SAXException(e);
                 }
-                dayConstructor.resetDay();
                 return;
             }
         }
 
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
-            //TODO Перевести на new String, что есть плохого в String
-            information = "";
-            for (Integer i = start; i < start + length; i++) {
-                information = information + String.valueOf(ch[i]);
-            }
-            if (information.equals("")) {
-                return;
-            }
+            //TODO Перевести на new String, что есть плохого в String DONE
+            information = new String(ch, start, length);
         }
     }
 

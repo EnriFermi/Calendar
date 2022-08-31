@@ -3,11 +3,10 @@ package ru.study.calendar.config.domain.impl;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
-import ru.study.calendar.config.domain.inter.reading.IDayTemplateForReading;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Setter(AccessLevel.PUBLIC)
-public class DayTemplate implements IDayTemplateForReading {
+public class DayTemplate {
     /**
      * Конструктор дня недели по передаваемому JSON конфигу
      * @param  Объект JSON конфига, хранящий информацию о конкретном дне
@@ -23,7 +22,6 @@ public class DayTemplate implements IDayTemplateForReading {
      * Указание рабочий ли день
      */
     private Boolean weekDayWorkOut;
-    @Override
     public String getDayName() {
         return dayName;
     }
@@ -31,16 +29,9 @@ public class DayTemplate implements IDayTemplateForReading {
      * Метод получения информации рабочий ли день
      * @return Возвращает boolean значение рабочий ли день
      */
-    @Override
     public Boolean isDefaultDayWorkOut() {
         return this.weekDayWorkOut;
     }
 
-    public void resetDay() {
-    }
 
-    public void clone(DayTemplate dayConstructor) {
-        dayName = dayConstructor.getDayName();
-        weekDayWorkOut = dayConstructor.isDefaultDayWorkOut();
-    }
 }

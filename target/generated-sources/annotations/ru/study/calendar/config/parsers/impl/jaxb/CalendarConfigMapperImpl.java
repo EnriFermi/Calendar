@@ -11,7 +11,7 @@ import ru.study.calendar.config.domain.impl.YearTemplate;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-29T11:46:22+0300",
+    date = "2022-08-31T18:10:51+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 18.0.1.1 (Oracle Corporation)"
 )
 public class CalendarConfigMapperImpl extends CalendarConfigMapper {
@@ -47,14 +47,15 @@ public class CalendarConfigMapperImpl extends CalendarConfigMapper {
 
         YearTemplate yearTemplate = new YearTemplate();
 
+        List<JaxbMonthConfig> jaxbMonthConfigList = yearConfigMonthListJaxbMonthConfigList( yearConfig );
         if ( yearTemplate.getMonthList() != null ) {
-            List<MonthTemplate> list = monthListMapper( yearConfig.getMonthList() );
+            List<MonthTemplate> list = jaxbMonthConfigListToMonthTemplateList( jaxbMonthConfigList );
             if ( list != null ) {
                 yearTemplate.getMonthList().addAll( list );
             }
         }
 
-        setDayQuantity( yearTemplate );
+        yearTemplate.setDayQuantity( yearConfig.getMonthList().getJaxbMonthConfigList().stream().map(monthTemplate -> monthTemplate.getDayCount()).reduce((i, j) -> i + j).orElse(0) );
 
         return yearTemplate;
     }
@@ -69,8 +70,16 @@ public class CalendarConfigMapperImpl extends CalendarConfigMapper {
 
         monthTemplate.setName( monthConfig.getMonthName() );
         monthTemplate.setDayCount( monthConfig.getDayCount() );
-        monthTemplate.setDayWorkOutList( weekDayWorkOutMapper( monthConfig.getDayWorkOutList() ) );
-        monthTemplate.setDayWorkList( weekDayWorkMapper( monthConfig.getDayWorkList() ) );
+        List<Integer> dateOfWorkOutDay = monthConfigDayWorkOutListDateOfWorkOutDay( monthConfig );
+        List<Integer> list = dateOfWorkOutDay;
+        if ( list != null ) {
+            monthTemplate.setDayWorkOutList( new ArrayList<Integer>( list ) );
+        }
+        List<Integer> dateOfWorkDay = monthConfigDayWorkListDateOfWorkDay( monthConfig );
+        List<Integer> list1 = dateOfWorkDay;
+        if ( list1 != null ) {
+            monthTemplate.setDayWorkList( new ArrayList<Integer>( list1 ) );
+        }
 
         return monthTemplate;
     }
@@ -97,14 +106,15 @@ public class CalendarConfigMapperImpl extends CalendarConfigMapper {
 
         WeekTemplate weekTemplate = new WeekTemplate();
 
+        List<JaxbDayConfig> jaxbWeekDayConfigList = jaxbWeekJaxbWeekDayNameListJaxbWeekDayConfigList( jaxbWeek );
         if ( weekTemplate.getWeekDayNameList() != null ) {
-            List<DayTemplate> list = weekDayListMapper( jaxbWeek.getJaxbWeekDayNameList() );
+            List<DayTemplate> list = jaxbDayConfigListToDayTemplateList( jaxbWeekDayConfigList );
             if ( list != null ) {
                 weekTemplate.getWeekDayNameList().addAll( list );
             }
         }
 
-        setWeekDayCount( weekTemplate );
+        weekTemplate.setWeekDayCount( jaxbWeek.getJaxbWeekDayNameList().getJaxbWeekDayConfigList().size() );
 
         return weekTemplate;
     }
@@ -132,6 +142,92 @@ public class CalendarConfigMapperImpl extends CalendarConfigMapper {
         List<YearTemplate> list1 = new ArrayList<YearTemplate>( list.size() );
         for ( JaxbYearConfig jaxbYearConfig : list ) {
             list1.add( yearMapper( jaxbYearConfig ) );
+        }
+
+        return list1;
+    }
+
+    private List<JaxbMonthConfig> yearConfigMonthListJaxbMonthConfigList(JaxbYearConfig jaxbYearConfig) {
+        if ( jaxbYearConfig == null ) {
+            return null;
+        }
+        JaxbMonthList monthList = jaxbYearConfig.getMonthList();
+        if ( monthList == null ) {
+            return null;
+        }
+        List<JaxbMonthConfig> jaxbMonthConfigList = monthList.getJaxbMonthConfigList();
+        if ( jaxbMonthConfigList == null ) {
+            return null;
+        }
+        return jaxbMonthConfigList;
+    }
+
+    protected List<MonthTemplate> jaxbMonthConfigListToMonthTemplateList(List<JaxbMonthConfig> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<MonthTemplate> list1 = new ArrayList<MonthTemplate>( list.size() );
+        for ( JaxbMonthConfig jaxbMonthConfig : list ) {
+            list1.add( monthMapper( jaxbMonthConfig ) );
+        }
+
+        return list1;
+    }
+
+    private List<Integer> monthConfigDayWorkOutListDateOfWorkOutDay(JaxbMonthConfig jaxbMonthConfig) {
+        if ( jaxbMonthConfig == null ) {
+            return null;
+        }
+        JaxbDayWorkOutList dayWorkOutList = jaxbMonthConfig.getDayWorkOutList();
+        if ( dayWorkOutList == null ) {
+            return null;
+        }
+        List<Integer> dateOfWorkOutDay = dayWorkOutList.getDateOfWorkOutDay();
+        if ( dateOfWorkOutDay == null ) {
+            return null;
+        }
+        return dateOfWorkOutDay;
+    }
+
+    private List<Integer> monthConfigDayWorkListDateOfWorkDay(JaxbMonthConfig jaxbMonthConfig) {
+        if ( jaxbMonthConfig == null ) {
+            return null;
+        }
+        JaxbDayWorkList dayWorkList = jaxbMonthConfig.getDayWorkList();
+        if ( dayWorkList == null ) {
+            return null;
+        }
+        List<Integer> dateOfWorkDay = dayWorkList.getDateOfWorkDay();
+        if ( dateOfWorkDay == null ) {
+            return null;
+        }
+        return dateOfWorkDay;
+    }
+
+    private List<JaxbDayConfig> jaxbWeekJaxbWeekDayNameListJaxbWeekDayConfigList(JaxbWeek jaxbWeek) {
+        if ( jaxbWeek == null ) {
+            return null;
+        }
+        JaxbWeekDayNameList jaxbWeekDayNameList = jaxbWeek.getJaxbWeekDayNameList();
+        if ( jaxbWeekDayNameList == null ) {
+            return null;
+        }
+        List<JaxbDayConfig> jaxbWeekDayConfigList = jaxbWeekDayNameList.getJaxbWeekDayConfigList();
+        if ( jaxbWeekDayConfigList == null ) {
+            return null;
+        }
+        return jaxbWeekDayConfigList;
+    }
+
+    protected List<DayTemplate> jaxbDayConfigListToDayTemplateList(List<JaxbDayConfig> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<DayTemplate> list1 = new ArrayList<DayTemplate>( list.size() );
+        for ( JaxbDayConfig jaxbDayConfig : list ) {
+            list1.add( dayMapper( jaxbDayConfig ) );
         }
 
         return list1;

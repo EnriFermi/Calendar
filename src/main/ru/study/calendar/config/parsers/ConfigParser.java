@@ -1,6 +1,6 @@
 package ru.study.calendar.config.parsers;
 
-import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 /**
@@ -9,9 +9,10 @@ import ru.study.calendar.exceptions.ConfigurationException;
 public interface ConfigParser {
     /**
      * Парсит конфиг по заданному адресу
+     *
      * @param configPath Адрес конфига
      * @return Объект Конфигурации календаря
      * @throws ConfigurationException
      */
-    public ICalendarTemplateForReading parse(String configPath) throws ConfigurationException;
+    public CalendarTemplate parse(String configPath) throws ConfigurationException;
 }

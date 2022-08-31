@@ -1,13 +1,12 @@
 package ru.study.calendar.config.domain.impl;
 
-import ru.study.calendar.config.domain.inter.reading.IYearTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class YearTemplate implements IYearTemplateForReading {
+public class YearTemplate {
     /**
      * Список месяцев в году
      */
@@ -34,22 +33,11 @@ public class YearTemplate implements IYearTemplateForReading {
             throw new ConfigurationException("Не уникальное название месяца: " + month.getName());
         }
     }
-    public void resetYearTemplate() {
-        dayQuantity = 0;
-        monthList.clear();
-    }
 
-    public void clone(YearTemplate yearConstructor) {
-        dayQuantity = yearConstructor.getDayQuantity();
-        monthList.addAll(yearConstructor.getMonthList());
-    }
-
-    @Override
     public Integer getDayQuantity() {
         return dayQuantity;
     }
 
-    @Override
     public List<MonthTemplate> getMonthList() {
         return monthList;
     }

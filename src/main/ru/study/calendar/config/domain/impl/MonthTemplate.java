@@ -3,7 +3,6 @@ package ru.study.calendar.config.domain.impl;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
-import ru.study.calendar.config.domain.inter.reading.IMonthTemplateForReading;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Setter(value = AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class MonthTemplate implements IMonthTemplateForReading {
+public class MonthTemplate {
     /**
      * Имя месяца
      */
@@ -61,34 +60,20 @@ public class MonthTemplate implements IMonthTemplateForReading {
         }
         dayWorkOutList.add(date);
     }
-    public void resetMonth() {
-        dayWorkOutList.clear();
-        dayWorkList.clear();
-    }
 
-    public void clone(MonthTemplate monthConstructor) {
-        dayCount = monthConstructor.getDayCount();
-        name = monthConstructor.getName();
-        dayWorkOutList.addAll(monthConstructor.getDayWorkOutList());
-        dayWorkList.addAll(monthConstructor.getDayWorkList());
-    }
-
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public Integer getDayCount() {
         return dayCount;
     }
 
-    @Override
+
     public List<Integer> getDayWorkOutList() {
         return dayWorkOutList;
     }
 
-    @Override
     public List<Integer> getDayWorkList() {
         return dayWorkList;
     }

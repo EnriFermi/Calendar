@@ -8,8 +8,9 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.study.calendar.CalendarMain;
-import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
-import ru.study.calendar.config.parsers.ConfigFactory;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.factory.ConfigFactory;
+import ru.study.calendar.config.factory.enums.ConfigTypesEnum;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.impl.Calendar;
 
@@ -25,7 +26,7 @@ public class ConfigTest {
         Logger log = LoggerFactory.getLogger(CalendarMain.class);
 
         try {
-            ICalendarTemplateForReading calendarConfig = ConfigFactory.getCalendarTemplate(configPath, "json.json");
+            CalendarTemplate calendarConfig = ConfigFactory.getCalendarTemplate(configPath, ConfigTypesEnum.JSON);
             ICalendar calendar = new Calendar(2022, calendarConfig);
             log.info(calendar.getWeekDay(8, "August").getWeekDay());
             log.info("В году всего " + calendar.getDayInYearCount() + " дней");

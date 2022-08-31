@@ -1,8 +1,10 @@
-package ru.study.calendar.config.parsers;
+package ru.study.calendar.config.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.factory.enums.ConfigTypesEnum;
+import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jaxb.JaxbConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.JdbcConfigParser;
 import ru.study.calendar.config.parsers.impl.json.JsonConfigParser;
@@ -25,11 +27,11 @@ public interface ConfigFactory {
      * @return Объект Конфигурации календаря
      * @throws ConfigurationException
      */
-    static ICalendarTemplateForReading getCalendarTemplate(String configPath, String configType) throws ConfigurationException {
+    static CalendarTemplate getCalendarTemplate(String configPath, ConfigTypesEnum configType) throws ConfigurationException {
         Logger log = LoggerFactory.getLogger(ConfigFactory.class);
-        //TODO сделать объект с типами из енумов вместо configType
+        //TODO сделать объект с типами из енумов вместо configType DONE
         try {
-            return configSwitch(configType).parse(configPath+ "." +configType.split("\\.")[1]);
+            return configSwitch(configType).parse(configPath+ "." +configType.getTypeOfFile());
         } catch (ConfigurationFactoryException e) {
             log.info(e.getMessage());
             return defaultHandler(configPath, log);
@@ -42,19 +44,19 @@ public interface ConfigFactory {
      * @return Объект парсера
      * @throws ConfigurationException
      */
-    private static ConfigParser configSwitch(String configType) throws ConfigurationException {
+    private static ConfigParser configSwitch(ConfigTypesEnum configType) throws ConfigurationException {
         switch (configType) {
-            case "jdbc.xml":
+            case JDBC:
                 return new JdbcConfigParser();
-            case "dom.xml":
+            case DOM:
                 return new XMLDomConfigParser();
-            case "sax.xml":
+            case SAX:
                 return new XMLSaxConfigParser();
-            case "jaxb.xml":
+            case JAXB:
                 return new JaxbConfigParser();
-            case "json.json":
+            case JSON:
                 return new JsonConfigParser();
-            case "auto":
+            case AUTO:
                 throw new ConfigurationFactoryException("Автоматический выбор типа");
             default:
                 throw new ConfigurationException("Отсутствует тип конфигурации");
@@ -68,11 +70,12 @@ public interface ConfigFactory {
      * @return Объект Конфигурации календаря
      * @throws ConfigurationException
      */
-    private static ICalendarTemplateForReading defaultHandler(String configPath, Logger log) throws ConfigurationException {
-        List<String> list = Arrays.stream(new String[] {"dom.xml", "sax.xml", "json.json", "jaxb.xml", "jdbc.xml"}).toList();
-        for (String configType:list) {
+    private static CalendarTemplate defaultHandler(String configPath, Logger log) throws ConfigurationException {
+        List<ConfigTypesEnum> list = Arrays.stream(new ConfigTypesEnum[] {ConfigTypesEnum.DOM, ConfigTypesEnum.SAX,
+                ConfigTypesEnum.JSON, ConfigTypesEnum.JAXB, ConfigTypesEnum.JDBC}).toList();
+        for (ConfigTypesEnum configType:list) {
             try {
-                return configSwitch(configType).parse(configPath + "." + configType.split("\\.")[1]);
+                return configSwitch(configType).parse(configPath + "." + configType.getTypeOfFile());
             } catch (ConfigurationException e) {
                 log.warn("ConfigType: " + configType + "\n Error: ", e);
             }

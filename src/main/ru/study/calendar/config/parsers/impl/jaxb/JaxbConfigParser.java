@@ -1,7 +1,7 @@
 package ru.study.calendar.config.parsers.impl.jaxb;
 
 import org.mapstruct.factory.Mappers;
-import ru.study.calendar.config.domain.inter.reading.ICalendarTemplateForReading;
+import ru.study.calendar.config.domain.impl.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JaxbParsingException;
@@ -12,7 +12,7 @@ import java.io.File;
 
 public class JaxbConfigParser implements ConfigParser {
     @Override
-    public ICalendarTemplateForReading parse(String configPath) throws ConfigurationException {
+    public CalendarTemplate parse(String configPath) throws ConfigurationException {
         JaxbCalendarConfig jaxbCalendarConfig;
         File file = new File(configPath);
         try {
