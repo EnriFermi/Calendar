@@ -1,6 +1,6 @@
 package ru.study.calendar.config.factory.enums;
 
-public enum ConfigTypesEnum {
+public enum ConfigTypeEnum {
     JDBC("xml"),
     DOM("xml"),
     SAX("xml"),
@@ -11,7 +11,7 @@ public enum ConfigTypesEnum {
     public String getTypeOfFile() {
         return this.fieldName;
     }
-    ConfigTypesEnum(String fieldName) {
+    ConfigTypeEnum(String fieldName) {
         this.fieldName = fieldName;
     }
 }

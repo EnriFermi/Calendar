@@ -1,15 +1,17 @@
-package ru.study.calendar.config.parsers.impl.jaxb;
+package ru.study.calendar.config.parsers.impl.xml.jaxb;
 
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import ru.study.calendar.config.domain.impl.*;
+import ru.study.calendar.config.domain.CalendarTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.MonthTemplate;
+import ru.study.calendar.config.domain.WeekTemplate;
+import ru.study.calendar.config.domain.YearTemplate;
 
-//TODO почитать про параметры , всегда советую использовать ReportingPolicy.ERROR DONE
-@org.mapstruct.Mapper(unmappedTargetPolicy = ReportingPolicy.WARN)
+@org.mapstruct.Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public abstract class CalendarConfigMapper {
 
     @Mapping(target = "anchorWeekDay", source = "jaxbDayConfig")
-    //TODO аналогично переделать, и заменить название метода DONE
     @Mapping(target = "yearList", source = "jaxbYearList.yearConfigList")
     @Mapping(target = "beginningYear", source = "beginningYear")
     @Mapping(target = "endYear", source = "endYear")

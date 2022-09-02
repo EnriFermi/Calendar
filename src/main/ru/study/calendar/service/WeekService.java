@@ -1,7 +1,7 @@
 package ru.study.calendar.service;
 
-import ru.study.calendar.config.domain.impl.DayTemplate;
-import ru.study.calendar.config.domain.impl.WeekTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.WeekTemplate;
 
 public interface WeekService {
     /**

@@ -1,4 +1,4 @@
-package ru.study.calendar.config.parsers.impl.jaxb.enums;
+package ru.study.calendar.config.parsers.impl.xml.jaxb.enums;
 
 /**
  * Хранит названия полей для парсинга JSON конфига

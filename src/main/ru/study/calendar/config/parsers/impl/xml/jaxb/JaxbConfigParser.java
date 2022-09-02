@@ -1,7 +1,7 @@
-package ru.study.calendar.config.parsers.impl.jaxb;
+package ru.study.calendar.config.parsers.impl.xml.jaxb;
 
 import org.mapstruct.factory.Mappers;
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JaxbParsingException;

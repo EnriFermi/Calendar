@@ -1,4 +1,4 @@
-package ru.study.calendar.config.parsers.impl.jaxb;
+package ru.study.calendar.config.parsers.impl.xml.jaxb;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class JaxbYearList {
-    @XmlElement(name = "yearConfig")
-    private List<JaxbYearConfig> yearConfigList = new ArrayList<>();
+public class JaxbMonthList {
+    @XmlElement(name = "monthConfig")
+    private List<JaxbMonthConfig> jaxbMonthConfigList = new ArrayList<>();
 }

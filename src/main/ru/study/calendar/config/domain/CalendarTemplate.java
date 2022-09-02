@@ -1,11 +1,10 @@
-package ru.study.calendar.config.domain.impl;
+package ru.study.calendar.config.domain;
 
 import lombok.AccessLevel;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-//TODO интерфейсы используются если класс умеет делать действия, а не является хранилищем DONE
 public class CalendarTemplate {
     /**
      * День первого числа первого месяца привязочного года

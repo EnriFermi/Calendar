@@ -1,6 +1,6 @@
 package ru.study.calendar.config.parsers.impl.jdbc;
 
-import ru.study.calendar.config.domain.impl.DayTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 
 import java.sql.ResultSet;

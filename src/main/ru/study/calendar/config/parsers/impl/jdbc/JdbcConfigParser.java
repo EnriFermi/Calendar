@@ -1,6 +1,6 @@
 package ru.study.calendar.config.parsers.impl.jdbc;
 
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.service.db.connection.ConnectionService;
@@ -11,9 +11,10 @@ import ru.study.calendar.exceptions.JdbcParsingException;
 import java.sql.*;
 
 public class JdbcConfigParser implements ConfigParser {
+    //TODO на вход требуется ИД календаря + сделать проверки от дурака
     @Override
     public CalendarTemplate parse(String configPath) throws ConfigurationException {
-        ru.study.calendar.config.domain.impl.CalendarTemplate calendarTemplate = new ru.study.calendar.config.domain.impl.CalendarTemplate();
+        CalendarTemplate calendarTemplate = new CalendarTemplate();
         ServerConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPath);
         Integer anchorWeekDayKey = null;
         Integer calendarIndex = 0;
@@ -29,8 +30,6 @@ public class JdbcConfigParser implements ConfigParser {
                 calendarTemplate.setEndYear(calendarSet.getInt(JdbcFieldNames.END_YEAR.getFieldName()));
                 anchorWeekDayKey = calendarSet.getInt(JdbcFieldNames.ANCHOR_WEEKDAY_KEY.getFieldName());
             }
-            ;
-            //TODO использовать try with, чтобы не вызывать close DONE
             PreparedStatement anchorDayStatement = connection.prepareStatement("select * from "
                     + JdbcFieldNames.DAY_LIST.getFieldName() + " where "
                     + JdbcFieldNames.DAY_ID.getFieldName() + " = ?");

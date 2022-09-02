@@ -2,7 +2,7 @@ package ru.study.calendar.config.parsers.impl.xml.dom;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import ru.study.calendar.config.domain.impl.WeekTemplate;
+import ru.study.calendar.config.domain.WeekTemplate;
 import ru.study.calendar.config.parsers.impl.xml.dom.enums.XMLDomFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.XmlDomParsingException;

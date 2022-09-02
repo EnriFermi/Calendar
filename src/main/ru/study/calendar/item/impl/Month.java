@@ -1,9 +1,9 @@
 package ru.study.calendar.item.impl;
 
 import lombok.Getter;
-import ru.study.calendar.config.domain.impl.DayTemplate;
-import ru.study.calendar.config.domain.impl.MonthTemplate;
-import ru.study.calendar.config.domain.impl.WeekTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.MonthTemplate;
+import ru.study.calendar.config.domain.WeekTemplate;
 import ru.study.calendar.item.IDay;
 import ru.study.calendar.item.IMonth;
 import ru.study.calendar.service.WeekService;

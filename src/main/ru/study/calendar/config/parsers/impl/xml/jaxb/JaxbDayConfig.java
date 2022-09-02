@@ -1,4 +1,4 @@
-package ru.study.calendar.config.parsers.impl.jaxb;
+package ru.study.calendar.config.parsers.impl.xml.jaxb;
 
 import lombok.Getter;
 import lombok.Setter;

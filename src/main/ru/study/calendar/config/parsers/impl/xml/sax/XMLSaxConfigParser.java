@@ -3,7 +3,11 @@ package ru.study.calendar.config.parsers.impl.xml.sax;
 import lombok.Getter;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import ru.study.calendar.config.domain.impl.*;
+import ru.study.calendar.config.domain.CalendarTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.MonthTemplate;
+import ru.study.calendar.config.domain.WeekTemplate;
+import ru.study.calendar.config.domain.YearTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.xml.sax.enums.XMLSaxFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
@@ -46,7 +50,7 @@ public class XMLSaxConfigParser implements ConfigParser {
 
     private class CalendarConfigHandler extends DefaultHandler {
 
-        private ru.study.calendar.config.domain.impl.CalendarTemplate calendarTemplate = new ru.study.calendar.config.domain.impl.CalendarTemplate();
+        private final CalendarTemplate calendarTemplate = new CalendarTemplate();
 
         private YearTemplate yearConstructor = new YearTemplate();
         private MonthTemplate monthConstructor = new MonthTemplate();
@@ -63,9 +67,7 @@ public class XMLSaxConfigParser implements ConfigParser {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             nodeName = qName;
             if (nodeName.equals(XMLSaxFieldNames.ANCHOR_WEEKDAY.getFieldName())) {
-                //TODO попытаться в список положить объект, а потом использовать new DONE
                 calendarTemplate.setAnchorWeekDay(dayConstructor);
-                //TODO вместо reset использовать new DONE
                 dayConstructor = new DayTemplate();
                 return;
             }
@@ -140,8 +142,7 @@ public class XMLSaxConfigParser implements ConfigParser {
         }
 
         @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            //TODO Перевести на new String, что есть плохого в String DONE
+        public void characters(char[] ch, int start, int length) {
             information = new String(ch, start, length);
         }
     }

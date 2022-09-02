@@ -1,9 +1,9 @@
 package ru.study.calendar.item.impl;
 
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
-import ru.study.calendar.config.domain.impl.DayTemplate;
-import ru.study.calendar.config.domain.impl.MonthTemplate;
-import ru.study.calendar.config.domain.impl.YearTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.MonthTemplate;
+import ru.study.calendar.config.domain.YearTemplate;
 import ru.study.calendar.exceptions.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.IDay;

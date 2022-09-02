@@ -3,15 +3,26 @@ package ru.study.calendar.config.parsers.impl.jaxb;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
-import ru.study.calendar.config.domain.impl.DayTemplate;
-import ru.study.calendar.config.domain.impl.MonthTemplate;
-import ru.study.calendar.config.domain.impl.WeekTemplate;
-import ru.study.calendar.config.domain.impl.YearTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.MonthTemplate;
+import ru.study.calendar.config.domain.WeekTemplate;
+import ru.study.calendar.config.domain.YearTemplate;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.CalendarConfigMapper;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbCalendarConfig;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbDayConfig;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbDayWorkList;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbDayWorkOutList;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbMonthConfig;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbMonthList;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbWeek;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbWeekDayNameList;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbYearConfig;
+import ru.study.calendar.config.parsers.impl.xml.jaxb.JaxbYearList;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-08-31T18:10:51+0300",
+    date = "2022-09-02T10:17:40+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 18.0.1.1 (Oracle Corporation)"
 )
 public class CalendarConfigMapperImpl extends CalendarConfigMapper {

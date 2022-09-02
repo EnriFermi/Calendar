@@ -1,6 +1,6 @@
 package ru.study.calendar.service;
 
-import ru.study.calendar.config.domain.impl.YearTemplate;
+import ru.study.calendar.config.domain.YearTemplate;
 
 public interface YearService {
     /**

@@ -1,9 +1,9 @@
 package ru.study.calendar.config.service.converter;
 
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
-import ru.study.calendar.config.domain.impl.DayTemplate;
-import ru.study.calendar.config.domain.impl.MonthTemplate;
-import ru.study.calendar.config.domain.impl.YearTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
+import ru.study.calendar.config.domain.DayTemplate;
+import ru.study.calendar.config.domain.MonthTemplate;
+import ru.study.calendar.config.domain.YearTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.service.ConfigConverter;
@@ -15,11 +15,10 @@ import ru.study.calendar.exceptions.JdbcParsingException;
 import java.sql.*;
 
 public class Universal2DbConverter implements ConfigConverter {
+
     public void convert(ConfigParser configParser, String configPathFrom, String configPathDb) throws ConfigurationException {
         CalendarTemplate calendarTemplate = configParser.parse(configPathFrom);
-        //TODO транзакции? DONE
         ServerConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPathDb);
-        //TODO кажется лишнее DONE
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(serverConfiguration.getConnectionURL(),
@@ -37,8 +36,6 @@ public class Universal2DbConverter implements ConfigConverter {
 
             calendarStatement.executeUpdate();
             Integer calendarIndex = getIndex(calendarStatement);
-            //TODO посмотреть calendarStatement.getResultSet() DONE (получилось с getGeneratedKeys)
-            //TODO почитать про preparestatment DONE
 
             PreparedStatement yearStatement = connection.prepareStatement(
                     "insert into " + JdbcFieldNames.YEAR_LIST.getFieldName()

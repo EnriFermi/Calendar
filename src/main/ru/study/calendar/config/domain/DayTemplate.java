@@ -1,4 +1,4 @@
-package ru.study.calendar.config.domain.impl;
+package ru.study.calendar.config.domain;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

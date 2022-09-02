@@ -1,6 +1,6 @@
 package ru.study.calendar.config.parsers;
 
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.exceptions.ConfigurationException;
 
 /**

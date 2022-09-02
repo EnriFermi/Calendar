@@ -1,4 +1,4 @@
-package ru.study.calendar.config.parsers.impl.jaxb;
+package ru.study.calendar.config.parsers.impl.xml.jaxb;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class JaxbWeekDayNameList {
-    @XmlElement(name = "weekDayName")
-    private List<JaxbDayConfig> jaxbWeekDayConfigList = new ArrayList<>();
+public class JaxbDayWorkList {
+    @XmlElement(name = "dateOfWorkDay")
+    private List<Integer> dateOfWorkDay = new ArrayList<>();
 }

@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import ru.study.calendar.config.domain.impl.CalendarTemplate;
+import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class JsonConfigParser implements ConfigParser {
     @Override
     public CalendarTemplate parse(String configPath) throws ConfigurationException {
-        ru.study.calendar.config.domain.impl.CalendarTemplate calendarTemplate = new ru.study.calendar.config.domain.impl.CalendarTemplate();
+        CalendarTemplate calendarTemplate = new CalendarTemplate();
         JSONParser parserOfCalendar = new JSONParser();
         FileReader configFile;
         try {
