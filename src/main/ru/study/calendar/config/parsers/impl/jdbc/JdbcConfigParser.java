@@ -16,6 +16,7 @@ public class JdbcConfigParser implements ConfigParser {
         ru.study.calendar.config.domain.impl.CalendarTemplate calendarTemplate = new ru.study.calendar.config.domain.impl.CalendarTemplate();
         ServerConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPath);
         Integer anchorWeekDayKey = null;
+        Integer calendarIndex = 0;
         try (Connection connection = DriverManager.getConnection(serverConfiguration.getConnectionURL(),
                 serverConfiguration.getUserName(), serverConfiguration.getPassword())) {
             PreparedStatement calendarListStatement = connection.prepareStatement("select * from "
@@ -23,6 +24,7 @@ public class JdbcConfigParser implements ConfigParser {
             try(ResultSet calendarSet = calendarListStatement
                     .executeQuery()) {
                 calendarSet.next();
+                calendarIndex = calendarSet.getInt(JdbcFieldNames.CALENDAR_ID.getFieldName());
                 calendarTemplate.setBeginningYear(calendarSet.getInt(JdbcFieldNames.BEGINNING_YEAR.getFieldName()));
                 calendarTemplate.setEndYear(calendarSet.getInt(JdbcFieldNames.END_YEAR.getFieldName()));
                 anchorWeekDayKey = calendarSet.getInt(JdbcFieldNames.ANCHOR_WEEKDAY_KEY.getFieldName());
@@ -38,7 +40,10 @@ public class JdbcConfigParser implements ConfigParser {
                 calendarTemplate.setAnchorWeekDay(JdbcDayConfigParser.parse(anchorDaySet));
             }
             PreparedStatement yearListStatement = connection.prepareStatement("select * from "
-                    + JdbcFieldNames.YEAR_LIST.getFieldName());
+                    + JdbcFieldNames.YEAR_LIST.getFieldName()
+                    + " where " + JdbcFieldNames.CALENDAR_ID.getFieldName()
+                    + " = ?");
+            yearListStatement.setInt(1, calendarIndex);
             try(ResultSet yearListSet = yearListStatement.executeQuery()) {
                 Integer index;
                 while (yearListSet.next()) {
@@ -46,7 +51,7 @@ public class JdbcConfigParser implements ConfigParser {
                     calendarTemplate.addYear(JdbcYearConfigParser.parse(connection, index));
                 }
             }
-            calendarTemplate.setWeek(JdbcWeekConfigParser.parse(connection));
+            calendarTemplate.setWeek(JdbcWeekConfigParser.parse(connection, calendarIndex));
         } catch (SQLException e) {
             throw new JdbcParsingException(e);
         }

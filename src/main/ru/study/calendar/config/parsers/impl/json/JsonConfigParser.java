@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import ru.study.calendar.config.domain.impl.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
+import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.parsers.impl.json.enums.JsonFieldNames;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.IOConfigurationException;
@@ -34,6 +35,7 @@ public class JsonConfigParser implements ConfigParser {
         } catch (IOException e) {
             throw new IOConfigurationException(e);
         }
+        System.out.println(configOfCalendar);
         // Получаем день недели 1 дня 1 месяца 1 года
         calendarTemplate.setAnchorWeekDay(JsonDayConfigParser.parse((JSONObject) configOfCalendar.get(JsonFieldNames.ANCHOR_WEEKDAY.getFieldName())));
         // Год начала допустимого интервала календаря
@@ -43,6 +45,7 @@ public class JsonConfigParser implements ConfigParser {
         calendarTemplate.setEndYear(Integer.valueOf(configOfCalendar.get(JsonFieldNames.END_YEAR.getFieldName()).toString()));
         // Получаем список годов
         JSONArray yearArray = (JSONArray) configOfCalendar.get(JsonFieldNames.YEAR_LIST.getFieldName());
+        yearArray.stream().map(jsonObject -> Integer.valueOf(((JSONObject) jsonObject).get(JdbcFieldNames.DATE_OF_WORK_DAY.getFieldName()).toString()));
         for (Object year:yearArray) {
             calendarTemplate.addYear( JsonYearConfigParser.parse((JSONObject) year));
         }
