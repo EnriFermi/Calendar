@@ -1,6 +1,0 @@
-"src/test/resources/dateOfWorkOutDay_is_outOfRange", "Номер дополнительного нерабочего дня за границей допустимых значений"
-"src/test/resources/normalList", ""
-"src/test/resources/sameDayInWorkOutList_and_inWorkList", "Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней"
-"src/test/resources/sameMonthName", "Не уникальное название месяца: "
-"src/test/resources/sameWeekDayName", "Не уникальное название дня недели: "
-"src/test/resources/similarDays_in_dayWorkOutList", "Коллапс имен при попытке инициализировать список дополнительных выходных и рабочих дней"

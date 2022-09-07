@@ -4,14 +4,6 @@ import ru.study.calendar.exceptions.OutOfBoundException;
 import ru.study.calendar.item.IDay;
 
 public class CalendarService {
-    /**
-     * Конструктор календаря по номеру года из допустимого интервала
-     *
-     * @param numberYear     Номер года
-     * @param calendarConfig
-     * @throws Exception
-     */
-    //TODO утащить в сервис, возможно интерфейсы для хранения календаря не потребуются DONE
 
     /**
      * Выдает по номеру дня и названию месяца день недели
@@ -34,6 +26,7 @@ public class CalendarService {
      * Выдает количество дней в календаре
      * @return Количество дней в календаре
      */
+    //TODO гетеры только в самом классе
     public static Integer getDayInYearCount(Calendar calendar) {
         return calendar.getDayQuantity();
     }

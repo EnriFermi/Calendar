@@ -25,7 +25,6 @@ public class CalendarMain {
             log.info(CalendarService.getWeekDay(calendar, 10, "August").getWeekDay());
             log.info("В году всего " + CalendarService.getDayInYearCount(calendar) + " дней");
         } catch (ConfigurationException err) {
-            //TODO разобраться с абстрактным throws Exception DONE
             log.error("Error: ", err);
             throw err;
         }
