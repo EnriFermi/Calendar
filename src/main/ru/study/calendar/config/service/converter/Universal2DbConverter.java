@@ -8,7 +8,7 @@ import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.service.ConfigConverter;
 import ru.study.calendar.config.service.db.connection.ConnectionService;
-import ru.study.calendar.config.service.db.connection.ServerConfiguration;
+import ru.study.calendar.config.service.db.connection.ServerConnectionConfiguration;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JdbcParsingException;
 
@@ -18,13 +18,13 @@ public class Universal2DbConverter implements ConfigConverter {
 
     public void convert(ConfigParser configParser, String configPathFrom, String configPathDb) throws ConfigurationException {
         CalendarTemplate calendarTemplate = configParser.parse(configPathFrom);
-        ServerConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPathDb);
+        ServerConnectionConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPathDb);
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(serverConfiguration.getConnectionURL(),
                     serverConfiguration.getUserName(), serverConfiguration.getPassword());
             connection.setAutoCommit(false);
-
+            connection.setTransactionIsolation(2);
             PreparedStatement calendarStatement = connection
                     .prepareStatement("insert into " + JdbcFieldNames.CALENDAR_LIST.getFieldName()
                     + "("+ JdbcFieldNames.ANCHOR_WEEKDAY_KEY.getFieldName()+ ","

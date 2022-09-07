@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ServerConfiguration {
+public class ServerConnectionConfiguration {
     private String userName;
     private String password;
     private String connectionURL;
     private String driverName;
+    private Integer calendarId;
 }

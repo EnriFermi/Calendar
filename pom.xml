@@ -14,13 +14,14 @@
         <slf4j.version>1.7.36</slf4j.version>
         <json-simple.version>1.1.1</json-simple.version>
         <lombok.version>1.18.22</lombok.version>
-        <logback-classic.version>1.2.6</logback-classic.version>
-        <logback-core.version>1.2.6</logback-core.version>
-        <junit.version>5.8.2</junit.version>
+        <logback-classic.version>1.2.11</logback-classic.version>
+        <logback-core.version>1.2.11</logback-core.version>
+        <junit.version>5.9.0</junit.version>
         <jaxb.version>2.3.1</jaxb.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <hibernate.version>5.6.9.Final</hibernate.version>
-        <mysql_driver.version>8.0.28</mysql_driver.version>
+        <mysql_driver.version>8.0.30</mysql_driver.version>
+        <xsd2java.version>2.5.0</xsd2java.version>
     </properties>
     <build>
         <sourceDirectory>src/main</sourceDirectory>
@@ -55,6 +56,25 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>${xsd2java.version}</version>
+                <executions>
+                    <execution>
+                        <id>xsd-to-java</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <packageName>ru.study.calendar.config.parsers.impl.xml.jaxb</packageName>
+                    <sources>
+                        <source>src/main/xsd</source>
+                    </sources>
                 </configuration>
             </plugin>
         </plugins>

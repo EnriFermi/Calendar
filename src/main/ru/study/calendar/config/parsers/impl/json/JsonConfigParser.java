@@ -1,5 +1,4 @@
 package ru.study.calendar.config.parsers.impl.json;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

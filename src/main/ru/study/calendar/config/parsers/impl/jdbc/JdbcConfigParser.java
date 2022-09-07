@@ -4,18 +4,18 @@ import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.parsers.ConfigParser;
 import ru.study.calendar.config.parsers.impl.jdbc.enums.JdbcFieldNames;
 import ru.study.calendar.config.service.db.connection.ConnectionService;
-import ru.study.calendar.config.service.db.connection.ServerConfiguration;
+import ru.study.calendar.config.service.db.connection.ServerConnectionConfiguration;
 import ru.study.calendar.exceptions.ConfigurationException;
 import ru.study.calendar.exceptions.JdbcParsingException;
 
 import java.sql.*;
 
 public class JdbcConfigParser implements ConfigParser {
-    //TODO на вход требуется ИД календаря + сделать проверки от дурака
+    //TODO на вход требуется ИД календаря + сделать проверки от дурака(?) DONE
     @Override
     public CalendarTemplate parse(String configPath) throws ConfigurationException {
         CalendarTemplate calendarTemplate = new CalendarTemplate();
-        ServerConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPath);
+        ServerConnectionConfiguration serverConfiguration = ConnectionService.parseServerConfig(configPath);
         Integer anchorWeekDayKey = null;
         Integer calendarIndex = 0;
         try (Connection connection = DriverManager.getConnection(serverConfiguration.getConnectionURL(),
@@ -24,11 +24,23 @@ public class JdbcConfigParser implements ConfigParser {
                     + JdbcFieldNames.CALENDAR_LIST.getFieldName());
             try(ResultSet calendarSet = calendarListStatement
                     .executeQuery()) {
-                calendarSet.next();
-                calendarIndex = calendarSet.getInt(JdbcFieldNames.CALENDAR_ID.getFieldName());
-                calendarTemplate.setBeginningYear(calendarSet.getInt(JdbcFieldNames.BEGINNING_YEAR.getFieldName()));
-                calendarTemplate.setEndYear(calendarSet.getInt(JdbcFieldNames.END_YEAR.getFieldName()));
-                anchorWeekDayKey = calendarSet.getInt(JdbcFieldNames.ANCHOR_WEEKDAY_KEY.getFieldName());
+                Integer calendarID = 1;
+                Boolean calendarFound = false;
+                while(calendarSet.next()) {
+                    if(calendarID.equals(serverConfiguration.getCalendarId())) {
+                        calendarIndex = calendarSet.getInt(JdbcFieldNames.CALENDAR_ID.getFieldName());
+                        calendarTemplate.setBeginningYear(calendarSet.getInt(JdbcFieldNames.BEGINNING_YEAR.getFieldName()));
+                        calendarTemplate.setEndYear(calendarSet.getInt(JdbcFieldNames.END_YEAR.getFieldName()));
+                        anchorWeekDayKey = calendarSet.getInt(JdbcFieldNames.ANCHOR_WEEKDAY_KEY.getFieldName());
+                        calendarFound = true;
+                        break;
+                    }
+                }
+                if(!calendarFound){
+                    throw new JdbcParsingException("There is no calendar with such id: "
+                            + serverConfiguration.getCalendarId());
+                }
+
             }
             PreparedStatement anchorDayStatement = connection.prepareStatement("select * from "
                     + JdbcFieldNames.DAY_LIST.getFieldName() + " where "

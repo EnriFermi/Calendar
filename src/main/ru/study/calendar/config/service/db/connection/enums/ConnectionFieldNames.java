@@ -19,7 +19,11 @@ public enum ConnectionFieldNames {
     /*
      * Название драйвера JDBC
      */
-    DRIVER_NAME("driverName");
+    DRIVER_NAME("driverName"),
+    /*
+     * ID календаря в базе данных, который надо извлечь
+     */
+    CALENDAR_ID("calendarID");
 
     private String fieldName;
     public String getFieldName() {

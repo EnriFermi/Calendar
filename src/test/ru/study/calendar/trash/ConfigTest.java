@@ -11,8 +11,8 @@ import ru.study.calendar.CalendarMain;
 import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.factory.ConfigFactory;
 import ru.study.calendar.config.factory.enums.ConfigTypeEnum;
-import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.impl.Calendar;
+import ru.study.calendar.item.impl.CalendarService;
 
 /**
  * @author Romanikhin Valeriy <romanihin@unislabs.com>
@@ -27,9 +27,8 @@ public class ConfigTest {
 
         try {
             CalendarTemplate calendarConfig = ConfigFactory.getCalendarTemplate(configPath, ConfigTypeEnum.JSON);
-            ICalendar calendar = new Calendar(2022, calendarConfig);
-            log.info(calendar.getWeekDay(8, "August").getWeekDay());
-            log.info("В году всего " + calendar.getDayInYearCount() + " дней");
+            Calendar calendar = new Calendar(2022, calendarConfig);
+            log.info(CalendarService.getWeekDay(calendar, 10, "August").getWeekDay());
 
         } catch (Exception err) {
             Assert.assertTrue(err.getMessage().contains(result));

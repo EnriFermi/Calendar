@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="calendarConfig" type="calendarConfig"/>
+
+  <xs:complexType name="monthConfigType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="nameOfMonth"/>
+      <xs:element type="xs:int" name="dayCount"/>
+      <xs:element type="dayWorkListType" name="dayWorkList"/>
+      <xs:element type="dayWorkOutListType" name="dayWorkOutList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="monthListType">
+    <xs:sequence>
+      <xs:element type="monthConfigType" name="monthConfig" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dayWorkOutListType">
+    <xs:sequence>
+      <xs:element type="xs:int" name="dateOfWorkOutDay" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dayWorkListType">
+    <xs:sequence>
+      <xs:element type="xs:int" name="dateOfWorkDay" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="yearConfigType">
+    <xs:sequence>
+      <xs:element type="monthListType" name="monthList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="yearListType">
+    <xs:sequence>
+      <xs:element type="yearConfigType" name="yearConfig" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="weekDayNameType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="dayName"/>
+      <xs:element type="xs:boolean" name="weekDayWorkOut"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="weekDayNameListType">
+    <xs:sequence>
+      <xs:element type="weekDayNameType" name="weekDayName" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="weekType">
+    <xs:sequence>
+      <xs:element type="weekDayNameListType" name="weekDayNameList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calendarConfig">
+    <xs:sequence>
+      <xs:element type="weekDayNameType" name="anchorWeekDay"/>
+      <xs:element type="xs:int" name="beginningYear"/>
+      <xs:element type="xs:int" name="endYear"/>
+      <xs:element type="yearListType" name="yearList"/>
+      <xs:element type="weekType" name="week"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

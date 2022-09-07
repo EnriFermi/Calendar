@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 public interface ConnectionService {
-    public static ServerConfiguration parseServerConfig(String configPath) throws JdbcParsingException {
-        ServerConfiguration serverConfiguration = new ServerConfiguration();
+    public static ServerConnectionConfiguration parseServerConfig(String configPath) throws JdbcParsingException {
+        ServerConnectionConfiguration serverConfiguration = new ServerConnectionConfiguration();
         try {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(configPath));
             NodeList configOfConnection = document.getFirstChild().getChildNodes();
@@ -34,6 +34,9 @@ public interface ConnectionService {
                 }
                 if (elementCalendar.getNodeName().equals(ConnectionFieldNames.DRIVER_NAME.getFieldName())) {
                     serverConfiguration.setDriverName(elementCalendar.getTextContent());
+                }
+                if (elementCalendar.getNodeName().equals(ConnectionFieldNames.CALENDAR_ID.getFieldName())) {
+                    serverConfiguration.setCalendarId(Integer.valueOf(elementCalendar.getTextContent()));
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {

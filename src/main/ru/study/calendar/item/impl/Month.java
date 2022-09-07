@@ -6,7 +6,6 @@ import ru.study.calendar.config.domain.MonthTemplate;
 import ru.study.calendar.config.domain.WeekTemplate;
 import ru.study.calendar.item.IDay;
 import ru.study.calendar.item.IMonth;
-import ru.study.calendar.service.WeekService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,16 +1,14 @@
-package ru.study.calendar.service;
+package ru.study.calendar.item.impl;
 
-import ru.study.calendar.config.domain.YearTemplate;
-
-public interface YearService {
+public class YearService {
     /**
      * @param name Имя месяца
      * @param year Шаблон года
      * @return Номер месяца с именем name в году
      */
-    static Integer getIndexOfMonthByName(String name, YearTemplate year) {
-        for (int i = 0; i < year.getMonthList().size(); i++) {
-            if (year.getMonthList().get(i).getName().equals(name)) {
+    static Integer getIndexOfMonthByName(String name, Calendar calendar) {
+        for (int i = 0; i < calendar.getArrayOfMonth().size(); i++) {
+            if (calendar.getArrayOfMonth().get(i).getMonthName().equals(name)) {
                 return i;
             }
         }

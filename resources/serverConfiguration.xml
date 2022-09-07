@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<serverConfig>
+<serverConnectionConfig>
     <userName>root</userName>
     <password>12345</password>
     <connectionURL>jdbc:mysql://localhost:3306/CalendarConfiguration</connectionURL>
     <driverName>com.mysql.cj.jdbc.Driver</driverName>
-</serverConfig>
+    <calendarID>1</calendarID>
+</serverConnectionConfig>

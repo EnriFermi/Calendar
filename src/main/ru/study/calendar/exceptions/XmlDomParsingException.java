@@ -4,7 +4,7 @@ package ru.study.calendar.exceptions;
  * Исключение вызванное проблемами при попытке создания конфига
  */
 
-public class XmlDomParsingException extends ConfigurationException{
+public class XmlDomParsingException extends ConfigurationException {
 
     public XmlDomParsingException() {
         super("Исключение при попытке получения данных из файлов конфигурации в формате XML Dom способом");

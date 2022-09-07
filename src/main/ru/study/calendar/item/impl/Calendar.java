@@ -1,31 +1,32 @@
 package ru.study.calendar.item.impl;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.domain.DayTemplate;
 import ru.study.calendar.config.domain.MonthTemplate;
 import ru.study.calendar.config.domain.YearTemplate;
 import ru.study.calendar.exceptions.OutOfBoundException;
 import ru.study.calendar.item.ICalendar;
-import ru.study.calendar.item.IDay;
-import ru.study.calendar.service.WeekService;
-import ru.study.calendar.service.YearService;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter(AccessLevel.PACKAGE)
 public class Calendar implements ICalendar {
     /**
      * Список месяцев в календаре
      */
     private final List<Month> arrayOfMonth;
+
     /**
      * Номер года в цикле
      */
-    private final Integer indexOfYearInConfig;
+    private final Integer dayQuantity;
+    //private final Integer indexOfYearInConfig;
     /**
      * Конфиг календаря
      */
-    private final CalendarTemplate calendarConfig;
+    //private final CalendarTemplate calendarConfig;
 
     //-------------------------------------
 
@@ -36,19 +37,16 @@ public class Calendar implements ICalendar {
      * @throws Exception
      */
     public Calendar(int numberYear, CalendarTemplate calendarConfig) throws Exception {
-        this.calendarConfig = calendarConfig;
         /*
          * Проверка, что введенный номер года соответствует допустимому диапазону
          */
-        checkForValid(numberYear);
-
+        checkForValid(numberYear, calendarConfig);
         this.arrayOfMonth = new ArrayList<>();
         /*
          * anchor - Номер дня недели 1 числа i месяца года, по которому создается календарь
          * weekSize - Количество дней недели
          */
-        this.indexOfYearInConfig = (numberYear - 1) % this.calendarConfig.getYearList().size();
-        fillMonthList(numberYear);
+        this.dayQuantity = fillMonthList(numberYear, calendarConfig);
     }
 
     /**
@@ -57,8 +55,8 @@ public class Calendar implements ICalendar {
      * @param numberYear Проверяемый номер года
      * @throws Exception
      */
-    private void checkForValid(int numberYear) throws OutOfBoundException {
-        if ((this.calendarConfig.getBeginningYear() > numberYear) && (this.calendarConfig.getEndYear() < numberYear)) {
+    private void checkForValid(int numberYear, CalendarTemplate calendarConfig) throws OutOfBoundException {
+        if ((calendarConfig.getBeginningYear() > numberYear) && (calendarConfig.getEndYear() < numberYear)) {
             throw new OutOfBoundException("Номер года вне границ разрешенного диапазона");
         }
     }
@@ -69,15 +67,17 @@ public class Calendar implements ICalendar {
      * @param numberYear Номер года
      * @throws Exception
      */
-    private void fillMonthList(int numberYear) {
-        DayTemplate day = getIndexOfFirstDay(numberYear, this.calendarConfig);
-        YearTemplate year = this.calendarConfig.getYearList().get(this.indexOfYearInConfig);
+    private Integer fillMonthList(int numberYear, CalendarTemplate calendarConfig) {
+        Integer indexOfYearInConfig = (numberYear - 1) % calendarConfig.getYearList().size();
+        DayTemplate day = getIndexOfFirstDay(numberYear, calendarConfig);
+        YearTemplate year = calendarConfig.getYearList().get(indexOfYearInConfig);
         MonthTemplate month;
         for (int i = 0; i < year.getMonthList().size(); i++) {
             month = year.getMonthList().get(i);
             this.arrayOfMonth.add(new Month(month, day, calendarConfig.getWeek()));
             day = WeekService.getOffsetDayFrom(day, month.getDayCount(), calendarConfig.getWeek());
         }
+        return year.getDayQuantity();
     }
 
     /**
@@ -121,28 +121,5 @@ public class Calendar implements ICalendar {
                                   .getDayQuantity() % weekSize, calendarConfig.getWeek());
         }
         return firstDayInFirstYear;
-    }
-
-
-    /**
-     * Выдает по номеру дня и названию месяца день недели
-     *
-     * @param intDay      Номер дня в месяце (начинается с 1)
-     * @param stringMonth Название месяца
-     * @return Объект дня
-     * @throws Exception
-     */
-    public IDay getWeekDay(Integer intDay, String stringMonth) throws OutOfBoundException {
-        YearTemplate year = calendarConfig.getYearList().get(indexOfYearInConfig);
-        Integer monthIndex = YearService.getIndexOfMonthByName(stringMonth, year);
-        Integer dayQuantityInMonth = year.getMonthList().get(monthIndex).getDayCount();
-        if ((intDay > dayQuantityInMonth) || (intDay < 1)) {
-            throw new OutOfBoundException("Количество дней за границей допустимых значений");
-        }
-        return arrayOfMonth.get(monthIndex).getDayByNumberInMonth(intDay - 1);
-    }
-
-    public Integer getDayInYearCount() {
-        return calendarConfig.getYearList().get(indexOfYearInConfig).getDayQuantity();
     }
 }

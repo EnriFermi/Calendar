@@ -7,8 +7,8 @@ import ru.study.calendar.CalendarMain;
 import ru.study.calendar.config.domain.CalendarTemplate;
 import ru.study.calendar.config.factory.ConfigFactory;
 import ru.study.calendar.config.factory.enums.ConfigTypeEnum;
-import ru.study.calendar.item.ICalendar;
 import ru.study.calendar.item.impl.Calendar;
+import ru.study.calendar.item.impl.CalendarService;
 
 public class XMLSaxClass {
     @Test
@@ -16,8 +16,8 @@ public class XMLSaxClass {
         Logger log = LoggerFactory.getLogger(CalendarMain.class);
         try {
             CalendarTemplate calendarTemplate = ConfigFactory.getCalendarTemplate("resources/classicCalendar", ConfigTypeEnum.JSON);
-            ICalendar calendar = new Calendar(2022, calendarTemplate);
-            log.info(calendar.getWeekDay(8, "August").getWeekDay());
+            Calendar calendar = new Calendar(2022, calendarTemplate);
+            log.info(CalendarService.getWeekDay(calendar, 10, "August").getWeekDay());
 
         } catch (Exception e) {
 
