@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Get calendar</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/calendar/new/addWeekDay}" th:object="${dayTemplate}">
+  <input id="dayName" placeholder="Enter day name" required type="text" th:field="*{dayName}"/>
+  <input id="weekDayWorkOut" placeholder="Enter is it working day" required type="text" th:field="*{weekDayWorkOut}"/>
+  <input type="submit" value="Set week day">
+</form>
+</body>
+</html>

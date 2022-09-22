@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get calendar</title>
+</head>
+<body>
+<form method="POST" th:action="@{/calendar/new/addMonthRedirect}">
+    <button type="submit" name="submit" value="value" class="link-button">Add month</button>
+</form>
+<br>
+<form method="POST" th:action="@{/calendar/new/calendarRedirect}">
+    <button type="submit" name="submit" value="value" class="link-button">Return</button>
+</form>
+</body>
+</html>

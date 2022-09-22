@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Get calendar</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/calendar/new/addMonth}" th:object="${monthTemplate}">
+  <input id="monthName" placeholder="Enter month name" required type="text" th:field="*{name}"/>
+  <input id="dayCount" placeholder="Enter end year" required type="text" th:field="*{dayCount}"/>
+  </div>
+  <input type="submit" value="Set month">
+</form>
+</body>
+</html>

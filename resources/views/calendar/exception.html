@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Error occurred</title>
+</head>
+<body>
+<p>Error message: <a th:text="${exception.toString}"/></p>
+Stack trace:
+<div th:each="stack: ${exception.getStackTrace()}">
+  <p th:text="${stack.toString}"/>
+</div>
+<p><a  th:href="@{/}"> Return to start page</a></p>
+</body>
+</html>

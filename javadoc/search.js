@@ -341,15 +341,15 @@ $(function() {
                     if (ui.item.u) {
                         url = ui.item.u;
                     } else if (ui.item.p === UNNAMED) {
-                        url += ui.item.l + ".html";
+                        url += ui.item.l + "calendar.html";
                     } else {
-                        url += ui.item.p.replace(/\./g, '/') + "/" + ui.item.l + ".html";
+                        url += ui.item.p.replace(/\./g, '/') + "/" + ui.item.l + "calendar.html";
                     }
                 } else if (ui.item.category === catMembers) {
                     if (ui.item.p === UNNAMED) {
-                        url += ui.item.c + ".html" + "#";
+                        url += ui.item.c + "calendar.html" + "#";
                     } else {
-                        url += ui.item.p.replace(/\./g, '/') + "/" + ui.item.c + ".html" + "#";
+                        url += ui.item.p.replace(/\./g, '/') + "/" + ui.item.c + "calendar.html" + "#";
                     }
                     if (ui.item.u) {
                         url += ui.item.u;
