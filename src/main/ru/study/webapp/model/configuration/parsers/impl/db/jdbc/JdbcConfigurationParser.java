@@ -24,7 +24,6 @@ public class JdbcConfigurationParser implements ConfigurationParser {
         }
         try (Connection connection = DriverManager.getConnection(serverConfiguration.getConnectionURL(),
                 serverConfiguration.getUserName(), serverConfiguration.getPassword())) {
-            //TODO сложно читается запрос, выглядит, будто select * from columnName DONE
             PreparedStatement calendarListStatement = connection.prepareStatement("select * from "
                     + JdbcFieldNames.CALENDAR_TABLE.getFieldName());
             try (ResultSet calendarSet = calendarListStatement.executeQuery()) {
