@@ -2,7 +2,7 @@ package ru.study.webapp.model.body.services;
 
 import ru.study.webapp.model.body.domain.Calendar;
 import ru.study.webapp.model.body.domain.Day;
-import ru.study.webapp.model.exceptions.OutOfBoundException;
+import ru.study.webapp.exceptions.OutOfBoundException;
 
 public class CalendarService {
     /**

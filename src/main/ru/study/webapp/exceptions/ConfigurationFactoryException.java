@@ -1,4 +1,4 @@
-package ru.study.webapp.model.exceptions;
+package ru.study.webapp.exceptions;
 
 public class ConfigurationFactoryException extends ConfigurationException {
     public ConfigurationFactoryException(Throwable cause) {

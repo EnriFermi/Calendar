@@ -7,7 +7,7 @@ import ru.study.webapp.model.configuration.domain.CalendarTemplate;
 import ru.study.webapp.model.configuration.domain.DayTemplate;
 import ru.study.webapp.model.configuration.domain.MonthTemplate;
 import ru.study.webapp.model.configuration.domain.YearTemplate;
-import ru.study.webapp.model.exceptions.OutOfBoundException;
+import ru.study.webapp.exceptions.OutOfBoundException;
 
 import java.util.ArrayList;
 import java.util.List;

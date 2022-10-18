@@ -16,8 +16,7 @@ public class CalendarTemplate {
     /**
      * Список шаблонов лет
      */
-    @Setter(AccessLevel.PUBLIC)
-    private List<YearTemplate> yearList;
+    private final List<YearTemplate> yearList;
     /**
      * Шаблон недели
      */

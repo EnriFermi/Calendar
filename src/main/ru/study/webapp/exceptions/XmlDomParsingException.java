@@ -1,4 +1,4 @@
-package ru.study.webapp.model.exceptions;
+package ru.study.webapp.exceptions;
 
 /**
  * Исключение вызванное проблемами при попытке создания конфига

@@ -6,7 +6,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.study.webapp.model.configuration.services.connectors.db.domain.ServerConnectionConfiguration;
 import ru.study.webapp.model.configuration.services.connectors.db.enums.ConnectionFieldNames;
-import ru.study.webapp.model.exceptions.JdbcParsingException;
+import ru.study.webapp.exceptions.JdbcParsingException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

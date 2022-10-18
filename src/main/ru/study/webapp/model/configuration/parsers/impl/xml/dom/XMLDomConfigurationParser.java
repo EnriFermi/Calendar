@@ -7,9 +7,9 @@ import org.xml.sax.SAXException;
 import ru.study.webapp.model.configuration.domain.CalendarTemplate;
 import ru.study.webapp.model.configuration.parsers.ConfigurationParser;
 import ru.study.webapp.model.configuration.parsers.impl.xml.dom.enums.XMLDomFieldNames;
-import ru.study.webapp.model.exceptions.ConfigurationException;
-import ru.study.webapp.model.exceptions.IOConfigurationException;
-import ru.study.webapp.model.exceptions.XmlDomParsingException;
+import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.IOConfigurationException;
+import ru.study.webapp.exceptions.XmlDomParsingException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

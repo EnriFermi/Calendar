@@ -1,7 +1,7 @@
 package ru.study.webapp.model.configuration.parsers;
 
 import ru.study.webapp.model.configuration.domain.CalendarTemplate;
-import ru.study.webapp.model.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.ConfigurationException;
 
 /**
  * Шаблон парсера

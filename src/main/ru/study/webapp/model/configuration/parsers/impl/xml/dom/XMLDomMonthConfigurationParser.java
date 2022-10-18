@@ -4,8 +4,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.webapp.model.configuration.domain.MonthTemplate;
 import ru.study.webapp.model.configuration.parsers.impl.xml.dom.enums.XMLDomFieldNames;
-import ru.study.webapp.model.exceptions.ConfigurationException;
-import ru.study.webapp.model.exceptions.XmlDomParsingException;
+import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.XmlDomParsingException;
 
 /**
  * Класс реализующий хранение данных о конфигурации конкретного месяца в году

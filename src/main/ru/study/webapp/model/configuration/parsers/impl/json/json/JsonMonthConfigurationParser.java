@@ -4,8 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import ru.study.webapp.model.configuration.domain.MonthTemplate;
 import ru.study.webapp.model.configuration.parsers.impl.json.json.enums.JsonFieldNames;
-import ru.study.webapp.model.exceptions.ConfigurationException;
-import ru.study.webapp.model.exceptions.JsonParsingException;
+import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.JsonParsingException;
 
 import java.util.ArrayList;
 import java.util.List;

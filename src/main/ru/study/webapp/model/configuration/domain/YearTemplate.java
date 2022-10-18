@@ -3,7 +3,7 @@ package ru.study.webapp.model.configuration.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import ru.study.webapp.model.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;

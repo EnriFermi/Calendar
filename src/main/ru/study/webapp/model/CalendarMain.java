@@ -7,7 +7,7 @@ import ru.study.webapp.model.body.services.CalendarService;
 import ru.study.webapp.model.configuration.domain.CalendarTemplate;
 import ru.study.webapp.model.configuration.factory.ConfigurationFactory;
 import ru.study.webapp.model.configuration.factory.enums.ConfigTypeEnum;
-import ru.study.webapp.model.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.ConfigurationException;
 
 import java.io.File;
 

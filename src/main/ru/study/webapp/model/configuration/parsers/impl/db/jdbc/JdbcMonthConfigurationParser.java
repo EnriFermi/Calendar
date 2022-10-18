@@ -2,8 +2,8 @@ package ru.study.webapp.model.configuration.parsers.impl.db.jdbc;
 
 import ru.study.webapp.model.configuration.domain.MonthTemplate;
 import ru.study.webapp.model.configuration.parsers.impl.db.jdbc.enums.JdbcFieldNames;
-import ru.study.webapp.model.exceptions.ConfigurationException;
-import ru.study.webapp.model.exceptions.JsonParsingException;
+import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.JsonParsingException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -8,9 +8,9 @@ import ru.study.webapp.model.configuration.domain.CalendarTemplate;
 import ru.study.webapp.model.configuration.parsers.ConfigurationParser;
 import ru.study.webapp.model.configuration.parsers.impl.db.jdbc.enums.JdbcFieldNames;
 import ru.study.webapp.model.configuration.parsers.impl.json.json.enums.JsonFieldNames;
-import ru.study.webapp.model.exceptions.ConfigurationException;
-import ru.study.webapp.model.exceptions.IOConfigurationException;
-import ru.study.webapp.model.exceptions.JsonParsingException;
+import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.IOConfigurationException;
+import ru.study.webapp.exceptions.JsonParsingException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
