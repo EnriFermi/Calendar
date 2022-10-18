@@ -23,6 +23,4 @@ public class CalendarService {
         }
         return calendar.getArrayOfMonth().get(monthIndex).getDayByNumberInMonth(intDay - 1);
     }
-    //TODO гетеры только в самом классе DONE
-
 }
