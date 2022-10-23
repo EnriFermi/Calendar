@@ -1,4 +1,4 @@
-package ru.study.webapp.exceptions;
+package ru.study.webapp.exceptions.model;
 
 /**
  * Исключение о выходе значений переменной за границы допустимых значений

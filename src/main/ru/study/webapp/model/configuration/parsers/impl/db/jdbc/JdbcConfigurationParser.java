@@ -5,9 +5,9 @@ import ru.study.webapp.model.configuration.parsers.ConfigurationParser;
 import ru.study.webapp.model.configuration.parsers.impl.db.jdbc.enums.JdbcFieldNames;
 import ru.study.webapp.model.configuration.services.connectors.db.ConnectionService;
 import ru.study.webapp.model.configuration.services.connectors.db.domain.ServerConnectionConfiguration;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.JaxbParsingException;
-import ru.study.webapp.exceptions.JdbcParsingException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.JaxbParsingException;
+import ru.study.webapp.exceptions.model.JdbcParsingException;
 
 import java.sql.*;
 import java.util.ArrayList;

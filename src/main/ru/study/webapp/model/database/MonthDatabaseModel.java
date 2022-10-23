@@ -1,4 +1,4 @@
-package ru.study.webapp.database;
+package ru.study.webapp.model.database;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "monthlist", schema = "calendarconfiguration", catalog = "")
-public class MonthDAO {
+public class MonthDatabaseModel {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,13 +35,13 @@ public class MonthDAO {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yearId")
-    private YearDAO yearDAO;
+    private YearDatabaseModel yearDatabaseModel;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthDAO")
-    private List<DayWorkOutDAO> dayWorkOutList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthDatabaseModel")
+    private List<DayWorkOutDatabaseModel> dayWorkOutList;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthDAO")
-    private List<DayWorkDAO> dayWorkList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthDatabaseModel")
+    private List<DayWorkDatabaseModel> dayWorkList;
 }

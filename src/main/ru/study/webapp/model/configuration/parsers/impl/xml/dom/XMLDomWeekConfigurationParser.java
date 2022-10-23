@@ -4,8 +4,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.study.webapp.model.configuration.domain.WeekTemplate;
 import ru.study.webapp.model.configuration.parsers.impl.xml.dom.enums.XMLDomFieldNames;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.XmlDomParsingException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.XmlDomParsingException;
 
 /**
  * Класс реализующий хранение данных о конфигурации недели в календаре

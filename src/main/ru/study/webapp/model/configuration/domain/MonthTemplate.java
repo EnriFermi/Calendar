@@ -4,24 +4,39 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class MonthTemplate {
     /**
      * Имя месяца
      */
+    @Setter(AccessLevel.PUBLIC)
     @EqualsAndHashCode.Include
     private String name;
     /**
      * Количество дней в месяце
      */
+    @Setter(AccessLevel.PUBLIC)
     private Integer dayCount;
+
+    public void setDayWorkOutList(List<Integer> dayWorkOutList) throws ConfigurationException {
+        this.dayWorkOutList.clear();
+        for (Integer day : dayWorkOutList) {
+            addWorkOutDay(day);
+        }
+    }
+    public void setDayWorkList(List<Integer> dayWorkList) throws ConfigurationException {
+        this.dayWorkList.clear();
+        for (Integer day : dayWorkList) {
+            addWorkDay(day);
+        }
+    }
+
     /**
      * Список дополнительных нерабочих дней
      */

@@ -1,4 +1,4 @@
-package ru.study.webapp.database;
+package ru.study.webapp.model.database;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Entity
 @Table(name = "daylist", schema = "calendarconfiguration", catalog = "")
-public class DayDAO {
+public class DayDatabaseModel {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class DayDAO {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "calendarId")
-    private CalendarDAO calendarDAO;
+    private CalendarDatabaseModel calendarDatabaseModel;
 
 
     @EqualsAndHashCode.Include

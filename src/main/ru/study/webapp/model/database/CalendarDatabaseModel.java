@@ -1,4 +1,4 @@
-package ru.study.webapp.database;
+package ru.study.webapp.model.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "calendarlist", schema = "calendarconfiguration", catalog = "")
 @DynamicUpdate
-public class CalendarDAO {
+public class CalendarDatabaseModel {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,23 +24,25 @@ public class CalendarDAO {
 
     @Setter(AccessLevel.PUBLIC)
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarDAO")
-    private List<YearDAO> yearList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarDatabaseModel")
+    private List<YearDatabaseModel> yearList;
 
     @Setter(AccessLevel.PUBLIC)
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarDAO")
-    private List<DayDAO> dayList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarDatabaseModel")
+    private List<DayDatabaseModel> dayList;
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "anchorWeekDayKey")
     @Setter(AccessLevel.PUBLIC)
-    private DayDAO anchorWeekDay;
+    private DayDatabaseModel anchorWeekDay;
+
 
     @Column(name = "beginningYear")
     @Setter(AccessLevel.PUBLIC)
     private Integer beginningYear;
+
 
     @Column(name = "endYear")
     @Setter(AccessLevel.PUBLIC)

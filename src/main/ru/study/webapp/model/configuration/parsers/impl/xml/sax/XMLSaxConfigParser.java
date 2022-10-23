@@ -10,9 +10,9 @@ import ru.study.webapp.model.configuration.domain.WeekTemplate;
 import ru.study.webapp.model.configuration.domain.YearTemplate;
 import ru.study.webapp.model.configuration.parsers.ConfigurationParser;
 import ru.study.webapp.model.configuration.parsers.impl.xml.sax.enums.XMLSaxFieldNames;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.IOConfigurationException;
-import ru.study.webapp.exceptions.XmlSaxParsingException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.IOConfigurationException;
+import ru.study.webapp.exceptions.model.XmlSaxParsingException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;

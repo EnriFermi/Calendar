@@ -3,7 +3,7 @@ package ru.study.webapp.model.configuration.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,17 @@ import java.util.List;
 @Getter(AccessLevel.PUBLIC)
 
 public class YearTemplate {
+    public void setMonthList(List<MonthTemplate> monthList) throws ConfigurationException {
+        monthList.clear();
+        for(MonthTemplate month:monthList){
+            addMonth(month);
+        }
+    }
+
     /**
      * Список месяцев в году
      */
-    private final List<MonthTemplate> monthList;
+    private List<MonthTemplate> monthList;
     /**
      * Количество дней в году
      */

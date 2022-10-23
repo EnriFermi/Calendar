@@ -3,7 +3,7 @@ package ru.study.webapp.model.configuration.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import ru.study.webapp.exceptions.ConfigurationException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +36,4 @@ public class WeekTemplate {
             throw new ConfigurationException("Не уникальное название дня недели: " + day.getDayName());
         }
     }
-
 }

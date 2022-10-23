@@ -3,8 +3,8 @@ package ru.study.webapp.model.configuration.parsers.impl.xml.jaxb;
 import org.mapstruct.factory.Mappers;
 import ru.study.webapp.model.configuration.domain.CalendarTemplate;
 import ru.study.webapp.model.configuration.parsers.ConfigurationParser;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.JaxbParsingException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.JaxbParsingException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;

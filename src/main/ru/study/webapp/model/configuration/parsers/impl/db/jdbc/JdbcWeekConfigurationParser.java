@@ -2,8 +2,8 @@ package ru.study.webapp.model.configuration.parsers.impl.db.jdbc;
 
 import ru.study.webapp.model.configuration.domain.WeekTemplate;
 import ru.study.webapp.model.configuration.parsers.impl.db.jdbc.enums.JdbcFieldNames;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.JaxbParsingException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.JaxbParsingException;
 
 import java.sql.*;
 

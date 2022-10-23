@@ -1,4 +1,4 @@
-package ru.study.webapp.database;
+package ru.study.webapp.model.database;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 @Table(name = "dayworklist", schema = "calendarconfiguration", catalog = "")
-public class DayWorkDAO {
+public class DayWorkDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dayWorkId")
@@ -22,5 +22,5 @@ public class DayWorkDAO {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "monthId")
-    private MonthDAO monthDAO;
+    private MonthDatabaseModel monthDatabaseModel;
 }

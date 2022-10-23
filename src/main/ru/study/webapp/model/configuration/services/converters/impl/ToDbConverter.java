@@ -9,8 +9,8 @@ import ru.study.webapp.model.configuration.parsers.impl.db.jdbc.enums.JdbcFieldN
 import ru.study.webapp.model.configuration.services.connectors.db.ConnectionService;
 import ru.study.webapp.model.configuration.services.connectors.db.domain.ServerConnectionConfiguration;
 import ru.study.webapp.model.configuration.services.converters.ConfigConverter;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.JdbcParsingException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.JdbcParsingException;
 
 import java.sql.*;
 

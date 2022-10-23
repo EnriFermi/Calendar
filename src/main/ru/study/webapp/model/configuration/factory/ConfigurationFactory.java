@@ -10,8 +10,8 @@ import ru.study.webapp.model.configuration.parsers.impl.xml.jaxb.JaxbConfigurati
 import ru.study.webapp.model.configuration.parsers.impl.db.jdbc.JdbcConfigurationParser;
 import ru.study.webapp.model.configuration.parsers.impl.json.json.JsonConfigurationParser;
 import ru.study.webapp.model.configuration.parsers.impl.xml.sax.XMLSaxConfigParser;
-import ru.study.webapp.exceptions.ConfigurationException;
-import ru.study.webapp.exceptions.ConfigurationFactoryException;
+import ru.study.webapp.exceptions.model.ConfigurationException;
+import ru.study.webapp.exceptions.model.ConfigurationFactoryException;
 
 import java.util.Arrays;
 import java.util.List;

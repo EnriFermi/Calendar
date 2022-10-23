@@ -1,4 +1,4 @@
-package ru.study.webapp.exceptions;
+package ru.study.webapp.exceptions.model;
 
 public class IOConfigurationException extends ConfigurationException {
     public IOConfigurationException() {
