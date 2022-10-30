@@ -32,7 +32,7 @@ public class JdbcConfigurationParser implements ConfigurationParser {
         return calendarTemplate;
     }
     public List<CalendarTemplate> parse(Connection connection) throws SQLException, JdbcParsingException, JaxbParsingException {
-        //TODO сложно читается запрос, выглядит, будто select * from columnName
+        //TODO сложно читается запрос, выглядит, будто select * from columnName DONE
         List<CalendarTemplate> calendarTemplateList  = new ArrayList<>();
         PreparedStatement calendarListStatement = connection.prepareStatement("select * from "
                 + JdbcFieldNames.CALENDAR_TABLE.getFieldName());

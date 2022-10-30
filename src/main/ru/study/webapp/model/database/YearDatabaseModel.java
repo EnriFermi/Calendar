@@ -1,7 +1,6 @@
 package ru.study.webapp.model.database;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -19,10 +18,10 @@ import java.util.List;
 public class YearDatabaseModel {
 
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yearId")
     private Long id;
+
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

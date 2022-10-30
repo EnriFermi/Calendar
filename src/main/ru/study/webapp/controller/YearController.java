@@ -2,92 +2,47 @@ package ru.study.webapp.controller;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
-import ru.study.webapp.controller.CalendarController;
-import ru.study.webapp.model.database.CalendarDatabaseModel;
 import ru.study.webapp.model.database.DatabaseMapper;
-import ru.study.webapp.exceptions.CalendarNotFoundException;
-import ru.study.webapp.model.configuration.domain.YearTemplate;
-import ru.study.webapp.repository.YearRepository;
+import ru.study.webapp.model.database.YearDatabaseModel;
+import ru.study.webapp.service.YearService;
 
 import java.util.List;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
 @ComponentScan("ru.study.webapp")
-@RequestMapping("/year")
+@RequestMapping("/calendar/year")
 public class YearController {
     private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
-    private final YearRepository repository;
+    private final YearService service;
 
-
-    YearController(YearRepository repository) {
-        this.repository = repository;
+    public YearController(YearService service) {
+        this.service = service;
     }
 
-    @GetMapping("/")
-    public List<YearTemplate all() {
 
+    @GetMapping("/")
+    public List<YearDatabaseModel> all() {
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public EntityModel<CalendarDatabaseModel> one(@PathVariable Long id) {
-        return assembler.toModel(repository.findById(id)
-                .orElseThrow(() -> new CalendarNotFoundException(id)));
+    public YearDatabaseModel one(@PathVariable Long id) {
+        return service.getOne(id);
     }
 
     @PostMapping("/")
-    public EntityModel<CalendarDatabaseModel> newEmployee(@RequestBody CalendarDatabaseModel calendarDatabaseModel) {
-        for (int i = 0; i < calendarDatabaseModel.getDayList().size(); i++) {
-            if (calendarDatabaseModel.getDayList().get(i).equals(calendarDatabaseModel.getAnchorWeekDay())) {
-                calendarDatabaseModel.setAnchorWeekDay(calendarDatabaseModel.getDayList().get(i));
-                break;
-            }
-        }
-        return assembler.toModel(repository.save(calendarDatabaseModel));
+    public YearDatabaseModel add(@RequestBody YearDatabaseModel yearDatabaseModel) {
+        return service.addOne(yearDatabaseModel);
     }
 
     @PutMapping("/{id}")
-    //TODO архитектура: контроллер -> сервис(если надо открывает тразакцию) -> репозиториями
-    //контроллер (ДТО - json + schema) -> сервис( доменная модель, чисто класс с getter+setter) -> репозиториями (entity -> БД)
-    public EntityModel<CalendarDatabaseModel> replaceCalendar(@RequestBody CalendarDatabaseModel calendarDatabaseModel, @PathVariable Long id) {
-
-        //TODO можно разбить на кучу контроллеров, например меняющий с какого дня недели стартует 0 год
-        for (int i = 0; i < calendarDatabaseModel.getDayList().size(); i++) {
-            if (calendarDatabaseModel.getDayList().get(i).equals(calendarDatabaseModel.getAnchorWeekDay())) {
-                calendarDatabaseModel.setAnchorWeekDay(calendarDatabaseModel.getDayList().get(i));
-                break;
-            }
-        }
-
-        //TODO если решил делать все на все, тогда надо calendarDAO = repository.findById(id), и в него прокидывать простые объекты при различии
-        // а если зависимый объект отличается, то надо конкретный заменять
-
-
-        //контроллер (ДТО - json + schema) -> сервис( доменная модель, чисто класс с getter+setter) -> репозиториями (entity -> БД)/
-        // при парсинге в доменную проверяешь допустимость изменений. А ее заливаешь в существующую энтити.
-        return repository.findById(id)
-                .map(calendar -> {
-                    mapper.updateCalendarDAO(calendarDatabaseModel, calendar);
-                    return assembler.toModel(repository.save(calendar));
-                })
-                .orElseGet(() -> {
-                    calendarDatabaseModel.setId(id);
-                    return assembler.toModel(repository.save(calendarDatabaseModel));
-                });
+    public YearDatabaseModel replaceCalendar(@RequestBody YearDatabaseModel yearDatabaseModel, @PathVariable Long id) {
+        return service.updateOne(yearDatabaseModel, id);
     }
 
     @DeleteMapping("/{id}")
-    EntityModel<CalendarDatabaseModel> deleteCalendar(@PathVariable Long id) {
-        if (!repository.existsById(id)) {
-            throw new CalendarNotFoundException(id);
-        } else {
-            repository.deleteById(id);
-            return EntityModel.of(new CalendarDatabaseModel(), WebMvcLinkBuilder.linkTo(methodOn(CalendarController.class).all()).withRel("calendar"));
-        }
+    YearDatabaseModel deleteCalendar(@PathVariable Long id) {
+        return service.deleteOne(id);
     }
 }

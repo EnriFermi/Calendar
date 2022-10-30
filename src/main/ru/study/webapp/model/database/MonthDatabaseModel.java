@@ -1,7 +1,6 @@
 package ru.study.webapp.model.database;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -18,7 +17,6 @@ import java.util.List;
 @Table(name = "monthlist", schema = "calendarconfiguration", catalog = "")
 public class MonthDatabaseModel {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "monthId")
     private Long id;

@@ -1,6 +1,6 @@
 package ru.study.webapp.exceptions.model;
 
-public class ConfigurationException extends Exception {
+public class ConfigurationException extends RuntimeException {
     public ConfigurationException(Throwable cause) {
         super(cause);
     }

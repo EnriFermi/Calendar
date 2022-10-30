@@ -15,6 +15,19 @@ public class WeekTemplate {
      * Количество дней в неделе
      */
     private Integer weekDayCount;
+
+    public WeekTemplate(List<DayTemplate> weekDayNameList) throws ConfigurationException {
+        this.weekDayNameList = new ArrayList<>();
+        weekDayCount = 0;
+        setWeekDayNameList(weekDayNameList);
+    }
+
+    public void setWeekDayNameList(List<DayTemplate> weekDayNameList) throws ConfigurationException {
+        for(DayTemplate day: weekDayNameList){
+            addWeekDay(day);
+        }
+    }
+
     /**
      * Список дней недели
      */

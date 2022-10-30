@@ -1,6 +1,5 @@
 package ru.study.webapp.model.database;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import java.util.List;
 @DynamicUpdate
 public class CalendarDatabaseModel {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "calendarId")
     @Setter(AccessLevel.PUBLIC)
