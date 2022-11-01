@@ -14,7 +14,7 @@ import java.util.List;
 @Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "yearlist", schema = "calendarconfiguration", catalog = "")
+@Table(name = "yearlist", /*schema = "calendarconfiguration",*/ catalog = "")
 public class YearDatabaseModel {
 
     @Id

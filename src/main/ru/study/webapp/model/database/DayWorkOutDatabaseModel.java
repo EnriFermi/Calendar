@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
-@Table(name = "dayworkoutlist", schema = "calendarconfiguration", catalog = "")
+@Table(name = "dayworkoutlist", /*schema = "calendarconfiguration",*/ catalog = "")
 public class DayWorkOutDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

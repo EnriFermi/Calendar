@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter(AccessLevel.PUBLIC)
 @Entity
-@Table(name = "calendarlist", schema = "calendarconfiguration", catalog = "")
+@Table(name = "calendarlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @DynamicUpdate
 public class CalendarDatabaseModel {
     @Id

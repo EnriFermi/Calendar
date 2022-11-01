@@ -14,7 +14,7 @@ import java.util.List;
 @Getter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "monthlist", schema = "calendarconfiguration", catalog = "")
+@Table(name = "monthlist", /*schema = "calendarconfiguration",*/ catalog = "")
 public class MonthDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

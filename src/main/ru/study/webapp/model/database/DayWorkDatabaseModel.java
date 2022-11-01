@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
-@Table(name = "dayworklist", schema = "calendarconfiguration", catalog = "")
+@Table(name = "dayworklist", /*schema = "calendarconfiguration",*/ catalog = "")
 public class DayWorkDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
