@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 @ComponentScan("ru.study.webapp")
 public class YearService {
+
     private final YearRepository repository;
     private final CalendarRepository calendarRepository;
     private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);

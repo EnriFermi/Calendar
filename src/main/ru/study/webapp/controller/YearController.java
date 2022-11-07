@@ -10,10 +10,10 @@ import ru.study.webapp.service.YearService;
 import java.util.List;
 
 @RestController
+//TODO почитать, не должно быть в каждом классе по componentscan
 @ComponentScan("ru.study.webapp")
 @RequestMapping("/calendar/year")
 public class YearController {
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
     private final YearService service;
 
     public YearController(YearService service) {

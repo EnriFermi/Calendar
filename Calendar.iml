@@ -30,6 +30,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="Calendar" />
           <factory-entry name="entityManagerFactory" />
           <factory-entry name="noname-a.xml@0" value="704ca684-b262-4508-a70f-e9400d04d7cd" />
         </datasource-mapping>

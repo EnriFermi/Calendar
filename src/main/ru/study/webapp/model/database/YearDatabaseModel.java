@@ -6,8 +6,10 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.List;
 
 @Getter(AccessLevel.PUBLIC)
@@ -15,11 +17,14 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "yearlist", /*schema = "calendarconfiguration",*/ catalog = "")
+@Valid
 public class YearDatabaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yearId")
+    //TODO прочитать про @Valid
+    @NonNull
     private Long id;
 
 
