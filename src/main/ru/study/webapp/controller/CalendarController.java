@@ -55,6 +55,10 @@ public class CalendarController {
         return service.getOnePage(pageSize, pageNumber);
     }
 
+    //TODO в 1 методе сохранить весь календарь с детьми, в репозитории save должен вызваться 1 раз
+
+
+
     @Operation(summary = "Получить календарь по его id из БД")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Календарь найден",
