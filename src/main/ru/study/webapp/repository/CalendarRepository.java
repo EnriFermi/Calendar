@@ -1,8 +1,8 @@
 package ru.study.webapp.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.study.webapp.model.database.CalendarDatabaseModel;
 
-public interface CalendarRepository extends CrudRepository<CalendarDatabaseModel, Long> {
+public interface CalendarRepository extends JpaRepository<CalendarDatabaseModel, Long> {
 
 }

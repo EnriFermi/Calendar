@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
@@ -12,7 +13,9 @@ import javax.persistence.*;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 @Entity
-@Table(name = "daylist", /*schema = "calendarconfiguration",*/ catalog = "")
+@UniqueElements()
+@Table(name = "daylist", /*schema = "calendarconfiguration",*/ catalog = "",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"dayName", "calendarId"})})
 public class DayDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,8 +14,13 @@ import java.util.List;
 @Getter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "monthlist", /*schema = "calendarconfiguration",*/ catalog = "")
+@Table(name = "monthlist", /*schema = "calendarconfiguration",*/ catalog = "",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"monthName", "yearId"})})
 public class MonthDatabaseModel {
+    public MonthDatabaseModel() {}
+    public MonthDatabaseModel(Long id){
+        this.id = id;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "monthId")

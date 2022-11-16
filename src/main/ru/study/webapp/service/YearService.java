@@ -1,65 +1,72 @@
 package ru.study.webapp.service;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.study.webapp.exceptions.CalendarNotFoundException;
-import ru.study.webapp.model.database.DatabaseMapper;
+import ru.study.webapp.controller.dto.YearControllerDTO;
+import ru.study.webapp.exceptions.NotFoundException;
+import ru.study.webapp.model.database.CalendarDatabaseModel;
 import ru.study.webapp.model.database.YearDatabaseModel;
-import ru.study.webapp.repository.CalendarRepository;
+import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.YearRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
-@ComponentScan("ru.study.webapp")
+
 public class YearService {
-
     private final YearRepository repository;
-    private final CalendarRepository calendarRepository;
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
+    private final DatabaseDTOMapper mapper = Mappers.getMapper(DatabaseDTOMapper.class);
 
-    public YearService(YearRepository repository, CalendarRepository calendarRepository) {
+    public YearService(YearRepository repository) {
         this.repository = repository;
-        this.calendarRepository = calendarRepository;
     }
     @Transactional
-    public List<YearDatabaseModel> getAll() {
-        List<YearDatabaseModel> Years = (List<YearDatabaseModel>) repository.findAll();
-
-        return ((List<YearDatabaseModel>) repository.findAll()).stream().toList();
+    public List<YearControllerDTO> getAll() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .map(mapper::yearDatabaseModelToYearControllerDTO).toList();
     }
 
     @Transactional
-    public YearDatabaseModel getOne(Long id) {
-        return repository.findById(id).orElseThrow(() -> new CalendarNotFoundException(id));
+    public YearControllerDTO getOne(Long id) {
+        return mapper.yearDatabaseModelToYearControllerDTO(repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(YearControllerDTO.class,id)));
     }
     @Transactional
-    public YearDatabaseModel addOne(YearDatabaseModel yearDatabaseModel) {
-        YearDatabaseModel yearDatabaseModel1 = new YearDatabaseModel();
-        mapper.updateYearDatabaseModel(yearDatabaseModel, yearDatabaseModel1);
-        return repository.save(yearDatabaseModel1);
+    public List<YearControllerDTO> getOnePage(Long pageSize, Long pageNumber){
+        Page<YearDatabaseModel> res = repository.findAll(
+                PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
+        if(res.getTotalPages() < pageNumber.intValue()){
+            throw new NotFoundException(YearControllerDTO.class, "Номер страницы превышает их общее количество");
+        }
+        return StreamSupport.stream(res.spliterator(), false)
+                .map(mapper::yearDatabaseModelToYearControllerDTO).toList();
     }
     @Transactional
-    public YearDatabaseModel updateOne(YearDatabaseModel YearDatabaseModel, Long id) {
-        return repository.findById(id)
-                .map(Year -> {
-                    Year.setCalendarDatabaseModel(YearDatabaseModel.getCalendarDatabaseModel());
-                    return repository.save(Year);
-                })
-                .orElseGet(() -> {
-                    YearDatabaseModel.setId(id);
+    public YearControllerDTO addOne(YearControllerDTO YearControllerDTO) {
+        return mapper.yearDatabaseModelToYearControllerDTO(
+                repository.save(mapper.yearControllerDTOToYearDatabaseModel(YearControllerDTO)));
+    }
+    @Transactional
+    public YearControllerDTO updateOne(YearControllerDTO YearControllerDTO, Long id) {
+        return mapper.yearDatabaseModelToYearControllerDTO(repository.findById(id)
+                .map(YearDatabaseModel -> {
+                    YearDatabaseModel.setCalendarDatabaseModel(new CalendarDatabaseModel(
+                            YearControllerDTO.getCalendarControllerDTOId()));
                     return repository.save(YearDatabaseModel);
-                });
+                })
+                .orElseGet(() -> repository.save(mapper.yearControllerDTOToYearDatabaseModel(YearControllerDTO))));
     }
     @Transactional
-    public YearDatabaseModel deleteOne(Long id) {
+    public Long deleteOne(Long id) {
         if (!repository.existsById(id)) {
-            throw new CalendarNotFoundException(id);
+            throw new NotFoundException(YearControllerDTO.class, id);
         } else {
             repository.deleteById(id);
-            return new YearDatabaseModel();
+            return id;
         }
     }
 }

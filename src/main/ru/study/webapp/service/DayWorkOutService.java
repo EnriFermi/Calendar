@@ -1,65 +1,74 @@
 package ru.study.webapp.service;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.study.webapp.exceptions.CalendarNotFoundException;
-import ru.study.webapp.model.database.DatabaseMapper;
+import ru.study.webapp.controller.dto.DayWorkOutControllerDTO;
+import ru.study.webapp.exceptions.NotFoundException;
 import ru.study.webapp.model.database.DayWorkOutDatabaseModel;
-import ru.study.webapp.repository.CalendarRepository;
+import ru.study.webapp.model.database.MonthDatabaseModel;
+import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.DayWorkOutRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
-@ComponentScan("ru.study.webapp")
+
 public class DayWorkOutService {
     private final DayWorkOutRepository repository;
-    private final CalendarRepository calendarRepository;
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
+    private final DatabaseDTOMapper mapper = Mappers.getMapper(DatabaseDTOMapper.class);
 
-    public DayWorkOutService(DayWorkOutRepository repository, CalendarRepository calendarRepository) {
+    public DayWorkOutService(DayWorkOutRepository repository) {
         this.repository = repository;
-        this.calendarRepository = calendarRepository;
     }
     @Transactional
-    public List<DayWorkOutDatabaseModel> getAll() {
-        List<DayWorkOutDatabaseModel> DayWorkOuts = (List<DayWorkOutDatabaseModel>) repository.findAll();
-
-        return ((List<DayWorkOutDatabaseModel>) repository.findAll()).stream().toList();
+    public List<DayWorkOutControllerDTO> getAll() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .map(mapper::dayWorkOutDatabaseModelToDayWorkOutControllerDTO).toList();
     }
 
     @Transactional
-    public DayWorkOutDatabaseModel getOne(Long id) {
-        return repository.findById(id).orElseThrow(() -> new CalendarNotFoundException(id));
+    public DayWorkOutControllerDTO getOne(Long id) {
+        return mapper.dayWorkOutDatabaseModelToDayWorkOutControllerDTO(repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(DayWorkOutControllerDTO.class,id)));
     }
     @Transactional
-    public DayWorkOutDatabaseModel addOne(DayWorkOutDatabaseModel DayWorkOutDatabaseModel) {
-        DayWorkOutDatabaseModel DayWorkOutDatabaseModel1 = new DayWorkOutDatabaseModel();
-        mapper.updateDayWorkOutDatabaseModel(DayWorkOutDatabaseModel, DayWorkOutDatabaseModel1);
-        return repository.save(DayWorkOutDatabaseModel1);
+    public List<DayWorkOutControllerDTO> getOnePage(Long pageSize, Long pageNumber){
+        Page<DayWorkOutDatabaseModel> res = repository.findAll(
+                PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
+        if(res.getTotalPages() < pageNumber.intValue()){
+            throw new NotFoundException(DayWorkOutControllerDTO.class, "Номер страницы превышает их общее количество");
+        }
+        return StreamSupport.stream(res.spliterator(), false)
+                .map(mapper::dayWorkOutDatabaseModelToDayWorkOutControllerDTO).toList();
     }
     @Transactional
-    public DayWorkOutDatabaseModel updateOne(DayWorkOutDatabaseModel DayWorkOutDatabaseModel, Long id) {
-        return repository.findById(id)
-                .map(DayWorkOut -> {
-                    DayWorkOut.setDateOfWorkOutDay(DayWorkOutDatabaseModel.getDateOfWorkOutDay());
-                    DayWorkOut.setMonthDatabaseModel(DayWorkOutDatabaseModel.getMonthDatabaseModel());
-                    return repository.save(DayWorkOut);
+    public DayWorkOutControllerDTO addOne(DayWorkOutControllerDTO DayWorkOutControllerDTO) {
+        return mapper.dayWorkOutDatabaseModelToDayWorkOutControllerDTO(
+                repository.save(mapper.dayWorkOutControllerDTOToDayWorkOutDatabaseModel(DayWorkOutControllerDTO)));
+    }
+    @Transactional
+    public DayWorkOutControllerDTO updateOne(DayWorkOutControllerDTO DayWorkOutControllerDTO, Long id) {
+        return mapper.dayWorkOutDatabaseModelToDayWorkOutControllerDTO(repository.findById(id)
+                .map(dayWorkOutDatabaseModel -> {
+                    dayWorkOutDatabaseModel.setDateOfWorkOutDay(DayWorkOutControllerDTO.getDateOfWorkOutDay());
+                    dayWorkOutDatabaseModel.setMonthDatabaseModel(new MonthDatabaseModel(
+                            DayWorkOutControllerDTO.getId()));
+                    return repository.save(dayWorkOutDatabaseModel);
                 })
-                .orElseGet(() -> {
-                    DayWorkOutDatabaseModel.setId(id);
-                    return repository.save(DayWorkOutDatabaseModel);
-                });
+                .orElseGet(() -> repository.save(mapper.
+                        dayWorkOutControllerDTOToDayWorkOutDatabaseModel(DayWorkOutControllerDTO))));
     }
     @Transactional
-    public DayWorkOutDatabaseModel deleteOne(Long id) {
+    public Long deleteOne(Long id) {
         if (!repository.existsById(id)) {
-            throw new CalendarNotFoundException(id);
+            throw new NotFoundException(DayWorkOutControllerDTO.class, id);
         } else {
             repository.deleteById(id);
-            return new DayWorkOutDatabaseModel();
+            return id;
         }
     }
 }

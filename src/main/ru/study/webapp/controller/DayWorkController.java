@@ -1,20 +1,17 @@
 package ru.study.webapp.controller;
 
-import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
-import ru.study.webapp.model.database.DatabaseMapper;
-import ru.study.webapp.model.database.DayWorkDatabaseModel;
+import ru.study.webapp.controller.dto.DayWorkControllerDTO;
 import ru.study.webapp.service.DayWorkService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController
-@ComponentScan("ru.study.webapp")
+
 @RequestMapping("/calendar/DayWork")
 public class DayWorkController {
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
     private final DayWorkService service;
 
     public DayWorkController(DayWorkService service) {
@@ -23,27 +20,30 @@ public class DayWorkController {
 
 
     @GetMapping("/")
-    public List<DayWorkDatabaseModel> all() {
+    public List<DayWorkControllerDTO> all() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public DayWorkDatabaseModel one(@PathVariable Long id) {
+    public DayWorkControllerDTO one(@PathVariable Long id) {
         return service.getOne(id);
     }
-
+    @GetMapping("/page")
+    public List<DayWorkControllerDTO> onePage(@RequestParam Long pageSize, @RequestParam Long pageNumber) {
+        return service.getOnePage(pageSize, pageNumber);
+    }
     @PostMapping("/")
-    public DayWorkDatabaseModel add(@RequestBody DayWorkDatabaseModel DayWorkDatabaseModel) {
-        return service.addOne(DayWorkDatabaseModel);
+    public DayWorkControllerDTO add(@Valid @RequestBody DayWorkControllerDTO DayWorkControllerDTO) {
+        return service.addOne(DayWorkControllerDTO);
     }
 
     @PutMapping("/{id}")
-    public DayWorkDatabaseModel replaceCalendar(@RequestBody DayWorkDatabaseModel DayWorkDatabaseModel, @PathVariable Long id) {
-        return service.updateOne(DayWorkDatabaseModel, id);
+    public DayWorkControllerDTO replace(@Valid @RequestBody DayWorkControllerDTO DayWorkControllerDTO, @PathVariable Long id) {
+        return service.updateOne(DayWorkControllerDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    DayWorkDatabaseModel deleteCalendar(@PathVariable Long id) {
+    public Long delete(@PathVariable Long id) {
         return service.deleteOne(id);
     }
 }

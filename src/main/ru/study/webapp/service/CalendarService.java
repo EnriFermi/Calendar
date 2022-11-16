@@ -1,76 +1,94 @@
 package ru.study.webapp.service;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.study.webapp.exceptions.CalendarNotFoundException;
+import ru.study.webapp.controller.dto.CalendarControllerDTO;
+import ru.study.webapp.controller.dto.DayControllerDTO;
+import ru.study.webapp.exceptions.NotFoundException;
 import ru.study.webapp.model.database.CalendarDatabaseModel;
-import ru.study.webapp.model.database.DatabaseMapper;
 import ru.study.webapp.model.database.DayDatabaseModel;
+import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.CalendarRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
-@ComponentScan("ru.study.webapp")
+
 public class CalendarService {
     private final CalendarRepository repository;
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
+    private final DatabaseDTOMapper mapper = Mappers.getMapper(DatabaseDTOMapper.class);
 
     public CalendarService(CalendarRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public List<CalendarDatabaseModel> getAll() {
-        List<CalendarDatabaseModel> calendars = (List<CalendarDatabaseModel>) repository.findAll();
-
-        return ((List<CalendarDatabaseModel>) repository.findAll()).stream().toList();
+    public List<CalendarControllerDTO> getAll(){
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .map(mapper::calendarDatabaseModelToCalendarControllerDTO).toList();
+    }
+    @Transactional
+    public List<CalendarControllerDTO> getOnePage(Long pageSize, Long pageNumber){
+        Page<CalendarDatabaseModel> res = repository.findAll(
+                PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
+        if(res.getTotalPages() < pageNumber.intValue()){
+            throw new NotFoundException(CalendarControllerDTO.class, "Номер страницы превышает их общее количество");
+        }
+        return StreamSupport.stream(res.spliterator(), false)
+                .map(mapper::calendarDatabaseModelToCalendarControllerDTO).toList();
+    }
+    @Transactional
+    public CalendarControllerDTO getOne(Long id){
+        return mapper.calendarDatabaseModelToCalendarControllerDTO(repository.findById(id)
+            .orElseThrow(() -> new NotFoundException(CalendarControllerDTO.class, id)));
     }
 
     @Transactional
-    public CalendarDatabaseModel getOne(Long id) {
-        return repository.findById(id)
-            .orElseThrow(() -> new CalendarNotFoundException(id));
-    }
-
-    @Transactional
-    public CalendarDatabaseModel addOne(CalendarDatabaseModel calendarDatabaseModel) {
-        return repository.save(calendarDatabaseModel);
+    public CalendarControllerDTO addOne(CalendarControllerDTO calendarControllerDTO){
+    return mapper.calendarDatabaseModelToCalendarControllerDTO(
+            repository.save(mapper.calendarControllerDTOToCalendarDatabaseModel(calendarControllerDTO)));
     }
     @Transactional
-    public CalendarDatabaseModel setAnchorDay(Long calendarId, Long dayId){
-         return repository.findById(calendarId).map(calendar -> {
+    public CalendarControllerDTO setAnchorDay(Long calendarId, Long dayId){
+         return mapper.calendarDatabaseModelToCalendarControllerDTO(repository.findById(calendarId).map(calendar -> {
                     for(DayDatabaseModel day: calendar.getDayList()){
                         if(day.getId().equals(dayId)){
                             calendar.setAnchorWeekDay(day);
                             return repository.save(calendar);
                         }
                     }
-                    throw new CalendarNotFoundException(calendarId);//FIXME replace exception
-                }).orElseThrow();
+                    throw new NotFoundException(CalendarControllerDTO.class, calendarId);//FIXME replace exception
+                }).orElseThrow());
     }
     @Transactional
-    public CalendarDatabaseModel updateOne(CalendarDatabaseModel calendarDatabaseModel, Long id) {
-        return repository.findById(id)
+    public CalendarControllerDTO updateOne(CalendarControllerDTO calendarControllerDTO, Long id) {
+        return mapper.calendarDatabaseModelToCalendarControllerDTO(repository.findById(id)
             .map(calendar -> {
-                calendar.setBeginningYear(calendarDatabaseModel.getBeginningYear());
-                calendar.setEndYear(calendarDatabaseModel.getEndYear());
+                calendar.setBeginningYear(calendarControllerDTO.getBeginningYear());
+                calendar.setEndYear(calendarControllerDTO.getEndYear());
                 return repository.save(calendar);
             })
             .orElseGet(() -> {
-                calendarDatabaseModel.setId(id);
-                return repository.save(calendarDatabaseModel);
-            });
+                calendarControllerDTO.setId(id);
+                return repository.save(mapper.calendarControllerDTOToCalendarDatabaseModel(calendarControllerDTO));
+            }));
     }
     @Transactional
-    public CalendarDatabaseModel deleteOne(Long id) {
+    public Long deleteOne(Long id) {
         if (!repository.existsById(id)) {
-            throw new CalendarNotFoundException(id);
+            throw new NotFoundException(CalendarControllerDTO.class, id);
         } else {
             repository.deleteById(id);
-            return new CalendarDatabaseModel();
+            return id;
         }
+    }
+
+    @Transactional
+    public DayControllerDTO getAnchorDay(Long id) {
+        return mapper.dayDatabaseModelToDayControllerDTO(repository.findById(id).orElseThrow().getAnchorWeekDay());
     }
 }

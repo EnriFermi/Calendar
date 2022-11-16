@@ -1,20 +1,17 @@
 package ru.study.webapp.controller;
 
-import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
-import ru.study.webapp.model.database.DatabaseMapper;
-import ru.study.webapp.model.database.DayWorkOutDatabaseModel;
+import ru.study.webapp.controller.dto.DayWorkOutControllerDTO;
 import ru.study.webapp.service.DayWorkOutService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController
-@ComponentScan("ru.study.webapp")
+
 @RequestMapping("/calendar/DayWorkOut")
 public class DayWorkOutController {
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
     private final DayWorkOutService service;
 
     public DayWorkOutController(DayWorkOutService service) {
@@ -23,27 +20,30 @@ public class DayWorkOutController {
 
 
     @GetMapping("/")
-    public List<DayWorkOutDatabaseModel> all() {
+    public List<DayWorkOutControllerDTO> all() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public DayWorkOutDatabaseModel one(@PathVariable Long id) {
+    public DayWorkOutControllerDTO one(@PathVariable Long id) {
         return service.getOne(id);
     }
-
+    @GetMapping("/page")
+    public List<DayWorkOutControllerDTO> onePage(@RequestParam Long pageSize, @RequestParam Long pageNumber) {
+        return service.getOnePage(pageSize, pageNumber);
+    }
     @PostMapping("/")
-    public DayWorkOutDatabaseModel add(@RequestBody DayWorkOutDatabaseModel DayWorkOutDatabaseModel) {
-        return service.addOne(DayWorkOutDatabaseModel);
+    public DayWorkOutControllerDTO add(@Valid @RequestBody DayWorkOutControllerDTO DayWorkOutControllerDTO) {
+        return service.addOne(DayWorkOutControllerDTO);
     }
 
     @PutMapping("/{id}")
-    public DayWorkOutDatabaseModel replaceCalendar(@RequestBody DayWorkOutDatabaseModel DayWorkOutDatabaseModel, @PathVariable Long id) {
-        return service.updateOne(DayWorkOutDatabaseModel, id);
+    public DayWorkOutControllerDTO replace(@Valid @RequestBody DayWorkOutControllerDTO DayWorkOutControllerDTO, @PathVariable Long id) {
+        return service.updateOne(DayWorkOutControllerDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    DayWorkOutDatabaseModel deleteCalendar(@PathVariable Long id) {
+    public Long delete(@PathVariable Long id) {
         return service.deleteOne(id);
     }
 }

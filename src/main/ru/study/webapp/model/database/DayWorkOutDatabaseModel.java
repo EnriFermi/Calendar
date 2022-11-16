@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
-@Table(name = "dayworkoutlist", /*schema = "calendarconfiguration",*/ catalog = "")
+@Table(name = "dayworkoutlist", /*schema = "calendarconfiguration",*/ catalog = "",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"dateOfWorkOutDay", "monthId"})})
 public class DayWorkOutDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

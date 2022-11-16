@@ -19,7 +19,10 @@ import java.util.List;
 @Table(name = "yearlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @Valid
 public class YearDatabaseModel {
-
+    public YearDatabaseModel(){}
+    public YearDatabaseModel(Long id){
+        this.id = id;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yearId")

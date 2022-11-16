@@ -14,6 +14,9 @@ import java.util.List;
 @Table(name = "calendarlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @DynamicUpdate
 public class CalendarDatabaseModel {
+    public CalendarDatabaseModel(Long id){
+        this.id = id;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "calendarId")
@@ -46,4 +49,5 @@ public class CalendarDatabaseModel {
     @Setter(AccessLevel.PUBLIC)
     private Integer endYear;
 
+    public CalendarDatabaseModel() {}
 }

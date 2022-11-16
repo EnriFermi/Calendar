@@ -1,66 +1,74 @@
 package ru.study.webapp.service;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.study.webapp.exceptions.CalendarNotFoundException;
-import ru.study.webapp.model.database.DatabaseMapper;
+import ru.study.webapp.controller.dto.MonthControllerDTO;
+import ru.study.webapp.exceptions.NotFoundException;
 import ru.study.webapp.model.database.MonthDatabaseModel;
-import ru.study.webapp.repository.CalendarRepository;
+import ru.study.webapp.model.database.YearDatabaseModel;
+import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.MonthRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
-@ComponentScan("ru.study.webapp")
+
 public class MonthService {
     private final MonthRepository repository;
-    private final CalendarRepository calendarRepository;
-    private final DatabaseMapper mapper = Mappers.getMapper(DatabaseMapper.class);
+    private final DatabaseDTOMapper mapper = Mappers.getMapper(DatabaseDTOMapper.class);
 
-    public MonthService(MonthRepository repository, CalendarRepository calendarRepository) {
+    public MonthService(MonthRepository repository) {
         this.repository = repository;
-        this.calendarRepository = calendarRepository;
     }
     @Transactional
-    public List<MonthDatabaseModel> getAll() {
-        List<MonthDatabaseModel> Months = (List<MonthDatabaseModel>) repository.findAll();
-
-        return ((List<MonthDatabaseModel>) repository.findAll()).stream().toList();
+    public List<MonthControllerDTO> getAll() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .map(mapper::monthDatabaseModelToMonthControllerDTO).toList();
     }
 
     @Transactional
-    public MonthDatabaseModel getOne(Long id) {
-        return repository.findById(id).orElseThrow(() -> new CalendarNotFoundException(id));
+    public MonthControllerDTO getOne(Long id) {
+        return mapper.monthDatabaseModelToMonthControllerDTO(repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(MonthControllerDTO.class, id)));
     }
     @Transactional
-    public MonthDatabaseModel addOne(MonthDatabaseModel MonthDatabaseModel) {
-        MonthDatabaseModel MonthDatabaseModel1 = new MonthDatabaseModel();
-        mapper.updateMonthDatabaseModel(MonthDatabaseModel, MonthDatabaseModel1);
-        return repository.save(MonthDatabaseModel1);
+    public List<MonthControllerDTO> getOnePage(Long pageSize, Long pageNumber){
+        Page<MonthDatabaseModel> res = repository.findAll(
+                PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
+        if(res.getTotalPages() < pageNumber.intValue()){
+            throw new NotFoundException(MonthControllerDTO.class, "Номер страницы превышает их общее количество");
+        }
+        return StreamSupport.stream(res.spliterator(), false)
+                .map(mapper::monthDatabaseModelToMonthControllerDTO).toList();
     }
     @Transactional
-    public MonthDatabaseModel updateOne(MonthDatabaseModel MonthDatabaseModel, Long id) {
-        return repository.findById(id)
-                .map(Month -> {
-                    Month.setName(MonthDatabaseModel.getName());
-                    Month.setDayCount(MonthDatabaseModel.getDayCount());
-                    Month.setYearDatabaseModel(MonthDatabaseModel.getYearDatabaseModel());
-                    return repository.save(Month);
-                })
-                .orElseGet(() -> {
-                    MonthDatabaseModel.setId(id);
+    public MonthControllerDTO addOne(MonthControllerDTO MonthControllerDTO) {
+        return mapper.monthDatabaseModelToMonthControllerDTO(
+                repository.save(mapper.monthControllerDTOToMonthDatabaseModel(MonthControllerDTO)));
+    }
+    @Transactional
+    public MonthControllerDTO updateOne(MonthControllerDTO MonthControllerDTO, Long id) {
+        return mapper.monthDatabaseModelToMonthControllerDTO(repository.findById(id)
+                .map(MonthDatabaseModel -> {
+                    MonthDatabaseModel.setName(MonthControllerDTO.getName());
+                    MonthDatabaseModel.setDayCount(MonthControllerDTO.getDayCount());
+                    MonthDatabaseModel.setYearDatabaseModel(new YearDatabaseModel(MonthControllerDTO
+                            .getYearControllerDTOId()));
                     return repository.save(MonthDatabaseModel);
-                });
+                })
+                .orElseGet(() -> repository.save(mapper.monthControllerDTOToMonthDatabaseModel(MonthControllerDTO))));
     }
     @Transactional
-    public MonthDatabaseModel deleteOne(Long id) {
+    public Long deleteOne(Long id) {
         if (!repository.existsById(id)) {
-            throw new CalendarNotFoundException(id);
+            throw new NotFoundException(MonthControllerDTO.class, id);
         } else {
             repository.deleteById(id);
-            return new MonthDatabaseModel();
+            return id;
         }
     }
 }

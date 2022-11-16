@@ -32,12 +32,11 @@ public class JdbcConfigurationParser implements ConfigurationParser {
         return calendarTemplate;
     }
     public List<CalendarTemplate> parse(Connection connection) throws SQLException, JdbcParsingException, JaxbParsingException {
-        //TODO сложно читается запрос, выглядит, будто select * from columnName DONE
         List<CalendarTemplate> calendarTemplateList  = new ArrayList<>();
         PreparedStatement calendarListStatement = connection.prepareStatement("select * from "
                 + JdbcFieldNames.CALENDAR_TABLE.getFieldName());
         try (ResultSet calendarSet = calendarListStatement.executeQuery()) {
-            //TODO в параметр запроса
+            //TODO в параметр запроса ?)
             while (calendarSet.next()) {
                 calendarTemplateList.add(getCalendarTemplate(calendarSet, connection));
             }
@@ -45,27 +44,15 @@ public class JdbcConfigurationParser implements ConfigurationParser {
         return  calendarTemplateList;
     }
     public CalendarTemplate parse(Integer calendarId, Connection connection) throws SQLException, JdbcParsingException, JaxbParsingException {
-        //TODO сложно читается запрос, выглядит, будто select * from columnName
         CalendarTemplate calendarTemplate = null;
         PreparedStatement calendarListStatement = connection.prepareStatement("select * from "
-                + JdbcFieldNames.CALENDAR_TABLE.getFieldName());
+                + JdbcFieldNames.CALENDAR_TABLE.getFieldName() + " where "
+                + JdbcFieldNames.CALENDAR_ID.getFieldName() + " = " +calendarId.toString());
         try (ResultSet calendarSet = calendarListStatement.executeQuery()) {
-            Integer calendarID = 1;
-            Boolean calendarFound = false;
-            //TODO в параметр запроса
-            while (calendarSet.next()) {
-                if (calendarID.equals(calendarId)) {
-                    calendarTemplate = getCalendarTemplate(calendarSet, connection);
-                    calendarFound = true;
-                    break;
-                }
-                calendarID++;
-            }
-            if (!calendarFound) {
-                throw new JdbcParsingException("There is no calendar with such id: "
-                        + calendarId);
-            }
-
+            //TODO в параметр запроса DONE
+            calendarTemplate = getCalendarTemplate(calendarSet, connection);
+        } catch (SQLException e){
+            throw new JdbcParsingException(e);
         }
         return calendarTemplate;
     }
