@@ -35,6 +35,7 @@ public class CalendarService {
     public List<CalendarControllerDTO> getOnePage(Long pageSize, Long pageNumber){
         Page<CalendarDatabaseModel> res = repository.findAll(
                 PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
+        //TODO не ругаться. а вернуть пустой список
         if(res.getTotalPages() < pageNumber.intValue()){
             throw new NotFoundException(CalendarControllerDTO.class, "Номер страницы превышает их общее количество");
         }
@@ -73,6 +74,7 @@ public class CalendarService {
                 return repository.save(calendar);
             })
             .orElseGet(() -> {
+                //TODO если не нашли по ИД, должна быть ошибка
                 calendarControllerDTO.setId(id);
                 return repository.save(mapper.calendarControllerDTOToCalendarDatabaseModel(calendarControllerDTO));
             }));

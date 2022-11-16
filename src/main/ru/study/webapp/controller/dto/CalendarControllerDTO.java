@@ -11,7 +11,9 @@ import javax.validation.constraints.PositiveOrZero;
 @Getter(AccessLevel.PUBLIC)
 public class CalendarControllerDTO {
 
+    //TODO по хорошему надо сообщать информацию о странице. Посмотреть Page<>
     @Setter(AccessLevel.PUBLIC)
+    //TODO попробовать через final
     private Long id;
 
     @PositiveOrZero
@@ -20,6 +22,7 @@ public class CalendarControllerDTO {
     @Positive
     private Integer endYear = -1;
 
+    //TODO проверить создание через конструктор
     public void setBeginningYear(Integer beginningYear) {
         if(endYear != -1 && beginningYear >= endYear){
             throw new ValidationException(CalendarControllerDTO.class,

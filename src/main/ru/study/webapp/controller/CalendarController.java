@@ -49,6 +49,8 @@ public class CalendarController {
             content = @Content)
     })
     @GetMapping("/page")
+    //TODO добавить поиск ло опциональным полям:  beginningYear, endYear, наличие в календаре месяца с названием
+    // TODO возможность сортировки по полям:  beginningYear, endYear
     public List<CalendarControllerDTO> onePage(@RequestParam Long pageSize, @RequestParam Long pageNumber) {
         return service.getOnePage(pageSize, pageNumber);
     }
@@ -101,19 +103,11 @@ public class CalendarController {
                     @Schema(implementation = CalendarControllerDTO.class))}),
             @ApiResponse(responseCode = "404", description = "-",
                     content = @Content),
+    //TODO почитать https://www.baeldung.com/exception-handling-for-rest-with-spring
             @ApiResponse(responseCode = "400", description = "Не корректные данные",
                     content = @Content)})
     @PutMapping("/{id}")
-    //TODO архитектура: контроллер -> сервис(если надо открывает тразакцию) -> репозиториями
-    // контроллер (ДТО - json + schema) -> сервис( доменная модель, чисто класс с getter+setter) -> репозиториями (entity -> БД) DONE
     public CalendarControllerDTO update(@Valid @RequestBody CalendarControllerDTO calendarControllerDTO, @PathVariable Long id) {
-
-        //TODO можно разбить на кучу контроллеров, например меняющий с какого дня недели стартует 0 год DONE
-        //TODO если решил делать все на все, тогда надо calendarDAO = repository.findById(id), и в него прокидывать простые объекты при различии
-        // а если зависимый объект отличается, то надо конкретный заменять (Решил много контроллеров)
-
-        // TODO контроллер (ДТО - json + schema) -> сервис( доменная модель, чисто класс с getter+setter) -> репозиториями (entity -> БД)
-        //  при парсинге в доменную проверяешь допустимость изменений. А ее заливаешь в существующую энтити. ? DONE
         return service.updateOne(calendarControllerDTO, id);
     }
 
