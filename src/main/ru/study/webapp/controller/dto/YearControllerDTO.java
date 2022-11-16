@@ -11,7 +11,6 @@ import javax.validation.constraints.Positive;
 @Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class YearControllerDTO {
-    // TODO прочитать про @Valid DONE
     private Long id;
 
     @Positive

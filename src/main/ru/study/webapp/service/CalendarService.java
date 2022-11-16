@@ -61,7 +61,7 @@ public class CalendarService {
                             return repository.save(calendar);
                         }
                     }
-                    throw new NotFoundException(CalendarControllerDTO.class, calendarId);//FIXME replace exception
+                    throw new NotFoundException(CalendarControllerDTO.class, calendarId);
                 }).orElseThrow());
     }
     @Transactional

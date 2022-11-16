@@ -36,7 +36,6 @@ public class JdbcConfigurationParser implements ConfigurationParser {
         PreparedStatement calendarListStatement = connection.prepareStatement("select * from "
                 + JdbcFieldNames.CALENDAR_TABLE.getFieldName());
         try (ResultSet calendarSet = calendarListStatement.executeQuery()) {
-            //TODO в параметр запроса ?)
             while (calendarSet.next()) {
                 calendarTemplateList.add(getCalendarTemplate(calendarSet, connection));
             }
@@ -49,7 +48,6 @@ public class JdbcConfigurationParser implements ConfigurationParser {
                 + JdbcFieldNames.CALENDAR_TABLE.getFieldName() + " where "
                 + JdbcFieldNames.CALENDAR_ID.getFieldName() + " = " +calendarId.toString());
         try (ResultSet calendarSet = calendarListStatement.executeQuery()) {
-            //TODO в параметр запроса DONE
             calendarTemplate = getCalendarTemplate(calendarSet, connection);
         } catch (SQLException e){
             throw new JdbcParsingException(e);

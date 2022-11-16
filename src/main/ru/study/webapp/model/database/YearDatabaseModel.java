@@ -26,7 +26,6 @@ public class YearDatabaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "yearId")
-    //TODO прочитать про @Valid
     @NonNull
     private Long id;
 

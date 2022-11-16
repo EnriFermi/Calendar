@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-//TODO почитать, не должно быть в каждом классе по componentscan DONE
 @RequestMapping("/calendar/year")
 public class YearController {
     private final YearService service;
