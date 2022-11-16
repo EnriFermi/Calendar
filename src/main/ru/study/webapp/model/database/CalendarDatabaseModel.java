@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "calendarlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @DynamicUpdate
+//TODO rename to *Entity
+//TODO добавить поле версии, не позволять параллельное изменение
 public class CalendarDatabaseModel {
     public CalendarDatabaseModel(Long id){
         this.id = id;
