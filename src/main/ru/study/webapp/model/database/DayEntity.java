@@ -16,7 +16,7 @@ import javax.persistence.*;
 @UniqueElements()
 @Table(name = "daylist", /*schema = "calendarconfiguration",*/ catalog = "",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"dayName", "calendarId"})})
-public class DayDatabaseModel {
+public class DayEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dayId")
@@ -25,7 +25,7 @@ public class DayDatabaseModel {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calendarId")
-    private CalendarDatabaseModel calendarDatabaseModel;
+    private CalendarEntity calendarEntity;
 
 
     @EqualsAndHashCode.Include

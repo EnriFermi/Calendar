@@ -15,8 +15,8 @@ import java.util.List;
 @DynamicUpdate
 //TODO rename to *Entity
 //TODO добавить поле версии, не позволять параллельное изменение
-public class CalendarDatabaseModel {
-    public CalendarDatabaseModel(Long id){
+public class CalendarEntity {
+    public CalendarEntity(Long id){
         this.id = id;
     }
     @Id
@@ -27,19 +27,19 @@ public class CalendarDatabaseModel {
 
     @Setter(AccessLevel.PUBLIC)
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarDatabaseModel")
-    private List<YearDatabaseModel> yearList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarEntity")
+    private List<YearEntity> yearList;
 
     @Setter(AccessLevel.PUBLIC)
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarDatabaseModel")
-    private List<DayDatabaseModel> dayList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendarEntity")
+    private List<DayEntity> dayList;
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "anchorWeekDayKey")
     @Setter(AccessLevel.PUBLIC)
-    private DayDatabaseModel anchorWeekDay;
+    private DayEntity anchorWeekDay;
 
 
     @Column(name = "beginningYear")
@@ -51,5 +51,5 @@ public class CalendarDatabaseModel {
     @Setter(AccessLevel.PUBLIC)
     private Integer endYear;
 
-    public CalendarDatabaseModel() {}
+    public CalendarEntity() {}
 }

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.DayControllerDTO;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.CalendarDatabaseModel;
-import ru.study.webapp.model.database.DayDatabaseModel;
+import ru.study.webapp.model.database.CalendarEntity;
+import ru.study.webapp.model.database.DayEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.DayRepository;
 
@@ -26,40 +26,40 @@ public class DayService {
     @Transactional
     public List<DayControllerDTO> getAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(mapper::dayDatabaseModelToDayControllerDTO).toList();
+                .map(mapper::dayEntityToDayControllerDTO).toList();
     }
 
     @Transactional
     public DayControllerDTO getOne(Long id) {
-        return mapper.dayDatabaseModelToDayControllerDTO(repository.findById(id)
+        return mapper.dayEntityToDayControllerDTO(repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(DayControllerDTO.class, id)));
     }
     @Transactional
     public List<DayControllerDTO> getOnePage(Long pageSize, Long pageNumber){
-        Page<DayDatabaseModel> res = repository.findAll(
+        Page<DayEntity> res = repository.findAll(
                 PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
         if(res.getTotalPages() < pageNumber.intValue()){
             throw new NotFoundException(DayControllerDTO.class, "Номер страницы превышает их общее количество");
         }
         return StreamSupport.stream(res.spliterator(), false)
-                .map(mapper::dayDatabaseModelToDayControllerDTO).toList();
+                .map(mapper::dayEntityToDayControllerDTO).toList();
     }
     @Transactional
     public DayControllerDTO addOne(DayControllerDTO DayControllerDTO) {
-        return mapper.dayDatabaseModelToDayControllerDTO(
-                repository.save(mapper.dayControllerDTOToDayDatabaseModel(DayControllerDTO)));
+        return mapper.dayEntityToDayControllerDTO(
+                repository.save(mapper.dayControllerDTOToDayEntity(DayControllerDTO)));
     }
     @Transactional
     public DayControllerDTO updateOne(DayControllerDTO DayControllerDTO, Long id) {
-        return mapper.dayDatabaseModelToDayControllerDTO(repository.findById(id)
-                .map(dayDatabaseModel -> {
-                    dayDatabaseModel.setDayName(DayControllerDTO.getDayName());
-                    dayDatabaseModel.setWeekDayWorkOut(DayControllerDTO.getWeekDayWorkOut());
-                    dayDatabaseModel.setCalendarDatabaseModel(new CalendarDatabaseModel(DayControllerDTO
+        return mapper.dayEntityToDayControllerDTO(repository.findById(id)
+                .map(dayEntity -> {
+                    dayEntity.setDayName(DayControllerDTO.getDayName());
+                    dayEntity.setWeekDayWorkOut(DayControllerDTO.getWeekDayWorkOut());
+                    dayEntity.setCalendarEntity(new CalendarEntity(DayControllerDTO
                             .getCalendarControllerDTOId()));
-                    return repository.save(dayDatabaseModel);
+                    return repository.save(dayEntity);
                 })
-                .orElseGet(() -> repository.save(mapper.dayControllerDTOToDayDatabaseModel(DayControllerDTO))));
+                .orElseGet(() -> repository.save(mapper.dayControllerDTOToDayEntity(DayControllerDTO))));
     }
     @Transactional
     public Long deleteOne(Long id) {

@@ -15,69 +15,69 @@ public abstract class DatabaseDTOMapper {
     @Mapping(target = "beginningYear", source = "beginningYear")
     @Mapping(target = "endYear", source = "endYear")
     @Mapping(target = "dayList", ignore = true)
-    public abstract CalendarDatabaseModel calendarControllerDTOToCalendarDatabaseModel(CalendarControllerDTO calendarConfig);
+    public abstract CalendarEntity calendarControllerDTOToCalendarEntity(CalendarControllerDTO calendarConfig);
 
     @Mapping(target = "id", source = "id", ignore = true)
     @Mapping(target = "monthList", ignore = true)
-    @Mapping(target = "calendarDatabaseModel", expression = "java(new CalendarDatabaseModel(yearConfig" +
+    @Mapping(target = "calendarEntity", expression = "java(new CalendarEntity(yearConfig" +
             ".getCalendarControllerDTOId()))")
-    public abstract YearDatabaseModel yearControllerDTOToYearDatabaseModel(YearControllerDTO yearConfig);
+    public abstract YearEntity yearControllerDTOToYearEntity(YearControllerDTO yearConfig);
 
     @Mapping(target = "id", source = "id", ignore = true)
     @Mapping(target = "name", source = "name")
     @Mapping(target = "dayCount", source = "dayCount")
     @Mapping(target = "dayWorkList", ignore = true)
     @Mapping(target = "dayWorkOutList", ignore = true)
-    @Mapping(target = "yearDatabaseModel", expression = "java(new YearDatabaseModel(monthConfig" +
+    @Mapping(target = "yearEntity", expression = "java(new YearEntity(monthConfig" +
             ".getYearControllerDTOId()))")
-    public abstract MonthDatabaseModel monthControllerDTOToMonthDatabaseModel(MonthControllerDTO monthConfig);
+    public abstract MonthEntity monthControllerDTOToMonthEntity(MonthControllerDTO monthConfig);
 
     @Mapping(target = "id", source = "id", ignore = true)
     @Mapping(target = "dayName", source = "dayName")
     @Mapping(target = "weekDayWorkOut", source = "weekDayWorkOut")
-    @Mapping(target = "calendarDatabaseModel", expression = "java(new CalendarDatabaseModel(dayConfig" +
+    @Mapping(target = "calendarEntity", expression = "java(new CalendarEntity(dayConfig" +
             ".getCalendarControllerDTOId()))")
-    public abstract DayDatabaseModel dayControllerDTOToDayDatabaseModel(DayControllerDTO dayConfig);
+    public abstract DayEntity dayControllerDTOToDayEntity(DayControllerDTO dayConfig);
 
     @Mapping(target = "id", source = "id", ignore = true)
     @Mapping(target = "dateOfWorkOutDay", source = "dateOfWorkOutDay")
-    @Mapping(target = "monthDatabaseModel", expression = "java(new MonthDatabaseModel(dayWorkOutConfig" +
+    @Mapping(target = "monthEntity", expression = "java(new MonthEntity(dayWorkOutConfig" +
             ".getMonthControllerDTOId()))")
-    public abstract DayWorkOutDatabaseModel dayWorkOutControllerDTOToDayWorkOutDatabaseModel(DayWorkOutControllerDTO dayWorkOutConfig);
+    public abstract DayWorkOutEntity dayWorkOutControllerDTOToDayWorkOutEntity(DayWorkOutControllerDTO dayWorkOutConfig);
     @Mapping(target = "id", source = "id", ignore = true)
     @Mapping(target = "dateOfWorkDay", source = "dateOfWorkDay")
-    @Mapping(target = "monthDatabaseModel", expression = "java(new MonthDatabaseModel(dayWorkConfig" +
+    @Mapping(target = "monthEntity", expression = "java(new MonthEntity(dayWorkConfig" +
             ".getMonthControllerDTOId()))")
-    public abstract DayWorkDatabaseModel dayWorkControllerDTOToDayWorkDatabaseModel(DayWorkControllerDTO dayWorkConfig);
+    public abstract DayWorkEntity dayWorkControllerDTOToDayWorkEntity(DayWorkControllerDTO dayWorkConfig);
 //------------------------------------------------------------------------------------
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "beginningYear", source = "beginningYear")
     @Mapping(target = "endYear", source = "endYear")
-    public abstract CalendarControllerDTO calendarDatabaseModelToCalendarControllerDTO(CalendarDatabaseModel calendarConfig);
+    public abstract CalendarControllerDTO calendarEntityToCalendarControllerDTO(CalendarEntity calendarConfig);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "calendarControllerDTOId", source = "calendarDatabaseModel.id")
-    public abstract YearControllerDTO yearDatabaseModelToYearControllerDTO(YearDatabaseModel yearConfig);
+    @Mapping(target = "calendarControllerDTOId", source = "calendarEntity.id")
+    public abstract YearControllerDTO yearEntityToYearControllerDTO(YearEntity yearConfig);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "dayCount", source = "dayCount")
-    @Mapping(target = "yearControllerDTOId", source = "yearDatabaseModel.id")
-    public abstract MonthControllerDTO monthDatabaseModelToMonthControllerDTO(MonthDatabaseModel monthConfig);
+    @Mapping(target = "yearControllerDTOId", source = "yearEntity.id")
+    public abstract MonthControllerDTO monthEntityToMonthControllerDTO(MonthEntity monthConfig);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "dayName", source = "dayName")
     @Mapping(target = "weekDayWorkOut", source = "weekDayWorkOut")
-    @Mapping(target = "calendarControllerDTOId", source = "calendarDatabaseModel.id")
-    public abstract DayControllerDTO dayDatabaseModelToDayControllerDTO(DayDatabaseModel dayConfig);
+    @Mapping(target = "calendarControllerDTOId", source = "calendarEntity.id")
+    public abstract DayControllerDTO dayEntityToDayControllerDTO(DayEntity dayConfig);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "dateOfWorkOutDay", source = "dateOfWorkOutDay")
-    @Mapping(target = "monthControllerDTOId", source = "monthDatabaseModel.id")
-    public abstract DayWorkOutControllerDTO dayWorkOutDatabaseModelToDayWorkOutControllerDTO(DayWorkOutDatabaseModel dayWorkOutDAO);
+    @Mapping(target = "monthControllerDTOId", source = "monthEntity.id")
+    public abstract DayWorkOutControllerDTO dayWorkOutEntityToDayWorkOutControllerDTO(DayWorkOutEntity dayWorkOutDAO);
     @Mapping(target = "id", source = "id")
     @Mapping(target = "dateOfWorkDay", source = "dateOfWorkDay")
-    @Mapping(target = "monthControllerDTOId", source = "monthDatabaseModel.id")
-    public abstract DayWorkControllerDTO dayWorkDatabaseModelToDayWorkControllerDTO(DayWorkDatabaseModel dayWorkDAO);
+    @Mapping(target = "monthControllerDTOId", source = "monthEntity.id")
+    public abstract DayWorkControllerDTO dayWorkEntityToDayWorkControllerDTO(DayWorkEntity dayWorkDAO);
 }

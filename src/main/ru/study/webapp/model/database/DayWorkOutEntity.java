@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter(AccessLevel.PUBLIC)
 @Table(name = "dayworkoutlist", /*schema = "calendarconfiguration",*/ catalog = "",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"dateOfWorkOutDay", "monthId"})})
-public class DayWorkOutDatabaseModel {
+public class DayWorkOutEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dayWorkOutId")
@@ -24,5 +24,5 @@ public class DayWorkOutDatabaseModel {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "monthId")
-    private MonthDatabaseModel monthDatabaseModel;
+    private MonthEntity monthEntity;
 }

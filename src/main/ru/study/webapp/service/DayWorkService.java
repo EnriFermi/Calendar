@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.DayWorkControllerDTO;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.DayWorkDatabaseModel;
-import ru.study.webapp.model.database.MonthDatabaseModel;
+import ru.study.webapp.model.database.DayWorkEntity;
+import ru.study.webapp.model.database.MonthEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.DayWorkRepository;
 
@@ -27,40 +27,40 @@ public class DayWorkService {
     @Transactional
     public List<DayWorkControllerDTO> getAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(mapper::dayWorkDatabaseModelToDayWorkControllerDTO).toList();
+                .map(mapper::dayWorkEntityToDayWorkControllerDTO).toList();
     }
 
     @Transactional
     public DayWorkControllerDTO getOne(Long id) {
-        return mapper.dayWorkDatabaseModelToDayWorkControllerDTO(repository.findById(id)
+        return mapper.dayWorkEntityToDayWorkControllerDTO(repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(DayWorkControllerDTO.class, id)));
     }
     @Transactional
     public List<DayWorkControllerDTO> getOnePage(Long pageSize, Long pageNumber){
-        Page<DayWorkDatabaseModel> res = repository.findAll(
+        Page<DayWorkEntity> res = repository.findAll(
                 PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
         if(res.getTotalPages() < pageNumber.intValue()){
             throw new NotFoundException(DayWorkControllerDTO.class, "Номер страницы превышает их общее количество");
         }
         return StreamSupport.stream(res.spliterator(), false)
-                .map(mapper::dayWorkDatabaseModelToDayWorkControllerDTO).toList();
+                .map(mapper::dayWorkEntityToDayWorkControllerDTO).toList();
     }
     @Transactional
     public DayWorkControllerDTO addOne(DayWorkControllerDTO DayWorkControllerDTO) {
-        return mapper.dayWorkDatabaseModelToDayWorkControllerDTO(
-                repository.save(mapper.dayWorkControllerDTOToDayWorkDatabaseModel(DayWorkControllerDTO)));
+        return mapper.dayWorkEntityToDayWorkControllerDTO(
+                repository.save(mapper.dayWorkControllerDTOToDayWorkEntity(DayWorkControllerDTO)));
     }
     @Transactional
     public DayWorkControllerDTO updateOne(DayWorkControllerDTO DayWorkControllerDTO, Long id) {
-        return mapper.dayWorkDatabaseModelToDayWorkControllerDTO(repository.findById(id)
-                .map(dayWorkDatabaseModel -> {
-                    dayWorkDatabaseModel.setDateOfWorkDay(DayWorkControllerDTO.getDateOfWorkDay());
-                    dayWorkDatabaseModel.setMonthDatabaseModel(new MonthDatabaseModel(
+        return mapper.dayWorkEntityToDayWorkControllerDTO(repository.findById(id)
+                .map(dayWorkEntity -> {
+                    dayWorkEntity.setDateOfWorkDay(DayWorkControllerDTO.getDateOfWorkDay());
+                    dayWorkEntity.setMonthEntity(new MonthEntity(
                             DayWorkControllerDTO.getId()));
-                    return repository.save(dayWorkDatabaseModel);
+                    return repository.save(dayWorkEntity);
                 })
                 .orElseGet(() -> repository.save(mapper.
-                        dayWorkControllerDTOToDayWorkDatabaseModel(DayWorkControllerDTO))));
+                        dayWorkControllerDTOToDayWorkEntity(DayWorkControllerDTO))));
     }
     @Transactional
     public Long deleteOne(Long id) {

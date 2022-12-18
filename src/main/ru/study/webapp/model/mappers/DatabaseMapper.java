@@ -16,25 +16,25 @@ public abstract class DatabaseMapper {
     @Mapping(target = "beginningYear", source = "beginningYear")
     @Mapping(target = "endYear", source = "endYear")
     @Mapping(target = "week", expression = "java(new WeekTemplate(calendarConfig.getDayList()" +
-            ".stream().map(day -> dayDatabaseModelToDayTemplate(day)).toList()))")
-    public abstract CalendarTemplate calendarDatabaseModelToCalendarTemplate(CalendarDatabaseModel calendarConfig);
+            ".stream().map(day -> dayEntityToDayTemplate(day)).toList()))")
+    public abstract CalendarTemplate calendarEntityToCalendarTemplate(CalendarEntity calendarConfig);
     @Mapping(target = "monthList", source = "monthList")
     @Mapping(target = "dayQuantity", ignore = true)
-    public abstract YearTemplate yearDatabaseModelToYearTemplate(YearDatabaseModel yearConfig);
+    public abstract YearTemplate yearEntityToYearTemplate(YearEntity yearConfig);
     @Mapping(target = "name", source = "name")
     @Mapping(target = "dayCount", source = "dayCount")
     @Mapping(target = "dayWorkOutList", source = "dayWorkOutList")
     @Mapping(target = "dayWorkList", source = "dayWorkList")
-    public abstract MonthTemplate monthDatabaseModelToMonthTemplate(MonthDatabaseModel monthConfig);
+    public abstract MonthTemplate monthEntityToMonthTemplate(MonthEntity monthConfig);
 
     @Mapping(target = "dayName", source = "dayName")
     @Mapping(target = "weekDayWorkOut", source = "weekDayWorkOut")
-    public abstract DayTemplate dayDatabaseModelToDayTemplate(DayDatabaseModel dayConfig);
+    public abstract DayTemplate dayEntityToDayTemplate(DayEntity dayConfig);
 
-    public Integer dayWorkOutDatabaseModelToInteger(DayWorkOutDatabaseModel dayWorkOutDAO){
+    public Integer dayWorkOutEntityToInteger(DayWorkOutEntity dayWorkOutDAO){
         return dayWorkOutDAO.getDateOfWorkOutDay();
     }
-    public Integer dayWorkDatabaseModelToInteger(DayWorkDatabaseModel dayWorkDAO){
+    public Integer dayWorkEntityToInteger(DayWorkEntity dayWorkDAO){
         return dayWorkDAO.getDateOfWorkDay();
     }
 
@@ -45,33 +45,33 @@ public abstract class DatabaseMapper {
     @Mapping(target = "endYear", source = "endYear")
     @Mapping(target = "dayList", ignore = true)
     @Mapping(target = "id", ignore = true)
-    public abstract CalendarDatabaseModel calendarTemplateToCalendarDatabaseModel(CalendarTemplate calendarConfig);
+    public abstract CalendarEntity calendarTemplateToCalendarEntity(CalendarTemplate calendarConfig);
     @Mapping(target = "monthList", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "calendarDatabaseModel", ignore = true)
-    public abstract YearDatabaseModel yearTemplateToYearDatabaseModel(YearTemplate yearConfig);
+    @Mapping(target = "calendarEntity", ignore = true)
+    public abstract YearEntity yearTemplateToYearEntity(YearTemplate yearConfig);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "name")
     @Mapping(target = "dayCount", source = "dayCount")
-    @Mapping(target = "yearDatabaseModel", ignore = true)
+    @Mapping(target = "yearEntity", ignore = true)
     @Mapping(target = "dayWorkOutList", ignore = true)
     @Mapping(target = "dayWorkList", ignore = true)
-    public abstract MonthDatabaseModel monthTemplateToMonthDatabaseModel(MonthTemplate monthConfig);
+    public abstract MonthEntity monthTemplateToMonthEntity(MonthTemplate monthConfig);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "calendarDatabaseModel", ignore = true)
+    @Mapping(target = "calendarEntity", ignore = true)
     @Mapping(target = "dayName", source = "dayName")
     @Mapping(target = "weekDayWorkOut", source = "weekDayWorkOut")
-    public abstract DayDatabaseModel dayTemplateToDayDatabaseModel(DayTemplate dayConfig);
+    public abstract DayEntity dayTemplateToDayEntity(DayTemplate dayConfig);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dateOfWorkOutDay",source = "dayWorkOut")
-    @Mapping(target = "monthDatabaseModel", ignore = true)
-    public abstract DayWorkOutDatabaseModel integerToDayWorkOutDatabaseModel(Integer dayWorkOut);
+    @Mapping(target = "monthEntity", ignore = true)
+    public abstract DayWorkOutEntity integerToDayWorkOutEntity(Integer dayWorkOut);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dateOfWorkDay",source = "dayWork")
-    @Mapping(target = "monthDatabaseModel", ignore = true)
-    public abstract DayWorkDatabaseModel integerDayWorkDatabaseModel(DayWorkDatabaseModel dayWork);
+    @Mapping(target = "monthEntity", ignore = true)
+    public abstract DayWorkEntity integerDayWorkEntity(DayWorkEntity dayWork);
     /*
     public abstract class DatabaseMapperDecorator extends DatabaseDTOMapper{
         private final DatabaseDTOMapper delegate;
@@ -79,24 +79,24 @@ public abstract class DatabaseMapper {
             this.delegate = delegate;
         }
         @Override
-        public CalendarControllerDTO calendarTemplateToCalendarDatabaseModel(CalendarTemplate calendarConfig){
-            CalendarControllerDTO calendarDatabaseModel = delegate
-                    .calendarTemplateToCalendarDatabaseModel(calendarConfig);
-            for(YearControllerDTO year: calendarDatabaseModel.getYearList()){
-                year.setCalendarControllerDTO(calendarDatabaseModel);
+        public CalendarControllerDTO calendarTemplateToCalendarEntity(CalendarTemplate calendarConfig){
+            CalendarControllerDTO calendarEntity = delegate
+                    .calendarTemplateToCalendarEntity(calendarConfig);
+            for(YearControllerDTO year: calendarEntity.getYearList()){
+                year.setCalendarControllerDTO(calendarEntity);
             }
-            for(DayControllerDTO day: calendarDatabaseModel.getDayList()){
-                day.setCalendarControllerDTO(calendarDatabaseModel);
+            for(DayControllerDTO day: calendarEntity.getDayList()){
+                day.setCalendarControllerDTO(calendarEntity);
             }
 
         }
 
         @Override
-        public YearControllerDTO yearTemplateToYearDatabaseModel(YearTemplate yearConfig){
+        public YearControllerDTO yearTemplateToYearEntity(YearTemplate yearConfig){
 
         }
         @Override
-        public MonthControllerDTO monthTemplateToMonthDatabaseModel(MonthTemplate monthConfig){
+        public MonthControllerDTO monthTemplateToMonthEntity(MonthTemplate monthConfig){
 
         }
 
@@ -111,166 +111,166 @@ public abstract class DatabaseMapper {
     @Mapping(target = "beginningYear", source = "beginningYear", ignore = false)
     @Mapping(target = "endYear", source = "endYear", ignore = false)
     @Mapping(target = "dayList", source = "dayList", ignore = true)
-    public abstract void updateCalendarDatabaseModel(CalendarDatabaseModel newCalendar, @MappingTarget CalendarDatabaseModel oldCalendar);
+    public abstract void updateCalendarEntity(CalendarEntity newCalendar, @MappingTarget CalendarEntity oldCalendar);
 
     @Mapping(target = "id", source = "id", ignore = false)
-    @Mapping(target = "calendarDatabaseModel", expression = "java(newYear.getCalendarDatabaseModel())", ignore = false)
+    @Mapping(target = "calendarEntity", expression = "java(newYear.getCalendarEntity())", ignore = false)
     @Mapping(target = "monthList", source = "monthList", ignore = true)
-    public abstract void updateYearDatabaseModel(YearDatabaseModel newYear, @MappingTarget YearDatabaseModel oldYear);
+    public abstract void updateYearEntity(YearEntity newYear, @MappingTarget YearEntity oldYear);
 
     @Mapping(target = "id", source = "id", ignore = false)
-    @Mapping(target = "yearDatabaseModel", expression = "java(newMonth.getYearDatabaseModel())" , ignore = false)
+    @Mapping(target = "yearEntity", expression = "java(newMonth.getYearEntity())" , ignore = false)
     @Mapping(target = "name", source = "name", ignore = false)
     @Mapping(target = "dayCount", source = "dayCount", ignore = false)
     @Mapping(target = "dayWorkOutList", source = "dayWorkOutList", ignore = true)
     @Mapping(target = "dayWorkList", source = "dayWorkList", ignore = true)
-    public abstract void updateMonthDatabaseModel(MonthDatabaseModel newMonth, @MappingTarget MonthDatabaseModel oldMonth);
+    public abstract void updateMonthEntity(MonthEntity newMonth, @MappingTarget MonthEntity oldMonth);
 
 
     @Mapping(target = "id", source = "id", ignore = false)
-    @Mapping(target = "calendarDatabaseModel", expression = "java(newDay.getCalendarDatabaseModel())", ignore = false)
+    @Mapping(target = "calendarEntity", expression = "java(newDay.getCalendarEntity())", ignore = false)
     @Mapping(target = "dayName", source = "dayName", ignore = false)
     @Mapping(target = "weekDayWorkOut", source = "weekDayWorkOut", ignore = false)
-    public abstract void updateDayDatabaseModel(DayDatabaseModel newDay, @MappingTarget DayDatabaseModel oldDay);
+    public abstract void updateDayEntity(DayEntity newDay, @MappingTarget DayEntity oldDay);
 
     @Mapping(target = "id", source = "id", ignore = false)
     @Mapping(target = "dateOfWorkOutDay", source = "dateOfWorkOutDay", ignore = false)
-    @Mapping(target = "monthDatabaseModel", expression = "java(newDayWorkOut.getMonthDatabaseModel())", ignore = false)
-    public abstract void updateDayWorkOutDatabaseModel(DayWorkOutDatabaseModel newDayWorkOut,
-                                                    @MappingTarget DayWorkOutDatabaseModel oldDayWorkOut);
+    @Mapping(target = "monthEntity", expression = "java(newDayWorkOut.getMonthEntity())", ignore = false)
+    public abstract void updateDayWorkOutEntity(DayWorkOutEntity newDayWorkOut,
+                                                       @MappingTarget DayWorkOutEntity oldDayWorkOut);
     @Mapping(target = "id", source = "id", ignore = false)
     @Mapping(target = "dateOfWorkDay", source = "dateOfWorkDay", ignore = false)
-    @Mapping(target = "monthDatabaseModel", expression = "java(newDayWork.getMonthDatabaseModel())", ignore = false)
-    public abstract void updateDayWorkDatabaseModel(DayWorkDatabaseModel newDayWork,
-                                                    @MappingTarget DayWorkDatabaseModel oldDayWork);
+    @Mapping(target = "monthEntity", expression = "java(newDayWork.getMonthEntity())", ignore = false)
+    public abstract void updateDayWorkEntity(DayWorkEntity newDayWork,
+                                                    @MappingTarget DayWorkEntity oldDayWork);
     /*
-    public void updateDayDAOList(List<DayControllerDTO> newDayDatabaseModelList, @MappingTarget List<DayControllerDTO> oldDayDatabaseModelList) {
+    public void updateDayDAOList(List<DayControllerDTO> newDayEntityList, @MappingTarget List<DayControllerDTO> oldDayEntityList) {
         Integer j;
-        if (oldDayDatabaseModelList != null ) {
-            if (newDayDatabaseModelList != null ) {
-                for(int i = 0; i< newDayDatabaseModelList.size(); i++) {
-                    j = oldDayDatabaseModelList.indexOf(newDayDatabaseModelList.get(i));
+        if (oldDayEntityList != null ) {
+            if (newDayEntityList != null ) {
+                for(int i = 0; i< newDayEntityList.size(); i++) {
+                    j = oldDayEntityList.indexOf(newDayEntityList.get(i));
                     if(j >= 0){
-                        updateDayDAO(newDayDatabaseModelList.get(i), oldDayDatabaseModelList.get(j));
+                        updateDayDAO(newDayEntityList.get(i), oldDayEntityList.get(j));
                     } else {
-                        oldDayDatabaseModelList.add(newDayDatabaseModelList.get(i));
+                        oldDayEntityList.add(newDayEntityList.get(i));
                     }
                 }
             }
             else {
-                oldDayDatabaseModelList = null;
+                oldDayEntityList = null;
             }
         }
         else {
-            if ( newDayDatabaseModelList != null ) {
-                oldDayDatabaseModelList = new ArrayList<DayControllerDTO>();
-                oldDayDatabaseModelList.addAll(newDayDatabaseModelList);
+            if ( newDayEntityList != null ) {
+                oldDayEntityList = new ArrayList<DayControllerDTO>();
+                oldDayEntityList.addAll(newDayEntityList);
             }
         }
     }
-    public void updateMonthDAOList(List<MonthControllerDTO> newMonthDatabaseModelList, @MappingTarget List<MonthControllerDTO> oldMonthDatabaseModelList) {
+    public void updateMonthDAOList(List<MonthControllerDTO> newMonthEntityList, @MappingTarget List<MonthControllerDTO> oldMonthEntityList) {
         Integer j;
-        if (oldMonthDatabaseModelList != null ) {
-            if (newMonthDatabaseModelList != null ) {
-                for(int i = 0; i< newMonthDatabaseModelList.size(); i++) {
-                    j = oldMonthDatabaseModelList.indexOf(newMonthDatabaseModelList.get(i));
+        if (oldMonthEntityList != null ) {
+            if (newMonthEntityList != null ) {
+                for(int i = 0; i< newMonthEntityList.size(); i++) {
+                    j = oldMonthEntityList.indexOf(newMonthEntityList.get(i));
                     if(j >= 0){
-                        updateMonthDAO(newMonthDatabaseModelList.get(i), oldMonthDatabaseModelList.get(j));
+                        updateMonthDAO(newMonthEntityList.get(i), oldMonthEntityList.get(j));
                     } else {
-                        oldMonthDatabaseModelList.add(newMonthDatabaseModelList.get(i));
+                        oldMonthEntityList.add(newMonthEntityList.get(i));
                     }
                 }
             }
             else {
-                oldMonthDatabaseModelList = null;
+                oldMonthEntityList = null;
             }
         }
         else {
-            if ( newMonthDatabaseModelList != null ) {
-                oldMonthDatabaseModelList = new ArrayList<MonthControllerDTO>();
-                oldMonthDatabaseModelList.addAll(newMonthDatabaseModelList);
+            if ( newMonthEntityList != null ) {
+                oldMonthEntityList = new ArrayList<MonthControllerDTO>();
+                oldMonthEntityList.addAll(newMonthEntityList);
             }
         }
     }
-    public void updateYearDAOList(List<YearControllerDTO> newYearDatabaseModelList, @MappingTarget List<YearControllerDTO> oldYearDatabaseModelList) {
+    public void updateYearDAOList(List<YearControllerDTO> newYearEntityList, @MappingTarget List<YearControllerDTO> oldYearEntityList) {
         Integer j;
-        if (oldYearDatabaseModelList != null ) {
-            if (newYearDatabaseModelList != null ) {
-                for(int i = 0; i< newYearDatabaseModelList.size(); i++) {
-                    j = oldYearDatabaseModelList.indexOf(newYearDatabaseModelList.get(i));
+        if (oldYearEntityList != null ) {
+            if (newYearEntityList != null ) {
+                for(int i = 0; i< newYearEntityList.size(); i++) {
+                    j = oldYearEntityList.indexOf(newYearEntityList.get(i));
                     if(j >= 0){
-                        updateYearDAO(newYearDatabaseModelList.get(i), oldYearDatabaseModelList.get(j));
+                        updateYearDAO(newYearEntityList.get(i), oldYearEntityList.get(j));
                     } else {
-                        oldYearDatabaseModelList.add(newYearDatabaseModelList.get(i));
+                        oldYearEntityList.add(newYearEntityList.get(i));
                     }
                 }
             }
             else {
-                oldYearDatabaseModelList = null;
+                oldYearEntityList = null;
             }
         }
         else {
-            if ( newYearDatabaseModelList != null ) {
-                oldYearDatabaseModelList = new ArrayList<YearControllerDTO>();
-                oldYearDatabaseModelList.addAll(newYearDatabaseModelList);
+            if ( newYearEntityList != null ) {
+                oldYearEntityList = new ArrayList<YearControllerDTO>();
+                oldYearEntityList.addAll(newYearEntityList);
             }
         }
     }
-    public void updateDayWorkDAOList(List<DayWorkControllerDTO> newDayWorkDatabaseModelList, @MappingTarget List<DayWorkControllerDTO> oldDayWorkDatabaseModelList) {
+    public void updateDayWorkDAOList(List<DayWorkControllerDTO> newDayWorkEntityList, @MappingTarget List<DayWorkControllerDTO> oldDayWorkEntityList) {
         Integer j;
-        if (oldDayWorkDatabaseModelList != null ) {
-            if (newDayWorkDatabaseModelList != null ) {
-                for(int i = 0; i< newDayWorkDatabaseModelList.size(); i++) {
-                    j = oldDayWorkDatabaseModelList.indexOf(newDayWorkDatabaseModelList.get(i));
+        if (oldDayWorkEntityList != null ) {
+            if (newDayWorkEntityList != null ) {
+                for(int i = 0; i< newDayWorkEntityList.size(); i++) {
+                    j = oldDayWorkEntityList.indexOf(newDayWorkEntityList.get(i));
                     if(j >= 0){
-                        newDayWorkDatabaseModelList.get(i).setDateOfWorkDay(oldDayWorkDatabaseModelList.get(j).getDateOfWorkDay());
+                        newDayWorkEntityList.get(i).setDateOfWorkDay(oldDayWorkEntityList.get(j).getDateOfWorkDay());
                     } else {
-                        oldDayWorkDatabaseModelList.add(newDayWorkDatabaseModelList.get(i));
+                        oldDayWorkEntityList.add(newDayWorkEntityList.get(i));
                     }
                 }
             }
             else {
-                oldDayWorkDatabaseModelList = null;
+                oldDayWorkEntityList = null;
             }
         }
         else {
-            if ( newDayWorkDatabaseModelList != null ) {
-                oldDayWorkDatabaseModelList = new ArrayList<DayWorkControllerDTO>();
-                oldDayWorkDatabaseModelList.addAll(newDayWorkDatabaseModelList);
+            if ( newDayWorkEntityList != null ) {
+                oldDayWorkEntityList = new ArrayList<DayWorkControllerDTO>();
+                oldDayWorkEntityList.addAll(newDayWorkEntityList);
             }
         }
     }
-    public void updateDayWorkOutDAOList(List<DayWorkOutControllerDTO> newDayWorkOutDatabaseModelList, @MappingTarget List<DayWorkOutControllerDTO> oldDayWorkOutDatabaseModelList) {
+    public void updateDayWorkOutDAOList(List<DayWorkOutControllerDTO> newDayWorkOutEntityList, @MappingTarget List<DayWorkOutControllerDTO> oldDayWorkOutEntityList) {
         Integer j;
-        if (oldDayWorkOutDatabaseModelList != null ) {
-            if (newDayWorkOutDatabaseModelList != null ) {
-                for(int i = 0; i< newDayWorkOutDatabaseModelList.size(); i++) {
-                    j = oldDayWorkOutDatabaseModelList.indexOf(newDayWorkOutDatabaseModelList.get(i));
+        if (oldDayWorkOutEntityList != null ) {
+            if (newDayWorkOutEntityList != null ) {
+                for(int i = 0; i< newDayWorkOutEntityList.size(); i++) {
+                    j = oldDayWorkOutEntityList.indexOf(newDayWorkOutEntityList.get(i));
                     if(j >= 0){
-                        newDayWorkOutDatabaseModelList.get(i).setDateOfWorkOutDay(oldDayWorkOutDatabaseModelList.get(j).getDateOfWorkOutDay());
+                        newDayWorkOutEntityList.get(i).setDateOfWorkOutDay(oldDayWorkOutEntityList.get(j).getDateOfWorkOutDay());
                     } else {
-                        oldDayWorkOutDatabaseModelList.add(newDayWorkOutDatabaseModelList.get(i));
+                        oldDayWorkOutEntityList.add(newDayWorkOutEntityList.get(i));
                     }
                 }
             }
             else {
-                oldDayWorkOutDatabaseModelList = null;
+                oldDayWorkOutEntityList = null;
             }
         }
         else {
-            if ( newDayWorkOutDatabaseModelList != null ) {
-                oldDayWorkOutDatabaseModelList = new ArrayList<DayWorkOutControllerDTO>();
-                oldDayWorkOutDatabaseModelList.addAll(newDayWorkOutDatabaseModelList);
+            if ( newDayWorkOutEntityList != null ) {
+                oldDayWorkOutEntityList = new ArrayList<DayWorkOutControllerDTO>();
+                oldDayWorkOutEntityList.addAll(newDayWorkOutEntityList);
             }
         }
     }
     @AfterMapping
-    public void updateAnchorDay(@MappingTarget CalendarControllerDTO calendarDatabaseModel){
-        if(calendarDatabaseModel.getDayList()!=null){
-            for(int i = 0; i< calendarDatabaseModel.getDayList().size(); i++) {
-                System.out.println(calendarDatabaseModel.getDayList().get(i).getDayName() + i);
-                if(calendarDatabaseModel.getAnchorWeekDay().equals(calendarDatabaseModel.getDayList().get(i))) {
-                    calendarDatabaseModel.setAnchorWeekDay(calendarDatabaseModel.getDayList().get(i));
+    public void updateAnchorDay(@MappingTarget CalendarControllerDTO calendarEntity){
+        if(calendarEntity.getDayList()!=null){
+            for(int i = 0; i< calendarEntity.getDayList().size(); i++) {
+                System.out.println(calendarEntity.getDayList().get(i).getDayName() + i);
+                if(calendarEntity.getAnchorWeekDay().equals(calendarEntity.getDayList().get(i))) {
+                    calendarEntity.setAnchorWeekDay(calendarEntity.getDayList().get(i));
                     break;
                 }
             }

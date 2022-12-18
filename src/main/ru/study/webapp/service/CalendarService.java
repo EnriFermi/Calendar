@@ -2,14 +2,16 @@ package ru.study.webapp.service;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.CalendarControllerDTO;
 import ru.study.webapp.controller.dto.DayControllerDTO;
+import ru.study.webapp.controller.requests.CalendarRequest;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.CalendarDatabaseModel;
-import ru.study.webapp.model.database.DayDatabaseModel;
+import ru.study.webapp.model.database.CalendarEntity;
+import ru.study.webapp.model.database.DayEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.CalendarRepository;
 
@@ -29,34 +31,33 @@ public class CalendarService {
     @Transactional
     public List<CalendarControllerDTO> getAll(){
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(mapper::calendarDatabaseModelToCalendarControllerDTO).toList();
+                .map(mapper::calendarEntityToCalendarControllerDTO).toList();
     }
     @Transactional
-    public List<CalendarControllerDTO> getOnePage(Long pageSize, Long pageNumber){
-        Page<CalendarDatabaseModel> res = repository.findAll(
-                PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
-        //TODO не ругаться. а вернуть пустой список
-        if(res.getTotalPages() < pageNumber.intValue()){
-            throw new NotFoundException(CalendarControllerDTO.class, "Номер страницы превышает их общее количество");
-        }
-        return StreamSupport.stream(res.spliterator(), false)
-                .map(mapper::calendarDatabaseModelToCalendarControllerDTO).toList();
+    public Page<CalendarControllerDTO> getOnePage(Long pageSize, Long pageNumber, CalendarRequest request){
+        Page<CalendarEntity> res = repository
+                .findAllParametrised(request, PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
+        //TODO не ругаться. а вернуть пустой список DONE
+        List<CalendarControllerDTO> list = res.stream()
+                .map(mapper::calendarEntityToCalendarControllerDTO).toList();
+        return  new PageImpl<>(list
+                , PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()), list.size());
     }
     @Transactional
     public CalendarControllerDTO getOne(Long id){
-        return mapper.calendarDatabaseModelToCalendarControllerDTO(repository.findById(id)
+        return mapper.calendarEntityToCalendarControllerDTO(repository.findById(id)
             .orElseThrow(() -> new NotFoundException(CalendarControllerDTO.class, id)));
     }
 
     @Transactional
     public CalendarControllerDTO addOne(CalendarControllerDTO calendarControllerDTO){
-    return mapper.calendarDatabaseModelToCalendarControllerDTO(
-            repository.save(mapper.calendarControllerDTOToCalendarDatabaseModel(calendarControllerDTO)));
+    return mapper.calendarEntityToCalendarControllerDTO(
+            repository.save(mapper.calendarControllerDTOToCalendarEntity(calendarControllerDTO)));
     }
     @Transactional
     public CalendarControllerDTO setAnchorDay(Long calendarId, Long dayId){
-         return mapper.calendarDatabaseModelToCalendarControllerDTO(repository.findById(calendarId).map(calendar -> {
-                    for(DayDatabaseModel day: calendar.getDayList()){
+         return mapper.calendarEntityToCalendarControllerDTO(repository.findById(calendarId).map(calendar -> {
+                    for(DayEntity day: calendar.getDayList()){
                         if(day.getId().equals(dayId)){
                             calendar.setAnchorWeekDay(day);
                             return repository.save(calendar);
@@ -67,16 +68,15 @@ public class CalendarService {
     }
     @Transactional
     public CalendarControllerDTO updateOne(CalendarControllerDTO calendarControllerDTO, Long id) {
-        return mapper.calendarDatabaseModelToCalendarControllerDTO(repository.findById(id)
+        return mapper.calendarEntityToCalendarControllerDTO(repository.findById(id)
             .map(calendar -> {
                 calendar.setBeginningYear(calendarControllerDTO.getBeginningYear());
                 calendar.setEndYear(calendarControllerDTO.getEndYear());
                 return repository.save(calendar);
             })
             .orElseGet(() -> {
-                //TODO если не нашли по ИД, должна быть ошибка
-                calendarControllerDTO.setId(id);
-                return repository.save(mapper.calendarControllerDTOToCalendarDatabaseModel(calendarControllerDTO));
+                //TODO если не нашли по ИД, должна быть ошибка DONE
+                throw new NotFoundException(CalendarControllerDTO.class, id);
             }));
     }
     @Transactional
@@ -91,6 +91,6 @@ public class CalendarService {
 
     @Transactional
     public DayControllerDTO getAnchorDay(Long id) {
-        return mapper.dayDatabaseModelToDayControllerDTO(repository.findById(id).orElseThrow().getAnchorWeekDay());
+        return mapper.dayEntityToDayControllerDTO(repository.findById(id).orElseThrow().getAnchorWeekDay());
     }
 }

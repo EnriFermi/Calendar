@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.DayWorkOutControllerDTO;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.DayWorkOutDatabaseModel;
-import ru.study.webapp.model.database.MonthDatabaseModel;
+import ru.study.webapp.model.database.DayWorkOutEntity;
+import ru.study.webapp.model.database.MonthEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.DayWorkOutRepository;
 
@@ -27,40 +27,40 @@ public class DayWorkOutService {
     @Transactional
     public List<DayWorkOutControllerDTO> getAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(mapper::dayWorkOutDatabaseModelToDayWorkOutControllerDTO).toList();
+                .map(mapper::dayWorkOutEntityToDayWorkOutControllerDTO).toList();
     }
 
     @Transactional
     public DayWorkOutControllerDTO getOne(Long id) {
-        return mapper.dayWorkOutDatabaseModelToDayWorkOutControllerDTO(repository.findById(id)
+        return mapper.dayWorkOutEntityToDayWorkOutControllerDTO(repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(DayWorkOutControllerDTO.class,id)));
     }
     @Transactional
     public List<DayWorkOutControllerDTO> getOnePage(Long pageSize, Long pageNumber){
-        Page<DayWorkOutDatabaseModel> res = repository.findAll(
+        Page<DayWorkOutEntity> res = repository.findAll(
                 PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
         if(res.getTotalPages() < pageNumber.intValue()){
             throw new NotFoundException(DayWorkOutControllerDTO.class, "Номер страницы превышает их общее количество");
         }
         return StreamSupport.stream(res.spliterator(), false)
-                .map(mapper::dayWorkOutDatabaseModelToDayWorkOutControllerDTO).toList();
+                .map(mapper::dayWorkOutEntityToDayWorkOutControllerDTO).toList();
     }
     @Transactional
     public DayWorkOutControllerDTO addOne(DayWorkOutControllerDTO DayWorkOutControllerDTO) {
-        return mapper.dayWorkOutDatabaseModelToDayWorkOutControllerDTO(
-                repository.save(mapper.dayWorkOutControllerDTOToDayWorkOutDatabaseModel(DayWorkOutControllerDTO)));
+        return mapper.dayWorkOutEntityToDayWorkOutControllerDTO(
+                repository.save(mapper.dayWorkOutControllerDTOToDayWorkOutEntity(DayWorkOutControllerDTO)));
     }
     @Transactional
     public DayWorkOutControllerDTO updateOne(DayWorkOutControllerDTO DayWorkOutControllerDTO, Long id) {
-        return mapper.dayWorkOutDatabaseModelToDayWorkOutControllerDTO(repository.findById(id)
-                .map(dayWorkOutDatabaseModel -> {
-                    dayWorkOutDatabaseModel.setDateOfWorkOutDay(DayWorkOutControllerDTO.getDateOfWorkOutDay());
-                    dayWorkOutDatabaseModel.setMonthDatabaseModel(new MonthDatabaseModel(
+        return mapper.dayWorkOutEntityToDayWorkOutControllerDTO(repository.findById(id)
+                .map(dayWorkOutEntity -> {
+                    dayWorkOutEntity.setDateOfWorkOutDay(DayWorkOutControllerDTO.getDateOfWorkOutDay());
+                    dayWorkOutEntity.setMonthEntity(new MonthEntity(
                             DayWorkOutControllerDTO.getId()));
-                    return repository.save(dayWorkOutDatabaseModel);
+                    return repository.save(dayWorkOutEntity);
                 })
                 .orElseGet(() -> repository.save(mapper.
-                        dayWorkOutControllerDTOToDayWorkOutDatabaseModel(DayWorkOutControllerDTO))));
+                        dayWorkOutControllerDTOToDayWorkOutEntity(DayWorkOutControllerDTO))));
     }
     @Transactional
     public Long deleteOne(Long id) {

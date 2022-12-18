@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.MonthControllerDTO;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.MonthDatabaseModel;
-import ru.study.webapp.model.database.YearDatabaseModel;
+import ru.study.webapp.model.database.MonthEntity;
+import ru.study.webapp.model.database.YearEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.MonthRepository;
 
@@ -27,40 +27,40 @@ public class MonthService {
     @Transactional
     public List<MonthControllerDTO> getAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(mapper::monthDatabaseModelToMonthControllerDTO).toList();
+                .map(mapper::monthEntityToMonthControllerDTO).toList();
     }
 
     @Transactional
     public MonthControllerDTO getOne(Long id) {
-        return mapper.monthDatabaseModelToMonthControllerDTO(repository.findById(id)
+        return mapper.monthEntityToMonthControllerDTO(repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(MonthControllerDTO.class, id)));
     }
     @Transactional
     public List<MonthControllerDTO> getOnePage(Long pageSize, Long pageNumber){
-        Page<MonthDatabaseModel> res = repository.findAll(
+        Page<MonthEntity> res = repository.findAll(
                 PageRequest.of(pageNumber.intValue()-1, pageSize.intValue()));
         if(res.getTotalPages() < pageNumber.intValue()){
             throw new NotFoundException(MonthControllerDTO.class, "Номер страницы превышает их общее количество");
         }
         return StreamSupport.stream(res.spliterator(), false)
-                .map(mapper::monthDatabaseModelToMonthControllerDTO).toList();
+                .map(mapper::monthEntityToMonthControllerDTO).toList();
     }
     @Transactional
     public MonthControllerDTO addOne(MonthControllerDTO MonthControllerDTO) {
-        return mapper.monthDatabaseModelToMonthControllerDTO(
-                repository.save(mapper.monthControllerDTOToMonthDatabaseModel(MonthControllerDTO)));
+        return mapper.monthEntityToMonthControllerDTO(
+                repository.save(mapper.monthControllerDTOToMonthEntity(MonthControllerDTO)));
     }
     @Transactional
     public MonthControllerDTO updateOne(MonthControllerDTO MonthControllerDTO, Long id) {
-        return mapper.monthDatabaseModelToMonthControllerDTO(repository.findById(id)
-                .map(MonthDatabaseModel -> {
-                    MonthDatabaseModel.setName(MonthControllerDTO.getName());
-                    MonthDatabaseModel.setDayCount(MonthControllerDTO.getDayCount());
-                    MonthDatabaseModel.setYearDatabaseModel(new YearDatabaseModel(MonthControllerDTO
+        return mapper.monthEntityToMonthControllerDTO(repository.findById(id)
+                .map(MonthEntity -> {
+                    MonthEntity.setName(MonthControllerDTO.getName());
+                    MonthEntity.setDayCount(MonthControllerDTO.getDayCount());
+                    MonthEntity.setYearEntity(new YearEntity(MonthControllerDTO
                             .getYearControllerDTOId()));
-                    return repository.save(MonthDatabaseModel);
+                    return repository.save(MonthEntity);
                 })
-                .orElseGet(() -> repository.save(mapper.monthControllerDTOToMonthDatabaseModel(MonthControllerDTO))));
+                .orElseGet(() -> repository.save(mapper.monthControllerDTOToMonthEntity(MonthControllerDTO))));
     }
     @Transactional
     public Long deleteOne(Long id) {

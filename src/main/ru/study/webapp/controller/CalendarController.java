@@ -6,13 +6,19 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.study.webapp.controller.dto.CalendarControllerDTO;
 import ru.study.webapp.controller.dto.DayControllerDTO;
+import ru.study.webapp.controller.requests.*;
+import ru.study.webapp.exceptions.FilterNotFoundException;
+import ru.study.webapp.model.database.CalendarEntity;
 import ru.study.webapp.service.CalendarService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -50,9 +56,28 @@ public class CalendarController {
     })
     @GetMapping("/page")
     //TODO добавить поиск ло опциональным полям:  beginningYear, endYear, наличие в календаре месяца с названием
-    // TODO возможность сортировки по полям:  beginningYear, endYear
-    public List<CalendarControllerDTO> onePage(@RequestParam Long pageSize, @RequestParam Long pageNumber) {
-        return service.getOnePage(pageSize, pageNumber);
+    //TODO возможность сортировки по полям: BeginningYear, endYear
+    public Page<CalendarControllerDTO> onePage(@RequestParam Long pageSize, @RequestParam Long pageNumber,
+                                               @RequestParam Map<String,String> filterAndSort) {
+        List<CalendarSearchFilter> searchFilterList = new ArrayList<>();
+        List<CalendarSortFilter> sortFilterList = new ArrayList<>();
+        // FIXME не сипл вей
+        filterAndSort.remove("pageSize");
+        filterAndSort.remove("pageNumber");
+        filterAndSort.forEach((key, value) -> {
+            System.out.println(key);
+            if(key.subSequence(0, 4).equals("SEAR")){
+                 searchFilterList.add(new CalendarSearchFilter(CalendarSearchFilterEnum
+                         .getRequestEnumFromCode(key.substring(5)), value));
+            } else if(key.subSequence(0, 4).equals("SORT")) {
+                sortFilterList.add(new CalendarSortFilter(CalendarSortFilterEnum
+                        .getSortEnumFromCode(key.substring(5)), value));
+            } else {
+                throw new FilterNotFoundException(CalendarEntity.class, key);
+            }
+        });
+        CalendarRequest request = new CalendarRequest(searchFilterList, sortFilterList);
+        return service.getOnePage(pageSize, pageNumber, request);
     }
 
     //TODO в 1 методе сохранить весь календарь с детьми, в репозитории save должен вызваться 1 раз

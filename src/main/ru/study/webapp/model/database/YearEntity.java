@@ -18,9 +18,9 @@ import java.util.List;
 @Entity
 @Table(name = "yearlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @Valid
-public class YearDatabaseModel {
-    public YearDatabaseModel(){}
-    public YearDatabaseModel(Long id){
+public class YearEntity {
+    public YearEntity(){}
+    public YearEntity(Long id){
         this.id = id;
     }
     @Id
@@ -33,11 +33,11 @@ public class YearDatabaseModel {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calendarId")
-    private CalendarDatabaseModel calendarDatabaseModel;
+    private CalendarEntity calendarEntity;
 
     @JsonManagedReference
     @EqualsAndHashCode.Include()
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "yearDatabaseModel")
-    private List<MonthDatabaseModel> monthList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "yearEntity")
+    private List<MonthEntity> monthList;
 
 }
