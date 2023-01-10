@@ -54,6 +54,7 @@ public class YearService {
     public YearControllerDTO updateOne(YearControllerDTO YearControllerDTO, Long id) {
         return mapper.yearEntityToYearControllerDTO(repository.findById(id)
                 .map(YearEntity -> {
+
                     YearEntity.setCalendarEntity(new CalendarEntity(
                             YearControllerDTO.getCalendarControllerDTOId()));
                     return repository.save(YearEntity);

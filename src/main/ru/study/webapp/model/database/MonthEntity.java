@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter(AccessLevel.PUBLIC)
@@ -20,6 +21,14 @@ public class MonthEntity {
     public MonthEntity() {}
     public MonthEntity(Long id){
         this.id = id;
+    }
+    public MonthEntity(Long id, String name, Integer dayCount, YearEntity yearEntity){
+        this.id = id;
+        this.name = name;
+        this.dayCount = dayCount;
+        this.dayWorkList = new ArrayList<>();
+        this.dayWorkOutList = new ArrayList<>();
+        this.yearEntity = yearEntity;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

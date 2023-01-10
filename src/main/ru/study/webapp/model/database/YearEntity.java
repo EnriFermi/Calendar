@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter(AccessLevel.PUBLIC)
@@ -19,9 +20,13 @@ import java.util.List;
 @Table(name = "yearlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @Valid
 public class YearEntity {
-    public YearEntity(){}
     public YearEntity(Long id){
         this.id = id;
+    }
+    public YearEntity(Long id, CalendarEntity calendarEntity){
+        this.id = id;
+        this.calendarEntity = calendarEntity;
+        this.monthList = new ArrayList<>();
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +45,7 @@ public class YearEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "yearEntity")
     private List<MonthEntity> monthList;
 
+    public YearEntity() {
+
+    }
 }

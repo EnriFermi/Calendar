@@ -6,19 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum CalendarSearchFilterEnum {
-    IS_BEGINNING_YEAR(Arrays.asList("beginningYear"), "IS_BEGINNING_YEAR"),
-    IS_END_YEAR(Arrays.asList("beginningYear"), "IS_END_YEAR"),
-    CONTAINING_MONTH(Arrays.asList("id", "id", "id"), "CONTAINING_MONTH");
-    private final List<String> dtFieldName;
+    IS_BEGINNING_YEAR("IS_BEGINNING_YEAR"),
+    IS_END_YEAR("IS_END_YEAR"),
+    CONTAINING_MONTH( "CONTAINING_MONTH");
     private final String jsonFieldName;
-    public List<String> getDtFieldName() {
-        return this.dtFieldName;
-    }
     public String getJsonFieldName() {
         return this.jsonFieldName;
-    }
-    CalendarSearchFilterEnum(List<String> dtFieldName, String jsonFieldName) {
-        this.dtFieldName = dtFieldName;
+}
+    CalendarSearchFilterEnum(String jsonFieldName) {
         this.jsonFieldName = jsonFieldName;
     }
     @JsonCreator

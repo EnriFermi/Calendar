@@ -54,6 +54,7 @@ public abstract class DatabaseDTOMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "beginningYear", source = "beginningYear")
     @Mapping(target = "endYear", source = "endYear")
+    @Mapping(target = "version", source = "version")
     public abstract CalendarControllerDTO calendarEntityToCalendarControllerDTO(CalendarEntity calendarConfig);
 
     @Mapping(target = "id", source = "id")

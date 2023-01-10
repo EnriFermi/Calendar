@@ -11,11 +11,13 @@ import javax.validation.constraints.Positive;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 public class DayControllerDTO {
-
+    @Positive
     private Long id;
 
     @Positive
     private Long calendarControllerDTOId;
+
+    private Long calendarControllerDTOVersion;
 
     @EqualsAndHashCode.Include
     private String dayName;

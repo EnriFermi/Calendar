@@ -12,6 +12,12 @@ import javax.persistence.*;
 @Table(name = "dayworklist", /*schema = "calendarconfiguration",*/ catalog = "",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"dateOfWorkDay", "monthId"})})
 public class DayWorkEntity {
+    public DayWorkEntity(){}
+    public DayWorkEntity(Long id, Integer dateOfWorkDay, MonthEntity monthEntity){
+        this.id = id;
+        this.dateOfWorkDay = dateOfWorkDay;
+        this.monthEntity = monthEntity;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dayWorkId")

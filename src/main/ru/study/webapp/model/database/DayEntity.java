@@ -13,10 +13,18 @@ import javax.persistence.*;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
 @Entity
-@UniqueElements()
-@Table(name = "daylist", /*schema = "calendarconfiguration",*/ catalog = "",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"dayName", "calendarId"})})
+@Table(name = "daylist", catalog = "",
+        uniqueConstraints = {@UniqueConstraint(name = "test", columnNames = {"dayName", "calendarId"})})
 public class DayEntity {
+    public DayEntity(){}
+
+    public DayEntity(Long id, String dayName, Boolean weekDayWorkOut, CalendarEntity calendarEntity){
+        this.id = id;
+        this.dayName = dayName;
+        this.weekDayWorkOut = weekDayWorkOut;
+        this.calendarEntity = calendarEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dayId")

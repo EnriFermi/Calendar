@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PUBLIC)
 public class DayWorkControllerDTO {
-
+    @Positive
     private Long id;
 
     private Integer dateOfWorkDay;

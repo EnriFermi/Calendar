@@ -11,8 +11,10 @@ import javax.validation.constraints.Positive;
 @Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class YearControllerDTO {
+    @Positive
     private Long id;
 
     @Positive
     private Long calendarControllerDTOId;
+
 }

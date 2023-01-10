@@ -11,13 +11,11 @@ import javax.validation.constraints.Positive;
 @Getter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class MonthControllerDTO {
-
+    @Positive
     private Long id;
-
 
     @EqualsAndHashCode.Include
     private String name;
-
 
     private Integer dayCount;
 

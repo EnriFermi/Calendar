@@ -6,12 +6,22 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.study.webapp.controller.dto.CalendarControllerDTO;
-import ru.study.webapp.controller.dto.DayControllerDTO;
+import org.springframework.web.context.request.WebRequest;
+import ru.study.webapp.controller.dto.*;
 import ru.study.webapp.controller.requests.*;
 import ru.study.webapp.exceptions.FilterNotFoundException;
+import ru.study.webapp.exceptions.NotFoundException;
+import ru.study.webapp.exceptions.ValidationException;
+import ru.study.webapp.exceptions.handler.ErrorResponseBody;
 import ru.study.webapp.model.database.CalendarEntity;
 import ru.study.webapp.service.CalendarService;
 
@@ -25,7 +35,6 @@ import java.util.Map;
 @RequestMapping("/calendar")
 public class CalendarController {
     public final CalendarService service;
-
     public CalendarController(CalendarService service) {
         this.service = service;
     }
@@ -55,35 +64,23 @@ public class CalendarController {
             content = @Content)
     })
     @GetMapping("/page")
-    //TODO добавить поиск ло опциональным полям:  beginningYear, endYear, наличие в календаре месяца с названием
-    //TODO возможность сортировки по полям: BeginningYear, endYear
-    public Page<CalendarControllerDTO> onePage(@RequestParam Long pageSize, @RequestParam Long pageNumber,
-                                               @RequestParam Map<String,String> filterAndSort) {
-        List<CalendarSearchFilter> searchFilterList = new ArrayList<>();
-        List<CalendarSortFilter> sortFilterList = new ArrayList<>();
-        // FIXME не сипл вей
-        filterAndSort.remove("pageSize");
-        filterAndSort.remove("pageNumber");
-        filterAndSort.forEach((key, value) -> {
-            System.out.println(key);
-            if(key.subSequence(0, 4).equals("SEAR")){
-                 searchFilterList.add(new CalendarSearchFilter(CalendarSearchFilterEnum
-                         .getRequestEnumFromCode(key.substring(5)), value));
-            } else if(key.subSequence(0, 4).equals("SORT")) {
-                sortFilterList.add(new CalendarSortFilter(CalendarSortFilterEnum
-                        .getSortEnumFromCode(key.substring(5)), value));
-            } else {
-                throw new FilterNotFoundException(CalendarEntity.class, key);
-            }
-        });
-        CalendarRequest request = new CalendarRequest(searchFilterList, sortFilterList);
-        return service.getOnePage(pageSize, pageNumber, request);
+    //TODO добавить поиск ло опциональным полям:  beginningYear, endYear, наличие в календаре месяца с названием DONE???
+    //TODO возможность сортировки по полям: BeginningYear, endYear DONE
+    public Page<CalendarControllerDTO> onePage(@RequestParam Map<String,String> filterMap, @PageableDefault Pageable page) {
+        return service.getOnePage(page, filterMap);
     }
 
-    //TODO в 1 методе сохранить весь календарь с детьми, в репозитории save должен вызваться 1 раз
-
-
-
+    //TODO в 1 методе сохранить весь календарь с детьми, в репозитории save должен вызваться 1 раз DONE
+    @PostMapping("/entire")
+    public CalendarControllerDTO addNested(@Valid @RequestBody CalendarControllerNestedDTO calendar) {
+        return service.addOneNested(calendar.getCalendarControllerDTO(),
+                calendar.getYearControllerDTOList(),
+                calendar.getMonthControllerDTOList(),
+                calendar.getDayControllerDTOList(),
+                calendar.getDayWorkControllerDTOList(),
+                calendar.getDayWorkOutControllerDTOList(),
+                calendar.getAnchorDayId());
+    }
     @Operation(summary = "Получить календарь по его id из БД")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Календарь найден",
@@ -132,7 +129,7 @@ public class CalendarController {
                     @Schema(implementation = CalendarControllerDTO.class))}),
             @ApiResponse(responseCode = "404", description = "-",
                     content = @Content),
-    //TODO почитать https://www.baeldung.com/exception-handling-for-rest-with-spring
+    //TODO почитать https://www.baeldung.com/exception-handling-for-rest-with-spring DONE(Вопрос насчет работы @ControllerAdvice)
             @ApiResponse(responseCode = "400", description = "Не корректные данные",
                     content = @Content)})
     @PutMapping("/{id}")
