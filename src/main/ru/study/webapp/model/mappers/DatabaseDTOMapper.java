@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import ru.study.webapp.controller.dto.*;
 import ru.study.webapp.model.database.*;
+import ru.study.webapp.repository.entity.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 

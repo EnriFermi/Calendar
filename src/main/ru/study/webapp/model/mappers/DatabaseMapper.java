@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import ru.study.webapp.model.configuration.domain.*;
 import ru.study.webapp.model.database.*;
+import ru.study.webapp.repository.entity.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {WeekTemplate.class})
 

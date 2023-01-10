@@ -6,27 +6,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springdoc.core.converters.models.PageableAsQueryParam;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import ru.study.webapp.controller.dto.*;
-import ru.study.webapp.controller.requests.*;
-import ru.study.webapp.exceptions.FilterNotFoundException;
-import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.exceptions.ValidationException;
-import ru.study.webapp.exceptions.handler.ErrorResponseBody;
-import ru.study.webapp.model.database.CalendarEntity;
 import ru.study.webapp.service.CalendarService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,13 +51,12 @@ public class CalendarController {
             content = @Content)
     })
     @GetMapping("/page")
-    //TODO добавить поиск ло опциональным полям:  beginningYear, endYear, наличие в календаре месяца с названием DONE???
-    //TODO возможность сортировки по полям: BeginningYear, endYear DONE
+    //TODO добавить поиск ло опциональным полям:  beginningYear, endYear, наличие в календаре месяца с названием ??? TO DTO
     public Page<CalendarControllerDTO> onePage(@RequestParam Map<String,String> filterMap, @PageableDefault Pageable page) {
         return service.getOnePage(page, filterMap);
     }
 
-    //TODO в 1 методе сохранить весь календарь с детьми, в репозитории save должен вызваться 1 раз DONE
+    //TODO в 1 методе сохранить весь календарь с детьми, в репозитории save должен вызваться 1 раз - сделать удобный объект
     @PostMapping("/entire")
     public CalendarControllerDTO addNested(@Valid @RequestBody CalendarControllerNestedDTO calendar) {
         return service.addOneNested(calendar.getCalendarControllerDTO(),
@@ -129,7 +115,6 @@ public class CalendarController {
                     @Schema(implementation = CalendarControllerDTO.class))}),
             @ApiResponse(responseCode = "404", description = "-",
                     content = @Content),
-    //TODO почитать https://www.baeldung.com/exception-handling-for-rest-with-spring DONE(Вопрос насчет работы @ControllerAdvice)
             @ApiResponse(responseCode = "400", description = "Не корректные данные",
                     content = @Content)})
     @PutMapping("/{id}")

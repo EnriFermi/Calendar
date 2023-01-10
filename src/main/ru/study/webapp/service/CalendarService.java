@@ -11,6 +11,7 @@ import ru.study.webapp.exceptions.NotFoundException;
 import ru.study.webapp.model.database.*;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.CalendarRepository;
+import ru.study.webapp.repository.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -41,11 +42,9 @@ public class CalendarService {
                         NumberUtils.createInteger(filterMap.getOrDefault(CalendarSearchFilterEnum.IS_BEGINNING_YEAR.getJsonFieldName(), null)),
                         NumberUtils.createInteger(filterMap.getOrDefault(CalendarSearchFilterEnum.IS_END_YEAR.getJsonFieldName(), null)),
                         page);
-        //TODO не ругаться. а вернуть пустой список DONE
         List<CalendarControllerDTO> list = res.stream()
                 .map(mapper::calendarEntityToCalendarControllerDTO).toList();
-        return new PageImpl<>(list
-                , page, list.size());
+        return new PageImpl<>(list, page, list.size());
     }
 
     @Transactional
@@ -70,7 +69,7 @@ public class CalendarService {
                 }
             }
             throw new NotFoundException(DayControllerDTO.class, calendarId);
-        }).orElseThrow(() -> new NotFoundException(CalendarControllerDTO.class, calendarId))); //TODO можно anchorDayError
+        }).orElseThrow(() -> new NotFoundException(CalendarControllerDTO.class, calendarId)));
     }
 
     @Transactional
@@ -82,7 +81,6 @@ public class CalendarService {
             throw new NotFoundException(CalendarControllerDTO.class, id);
         }
         return calendarControllerDTO;
-        //TODO если не нашли по ИД, должна быть ошибка DONE
     }
 
     @Transactional

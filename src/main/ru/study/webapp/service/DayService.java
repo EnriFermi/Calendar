@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.DayControllerDTO;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.CalendarEntity;
-import ru.study.webapp.model.database.DayEntity;
+import ru.study.webapp.repository.entity.CalendarEntity;
+import ru.study.webapp.repository.entity.DayEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.DayRepository;
 
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.StreamSupport;
 
 @Service
+//TODO  сделать интерфейсы ВСЕХ сервисов и их использовать в других бинах
 public class DayService {
     private final DayRepository repository;
     private final DatabaseDTOMapper mapper = Mappers.getMapper(DatabaseDTOMapper.class);
@@ -23,8 +24,9 @@ public class DayService {
     public DayService(DayRepository repository) {
         this.repository = repository;
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public List<DayControllerDTO> getAll() {
+        //TODO зачем?
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(mapper::dayEntityToDayControllerDTO).toList();
     }

@@ -10,13 +10,11 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.study.webapp.controller.dto.CalendarControllerDTO;
-import ru.study.webapp.model.database.CalendarEntity;
-
-import java.util.Optional;
+import ru.study.webapp.repository.entity.CalendarEntity;
 
 @Repository
 public interface CalendarRepository extends JpaRepository<CalendarEntity, Long> {
+    //TODO динамически строить запрос в коде, например используя https://www.baeldung.com/hibernate-criteria-queries
     @Transactional
     @Query("""
             select c from CalendarEntity c where (:monthName is null or (c.id in (select y.calendarEntity.id from YearEntity y where y.id in

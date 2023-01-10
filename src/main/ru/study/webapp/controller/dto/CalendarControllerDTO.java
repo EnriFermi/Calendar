@@ -11,9 +11,6 @@ import javax.validation.constraints.PositiveOrZero;
 @Getter(AccessLevel.PUBLIC)
 public class CalendarControllerDTO {
 
-    //TODO по хорошему надо сообщать информацию о странице. Посмотреть Page<> (в контроллер передается страница) DONE
-
-    //TODO попробовать через final DONE
     private final Long id;
 
     private final Long version;
@@ -24,7 +21,6 @@ public class CalendarControllerDTO {
     @Positive
     private final Integer endYear;
 
-    //TODO проверить создание через конструктор DONE
     public CalendarControllerDTO(@JsonProperty("id") Long id,
                                  @JsonProperty("version") Long version,
                                  @JsonProperty("beginningYear") Integer beginningYear,

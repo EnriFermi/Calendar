@@ -1,11 +1,10 @@
-package ru.study.webapp.model.database;
+package ru.study.webapp.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 

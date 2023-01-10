@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.study.webapp.controller.dto.MonthControllerDTO;
 import ru.study.webapp.exceptions.NotFoundException;
-import ru.study.webapp.model.database.MonthEntity;
-import ru.study.webapp.model.database.YearEntity;
+import ru.study.webapp.repository.entity.MonthEntity;
+import ru.study.webapp.repository.entity.YearEntity;
 import ru.study.webapp.model.mappers.DatabaseDTOMapper;
 import ru.study.webapp.repository.MonthRepository;
 

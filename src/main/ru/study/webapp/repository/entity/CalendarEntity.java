@@ -1,4 +1,4 @@
-package ru.study.webapp.model.database;
+package ru.study.webapp.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "calendarlist", /*schema = "calendarconfiguration",*/ catalog = "")
 @DynamicUpdate
-//TODO rename to *Entity DONE
-//TODO добавить поле версии, не позволять параллельное изменение ???DONE
 public class CalendarEntity {
     public CalendarEntity(Long id){
         this.id = id;

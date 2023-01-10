@@ -21,4 +21,5 @@ public class CalendarControllerHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, body,
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+    //TODO если версии не совпали то 409 Conflict
 }

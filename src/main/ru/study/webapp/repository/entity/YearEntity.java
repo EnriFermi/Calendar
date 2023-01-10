@@ -1,4 +1,4 @@
-package ru.study.webapp.model.database;
+package ru.study.webapp.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
